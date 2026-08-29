@@ -1,0 +1,17 @@
+[
+  {
+    "id": "example-scenario",
+    "title": "What happens when something changes",
+    "question": "The question a reader would actually ask.",
+    "tag": "Monetary policy",
+    "chain": [
+      { "stage": "Event", "text": "The thing that happens.", "concepts": ["interest-rates"] },
+      { "stage": "Mechanism", "text": "How it transmits.", "concepts": ["monetary-policy"] },
+      { "stage": "Direct effect", "text": "The first consequence.", "concepts": ["bond-pricing"] },
+      { "stage": "Secondary effect", "text": "What follows from that.", "concepts": ["discount-rate"] },
+      { "stage": "Business effect", "text": "How firms and markets respond.", "concepts": ["leverage"] },
+      { "stage": "Financial implication", "text": "What it means for money in the end.", "concepts": ["real-return"] }
+    ],
+    "caveat": "What this chain cannot tell you — direction versus magnitude and timing."
+  }
+]

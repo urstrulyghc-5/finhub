@@ -1,0 +1,40 @@
+[
+  {
+    "id": "example-concept",
+    "title": "Example Concept",
+    "domain": "investments",
+    "category": "principles",
+    "subcategory": "Investment Objectives",
+    "level": "Foundational",
+    "oneLine": "One sentence that captures the idea. Delete this example and add your own.",
+    "what": "The full definition. Two to four sentences, accurate and complete.",
+    "simple": "The same idea in plain words, for a complete beginner.",
+    "why": "Why this matters and what it makes possible.",
+    "how": ["First step of the mechanism", "Second step", "Third step"],
+    "components": [
+      { "k": "Component name", "v": "What it is and why it matters." }
+    ],
+    "formula": {
+      "main": "Result = Input × Rate",
+      "variables": [{ "sym": "Rate", "desc": "What this stands for" }],
+      "others": [{ "label": "Related form", "expr": "Alternative = A ÷ B" }]
+    },
+    "example": {
+      "setup": "The situation, with real numbers.",
+      "steps": ["Working line 1", "Working line 2"],
+      "result": "The answer",
+      "note": "What the reader should notice about it."
+    },
+    "interpretation": "How to read the result correctly.",
+    "application": ["Where it is used in practice", "Another use"],
+    "advantages": ["A genuine strength"],
+    "limitations": ["An honest limitation"],
+    "misconceptions": [
+      { "claim": "\"A common wrong belief.\"", "truth": "Why it is wrong, stated clearly." }
+    ],
+    "realWorld": "A real situation where this shows up.",
+    "related": ["equity", "risk-return"],
+    "prereq": ["risk-return"],
+    "next": ["equity"]
+  }
+]

@@ -1,0 +1,19 @@
+[
+  {
+    "id": "example-fraud",
+    "title": "Name as it appears in the public record",
+    "tag": "Accounting & disclosure",
+    "period": "Years involved",
+    "img": "fraud-satyam",
+    "note": "Summarised from the public record — name the regulatory orders, investigations or judgments relied on.",
+    "background": "What the organisation was before the events.",
+    "happened": "What occurred, factually and without drama.",
+    "mechanism": ["How the first part of the deception worked", "The second part", "The third"],
+    "conceptsInvolved": ["balance-sheet", "cash-flow-statement"],
+    "warnings": ["A signal that was visible beforehand", "Another signal"],
+    "impact": "Who was affected and how.",
+    "response": "Investigation, prosecution, and any regulatory change that followed.",
+    "lessons": ["What this teaches about detection", "A second lesson"],
+    "connected": ["financial-ratios", "leverage"]
+  }
+]

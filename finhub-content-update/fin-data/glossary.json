@@ -1,0 +1,9 @@
+[
+  {
+    "term": "Example Term",
+    "def": "The precise definition, in one or two sentences.",
+    "simple": "The same thing in plain words.",
+    "formula": "Optional = A ÷ B",
+    "link": "time-value-of-money"
+  }
+]

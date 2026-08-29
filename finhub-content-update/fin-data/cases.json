@@ -1,0 +1,19 @@
+[
+  {
+    "id": "example-case",
+    "title": "Title of the case study",
+    "type": "Historical case",
+    "tag": "Corporate Finance",
+    "img": "case-lehman",
+    "note": "Where this account is drawn from. Say plainly if it is a constructed teaching case.",
+    "background": "What the organisation was and the context before events began.",
+    "situation": "The specific position it found itself in.",
+    "problem": "The financial problem, stated precisely.",
+    "concepts": ["leverage", "risk-return"],
+    "analysis": ["First analytical point", "Second point", "Third point"],
+    "decision": "What was decided, and by whom.",
+    "outcome": "What actually happened.",
+    "lessons": ["What this teaches", "A second lesson"],
+    "connected": ["leverage", "liquidity-risk"]
+  }
+]

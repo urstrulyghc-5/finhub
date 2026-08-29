@@ -1,0 +1,17 @@
+[
+  {
+    "id": "investments",
+    "name": "Investments",
+    "kicker": "Turning capital into claims",
+    "blurb": "Asset classes, portfolios, analysis and the discipline of allocation.",
+    "icon": "investments",
+    "img": "investments",
+    "categories": [
+      {
+        "id": "principles",
+        "name": "Investment Principles",
+        "subcategories": ["Investment Objectives", "Time Horizon", "Liquidity Needs", "Cost of Investing"]
+      }
+    ]
+  }
+]
