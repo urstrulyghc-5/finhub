@@ -1,0 +1,99 @@
+[
+  {
+    "id": "ilfs-2018",
+    "title": "IL&FS and the cost of funding long assets short",
+    "type": "Historical case",
+    "tag": "Credit & liquidity",
+    "img": "case-ilfs",
+    "visual": "mismatch",
+    "visualCaption": "Infrastructure assets generating cash over decades, funded by borrowing that had to be renewed continuously.",
+    "sourceNote": "Summarised from filings of the Ministry of Corporate Affairs before the National Company Law Tribunal, reports of the government-appointed board, and orders of the Securities and Exchange Board of India.",
+    "background": "Infrastructure Leasing & Financial Services was a large Indian infrastructure financing and development group operating through a substantial number of subsidiaries and special purpose vehicles. Its debt carried high credit ratings and was widely held by mutual funds, pension funds and other institutional investors.",
+    "situation": "Infrastructure assets generate cash over decades. A significant part of the group's funding was short-term and had to be refinanced continuously, while group structure spanned enough entities that consolidated obligations were difficult for an outside investor to assess from published statements.",
+    "problem": "The assets and the liabilities were on entirely different clocks. Nothing about the projects had to fail for the group to default. It only needed lenders to become unwilling to roll over short-term funding at the moment repayment fell due.",
+    "concepts": ["liquidity-risk", "credit-risk", "leverage", "balance-sheet"],
+    "analysis": [
+      "Long-gestation assets funded substantially by short-term borrowing created a structural maturity mismatch.",
+      "High credit ratings encouraged institutional investors to treat the paper as low risk, so it was widely held and lightly examined.",
+      "Group complexity meant consolidated leverage was not readily visible in published statements, delaying the market's reassessment.",
+      "When refinancing became difficult in 2018, the mismatch converted immediately into default. The underlying assets had not disappeared, but they could not be converted to cash on the schedule the liabilities demanded."
+    ],
+    "decision": "The Government of India superseded the board in October 2018 and appointed a new board to manage a resolution process, on the basis that a disorderly failure would transmit widely through the financial system.",
+    "outcome": "Debt mutual funds holding the group's paper marked down their holdings, affecting retail investors who had considered such funds low risk. Funding costs rose across non-banking financial companies and credit availability tightened broadly. Resolution proceeded over several years through the National Company Law Tribunal.",
+    "lessons": [
+      "Solvency and liquidity are different questions. An entity holding sound long-term assets can still fail on a Tuesday because a lender declined to renew.",
+      "A credit rating is an opinion, not a verification. Paper that is widely held can be widely under-examined for precisely that reason.",
+      "Group complexity is itself a risk factor. If consolidated obligations cannot be assessed from published statements, that opacity is the finding."
+    ],
+    "connected": ["liquidity-risk", "credit-risk", "leverage", "balance-sheet"],
+    "sources": [
+      { "title": "Applications and filings before the National Company Law Tribunal, Mumbai Bench", "publisher": "Ministry of Corporate Affairs, Government of India", "year": "2018-2019" },
+      { "title": "Progress reports on the IL&FS group resolution", "publisher": "IL&FS Board", "year": "2019-2022" },
+      { "title": "Orders and circulars concerning credit rating agencies and debt scheme disclosures", "publisher": "Securities and Exchange Board of India", "year": "2018-2020" }
+    ]
+  },
+  {
+    "id": "housing-2008",
+    "title": "The 2008 crisis and risk that only looked diversified",
+    "type": "Historical case",
+    "tag": "Risk & securitisation",
+    "img": "case-housing-2008",
+    "visual": "concentration",
+    "visualCaption": "Thousands of individual loans bundled into securities, every one of them depending on the same national housing market.",
+    "sourceNote": "Summarised from the report of the Financial Crisis Inquiry Commission and the Lehman Brothers bankruptcy examiner's report.",
+    "background": "Through the mid-2000s, United States mortgage lending expanded rapidly, including to borrowers with weaker credit profiles. Individual mortgages were pooled and repackaged into securities that were sold to investors worldwide, and these were widely rated as low risk.",
+    "situation": "The argument for safety rested on diversification. A pool containing thousands of mortgages from many different borrowers in many different places should not fail all at once, because individual borrowers default for individual reasons.",
+    "problem": "The reasoning held only if defaults were independent of one another. They were not. Every loan in every pool depended on the same underlying condition: that United States house prices would not fall nationally at the same time.",
+    "concepts": ["diversification", "risk-return", "credit-risk", "liquidity-risk", "leverage"],
+    "analysis": [
+      "Diversification reduces risk only when the components are imperfectly correlated. These pools contained many names but a single shared factor.",
+      "When house prices fell nationally, defaults rose together rather than independently, and the statistical basis for the ratings failed with them.",
+      "Because the securities were complex, market participants could not quickly determine which holdings were impaired, so uncertainty spread to instruments that were sound.",
+      "Institutions holding these assets were highly leveraged and often funded short-term, so falling values consumed thin equity and simultaneously removed access to funding."
+    ],
+    "decision": "Central banks and governments intervened extensively through liquidity provision, guarantees and recapitalisation, on the judgement that a disorderly collapse of the banking system would cause greater damage than intervention.",
+    "outcome": "A severe global recession followed, with large losses to employment, output and household wealth. Regulation was substantially rewritten, including higher bank capital requirements, formal liquidity standards and reform of rating agency practices.",
+    "lessons": [
+      "The number of holdings is not a measure of diversification. What matters is whether they can fail for the same reason.",
+      "Correlations rise toward one in a crisis, which means diversification weakens exactly when it is most needed.",
+      "Complexity has a cost that appears only under stress: when nobody can tell which assets are impaired, every holder is treated as suspect."
+    ],
+    "connected": ["diversification", "risk-return", "credit-risk", "leverage"],
+    "sources": [
+      { "title": "The Financial Crisis Inquiry Report", "publisher": "Financial Crisis Inquiry Commission, United States", "year": "2011" },
+      { "title": "Report of Anton R. Valukas, Examiner, In re Lehman Brothers Holdings Inc.", "publisher": "United States Bankruptcy Court, Southern District of New York", "year": "2010" }
+    ]
+  },
+  {
+    "id": "nokia-decline",
+    "title": "Profitable, and still losing: the Nokia decline",
+    "type": "Historical case",
+    "tag": "Valuation & strategy",
+    "img": "case-nokia",
+    "visual": "discount",
+    "visualCaption": "A valuation rests on expected future cash flows. When expectations of the distant years fall, present value falls immediately.",
+    "sourceNote": "Summarised from published annual reports and public market records of the period.",
+    "background": "Nokia was for years the world's largest mobile phone manufacturer by volume, with a dominant global position, an extensive distribution network and substantial reported profits.",
+    "situation": "From 2007 the basis of competition in mobile devices shifted from hardware and distribution toward software platforms and application ecosystems. Nokia's profits and market share remained substantial for some time after that shift began.",
+    "problem": "A company can be highly profitable today and still be losing, because market value reflects expected future cash flows rather than current earnings. The question was not what Nokia was earning, but what the market believed it would earn in a decade.",
+    "concepts": ["discount-rate", "cash-flow-statement", "financial-ratios", "fundamental-analysis"],
+    "analysis": [
+      "Value in a discounted cash flow framework is dominated by distant years, so a change in long-run expectations moves value far more than a change in this year's profit.",
+      "Current profitability is a lagging indicator of competitive position. It reflects decisions taken years earlier, not the position being established now.",
+      "The relevant question for an investor was not whether the business was profitable, but whether the source of that profitability was durable.",
+      "Reported margins can hold up for several periods while the basis of competition moves underneath them."
+    ],
+    "decision": "The company reoriented its smartphone strategy around a partnership with a single external software platform, and subsequently sold its devices business to Microsoft in a transaction completed in 2014.",
+    "outcome": "Nokia exited handset manufacturing and refocused on network infrastructure, where it continues to operate. The devices business did not recover its former position.",
+    "lessons": [
+      "Accounting profit measures the past. Market value prices the future, which is why the two can move in opposite directions for years.",
+      "Durability of a competitive position matters more to valuation than the current level of margin.",
+      "In a discounted cash flow, the terminal assumptions carry most of the value. When they change, the arithmetic changes far more than intuition expects."
+    ],
+    "connected": ["discount-rate", "fundamental-analysis", "financial-ratios"],
+    "sources": [
+      { "title": "Annual reports, 2007-2013", "publisher": "Nokia Corporation", "year": "2007-2013" },
+      { "title": "Announcement and completion filings for the sale of the devices and services business", "publisher": "Nokia Corporation and Microsoft Corporation", "year": "2013-2014" }
+    ]
+  }
+]
