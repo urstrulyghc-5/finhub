@@ -1,0 +1,30 @@
+{
+  "brokers": {
+    "title": "Indian brokers by NSE active clients",
+    "period": "July 2026",
+    "definition": "An NSE active client is a unique client code that has traded at least once in the preceding twelve months. This is not the same as demat accounts, registered users or app downloads.",
+    "industryTotal": 45500000,
+    "industryNote": "NSE active clients stood at approximately 45.5 million through the first seven months of calendar 2026. The industry added only about 8,000 net active clients in July.",
+    "rows": [
+      { "rank": 1, "name": "Groww", "entity": "Billionbrains Garage Ventures", "clients": 13120000, "share": 28.88, "change": 70119, "type": "Discount" },
+      { "rank": 2, "name": "Zerodha", "entity": "Zerodha Broking", "clients": 6760000, "share": 14.88, "change": -38725, "type": "Discount" },
+      { "rank": 3, "name": "Angel One", "entity": "Angel One Ltd", "clients": 6630000, "share": 14.60, "change": 286, "type": "Discount" },
+      { "rank": 4, "name": "ICICI Securities", "entity": "ICICI Securities Ltd", "clients": 2130000, "share": null, "change": 11748, "type": "Full service" },
+      { "rank": 5, "name": "Upstox", "entity": "RKSV Securities", "clients": 1860000, "share": null, "change": -26433, "type": "Discount" },
+      { "rank": 6, "name": "Kotak Securities", "entity": "Kotak Securities Ltd", "clients": 1380000, "share": null, "change": 2546, "type": "Full service" },
+      { "rank": 7, "name": "Dhan", "entity": "Raise Securities", "clients": 1080000, "share": null, "change": 14166, "type": "Discount" }
+    ],
+    "notes": [
+      "HDFC Securities lost 9,169 active clients in July. SBI Securities recorded the sharpest fall among traditional brokers at 47,551. Motilal Oswal declined by 1,748. Their closing totals were not stated in the reports consulted and are therefore not listed above.",
+      "Share percentages are shown only where they were explicitly reported. Where a percentage was not reported it is left blank rather than derived, because the exact industry denominator for the month was not confirmed.",
+      "Client counts are reported to three significant figures in the sources used. They are not exact to the individual client."
+    ],
+    "sources": [
+      { "title": "India's broker industry adds just 8,000 active clients in July as Groww outpaces rivals", "publisher": "Outlook Business", "year": "August 2026", "url": "https://www.outlookbusiness.com/markets/indias-broker-industry-adds-just-8000-active-clients-in-july-as-groww-outpaces-rivals" },
+      { "title": "Groww adds over 70,000 active clients in July; market share nears 29%", "publisher": "SMEStreet", "year": "August 2026", "url": "https://smestreet.in/sectors/groww-adds-over-70000-active-clients-in-july-market-share-nears-29-12255734" },
+      { "title": "Groww gains market share in July; NSE active clients dip 1.8% month on month", "publisher": "Business Standard", "year": "17 August 2026", "url": "https://www.business-standard.com/markets/news/groww-gains-market-share-in-july-nse-active-clients-dip-1-8-m-o-m-126081700374_1.html" },
+      { "title": "Active clients by member, monthly data", "publisher": "National Stock Exchange of India", "year": "Primary source", "url": "https://www.nseindia.com/" }
+    ],
+    "quality": "Secondary verified. Figures are drawn from press reporting of NSE monthly data. The primary NSE release should be consulted before any figure is relied upon."
+  }
+}
