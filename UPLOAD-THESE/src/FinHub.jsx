@@ -149,6 +149,9 @@ const DOMAINS = [
     kicker: 'Numbers you can move',
     blurb: 'Calculators that connect back to the concept behind them.', route: '#/tools' },
 
+  { id: 'simulator', icon: 'markets', name: 'Simulator',
+    kicker: 'Learn by doing',
+    blurb: 'An educational market simulation. No live prices, no real orders.', route: '#/floor' },
 ];
 
 
@@ -5009,6 +5012,35 @@ function HistoryPage() {
 }
 
 /* ---- knowledge graph page ---- */
+
+/* One relationship explorer, used on the landing page and the graph page.
+   Selecting a concept changes the map, and the map is the navigation. */
+function GraphExplorer({ initial = "inflation", showOpen = true }) {
+  const [focus, setFocus] = useState(initial);
+  const c = conceptById(focus) || CONCEPTS[0];
+  return (
+    <div className="explorer">
+      <div className="explorer-picker" role="tablist" aria-label="Choose a concept">
+        {CONCEPTS.slice(0, 24).map((x) => (
+          <button key={x.id} role="tab" aria-selected={focus === x.id}
+            className={"tab" + (focus === x.id ? " on" : "")} onClick={() => setFocus(x.id)}>
+            {x.title}
+          </button>
+        ))}
+      </div>
+      <div className="card stage explorer-map">
+        <ConceptGraph id={c.id} key={c.id} />
+      </div>
+      {showOpen && (
+        <div className="explorer-foot">
+          <p className="small" style={{ maxWidth: "52ch" }}>{c.oneLine}</p>
+          <a className="btn ghost" href={`#/concept/${c.id}`}>Open {c.title} →</a>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function GraphPage() {
   return (
     <>
@@ -5596,6 +5628,1252 @@ function ToolsPage({ query }) {
    FINHUB AI — a guide over the structure, not a chatbot pretending to know more
    =========================================================================== */
 
+function useMarketData() {
+  const [d, setD] = useState(null);
+  useEffect(() => {
+    let alive = true;
+    fetch("fin-data/market-data-aug30.json", { cache: "no-cache" })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((j) => { if (alive && j) setD(j); })
+      .catch(() => {});
+    return () => { alive = false; };
+  }, []);
+  return d;
+}
+
+function BrokerChart({ data }) {
+  const ref = useRef(null);
+  const [play, setPlay] = useState(false);
+  const [active, setActive] = useState(null);
+  useEffect(() => {
+    const el = ref.current; if (!el) return;
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setPlay(true); io.disconnect(); } },
+      { rootMargin: "-8% 0px" });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  const rows = data.rows;
+  const max = Math.max(...rows.map((r) => r.clients));
+  const named = rows.reduce((n, r) => n + r.clients, 0);
+  const others = Math.max(0, data.industryTotal - named);
+
+  return (
+    <div ref={ref}>
+      <div className="bchart">
+        {rows.map((r, i) => {
+          const w = (r.clients / max) * 100;
+          const on = active === r.name;
+          return (
+            <div className={"brow" + (on ? " on" : "")} key={r.name}
+              onMouseEnter={() => setActive(r.name)} onMouseLeave={() => setActive(null)}>
+              <span className="brank">{String(r.rank).padStart(2, "0")}</span>
+              <span className="bname">
+                {r.name}
+                <em>{r.type}</em>
+              </span>
+              <span className="btrack">
+                <span className="bfill" style={{ width: play ? `${w}%` : 0, transitionDelay: `${i * 90}ms` }} />
+              </span>
+              <span className="bval">
+                {(r.clients / 10000000).toFixed(2)} cr
+                {r.share != null && <em>{r.share}%</em>}
+              </span>
+              <span className={"bchg " + (r.change >= 0 ? "up" : "down")}>
+                {r.change >= 0 ? "+" : ""}{fmt(r.change)}
+              </span>
+            </div>
+          );
+        })}
+        <div className="brow others">
+          <span className="brank">—</span>
+          <span className="bname">All other members<em>Not individually listed</em></span>
+          <span className="btrack">
+            <span className="bfill muted" style={{ width: play ? `${(others / max) * 100}%` : 0, transitionDelay: `${rows.length * 90}ms` }} />
+          </span>
+          <span className="bval">{(others / 10000000).toFixed(2)} cr</span>
+          <span className="bchg" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function MarketDataPage() {
+  const md = useMarketData();
+  const b = md && md.brokers;
+
+  return (
+    <>
+      <Crumbs items={[["FinHub", "#/"], ["Market data"]]} />
+      <div className="wrap">
+        <Reveal><p className="kicker">Sourced and dated</p></Reveal>
+        <Reveal delay={60}><h1 className="h-page" style={{ marginTop: 12 }}>Market Data</h1></Reveal>
+        <Reveal delay={120}>
+          <p className="lede" style={{ marginTop: 18, maxWidth: "62ch" }}>
+            Everything on this page carries the month it describes and the source it came from.
+            Figures that change over time are held in a data file rather than written into the
+            platform, so nothing here silently goes stale.
+          </p>
+        </Reveal>
+      </div>
+
+      <div className="wrap" style={{ paddingTop: 44, paddingBottom: 100 }}>
+        {!b && (
+          <div className="sub">
+            <p className="body">
+              The market data file has not been uploaded yet. When
+              <code> fin-data/market-data-aug30.json </code> is present, this page fills itself.
+            </p>
+          </div>
+        )}
+
+        {b && (
+          <>
+            <Reveal>
+              <div className="md-head">
+                <div>
+                  <h2 style={{ fontSize: 26 }}>{b.title}</h2>
+                  <p className="small" style={{ marginTop: 8 }}>{b.industryNote}</p>
+                </div>
+                <div className="md-stamp">
+                  <span className="badge aqua">{b.period}</span>
+                  <span className="badge">{b.quality}</span>
+                </div>
+              </div>
+            </Reveal>
+
+            <Reveal delay={80}>
+              <div className="sub" style={{ margin: "26px 0 30px", borderLeft: "2px solid var(--teal)" }}>
+                <p className="eyebrow" style={{ marginBottom: 8 }}>What an active client means</p>
+                <p className="body" style={{ fontSize: 16 }}>{b.definition}</p>
+              </div>
+            </Reveal>
+
+            <Reveal delay={120}><BrokerChart data={b} /></Reveal>
+
+            <Reveal delay={160}>
+              <div style={{ marginTop: 36 }}>
+                <p className="eyebrow" style={{ marginBottom: 14 }}>Notes on this data</p>
+                <div className="list">
+                  {b.notes.map((n, i) => <div className="li" key={i}><s>→</s><span style={{ fontSize: 15.5 }}>{n}</span></div>)}
+                </div>
+              </div>
+            </Reveal>
+
+            <div style={{ marginTop: 40 }}>
+              <SourceList sources={b.sources}
+                note="Where a figure could not be confirmed, it is left out rather than estimated." />
+            </div>
+
+            <Reveal>
+              <div className="chips" style={{ marginTop: 30 }}>
+                <a className="chip" href="#/concept/market-participants">Market participants →</a>
+                <a className="chip" href="#/concept/equity-markets">Equity markets →</a>
+                <a className="chip" href="#/history">History of markets →</a>
+              </div>
+            </Reveal>
+          </>
+        )}
+      </div>
+    </>
+  );
+}
+
+
+/* ===========================================================================
+   TAXATION
+   Tax rates change with every Budget, so none of them live in this file. The
+   page reads fin-data/tax-india-aug30.json, states the year it covers and the
+   date it was verified, and carries its own disclaimer. Replace the file after
+   a Budget and the page is current again.
+   =========================================================================== */
+
+function useTaxData() {
+  const [d, setD] = useState(null);
+  useEffect(() => {
+    let alive = true;
+    fetch("fin-data/tax-india-aug30.json", { cache: "no-cache" })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((j) => { if (alive && j) setD(j); })
+      .catch(() => {});
+    return () => { alive = false; };
+  }, []);
+  return d;
+}
+
+function TaxTable({ t }) {
+  return (
+    <div className="ttable-wrap">
+      <table className="ttable">
+        <thead>
+          <tr>{t.head.map((h, i) => <th key={i} className={i === 0 ? "first" : ""}>{h}</th>)}</tr>
+        </thead>
+        <tbody>
+          {t.rows.map((r, i) => (
+            <tr key={i}>
+              {r.map((c, j) => <td key={j} className={j === 0 ? "first" : ""}>{c}</td>)}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+function TaxPage() {
+  const d = useTaxData();
+  const [open, setOpen] = useState(0);
+
+  if (!d) {
+    return (
+      <>
+        <Crumbs items={[["FinHub", "#/"], ["Taxation"]]} />
+        <div className="wrap" style={{ paddingBottom: 90 }}>
+          <h1 className="h-page">Taxation</h1>
+          <div className="sub" style={{ marginTop: 26 }}>
+            <p className="body">
+              The tax data file has not been uploaded yet. When
+              <code> fin-data/tax-india-aug30.json </code> is present, this page fills itself.
+            </p>
+          </div>
+        </div>
+      </>
+    );
+  }
+
+  return (
+    <>
+      <Crumbs items={[["FinHub", "#/"], ["Taxation"]]} />
+      <div className="wrap">
+        <Reveal><p className="kicker">{d.period}</p></Reveal>
+        <Reveal delay={60}><h1 className="h-page" style={{ marginTop: 12 }}>{d.title}</h1></Reveal>
+        <Reveal delay={120}>
+          <div className="tax-stamp">
+            <span className="badge aqua">{d.period}</span>
+            <span className="badge">{d.asOf}</span>
+          </div>
+        </Reveal>
+        <Reveal delay={160}>
+          <div className="tax-warn">
+            <p className="eyebrow" style={{ marginBottom: 8, color: "var(--amber)" }}>Read this first</p>
+            <p className="body" style={{ fontSize: 16 }}>{d.disclaimer}</p>
+            <p className="small" style={{ marginTop: 12 }}>{d.quality}</p>
+          </div>
+        </Reveal>
+        {d.notice && (
+          <Reveal delay={200}>
+            <div className="sub" style={{ marginTop: 18, borderLeft: "2px solid var(--teal)" }}>
+              <p className="body" style={{ fontSize: 16 }}>{d.notice}</p>
+            </div>
+          </Reveal>
+        )}
+      </div>
+
+      <div className="wrap" style={{ paddingTop: 40, paddingBottom: 100 }}>
+        {d.sections.map((sec, i) => {
+          const isOpen = open === i;
+          return (
+            <Reveal key={sec.id} delay={Math.min(i * 40, 240)}>
+              <section className={"tsec" + (isOpen ? " on" : "")}>
+                <button className="tsec-head" onClick={() => setOpen(isOpen ? -1 : i)} aria-expanded={isOpen}>
+                  <span className="tsec-n">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="tsec-t">{sec.title}</span>
+                  <span className="org-x">{isOpen ? "−" : "+"}</span>
+                </button>
+                {isOpen && (
+                  <div className="tsec-body">
+                    {sec.intro && <p className="body" style={{ marginBottom: 22 }}>{sec.intro}</p>}
+                    {sec.table && <TaxTable t={sec.table} />}
+                    {sec.points && (
+                      <div className="list" style={{ marginTop: sec.table ? 24 : 0 }}>
+                        {sec.points.map((p, j) => (
+                          <div className="li" key={j}><s>→</s><span style={{ fontSize: 16 }}>{p}</span></div>
+                        ))}
+                      </div>
+                    )}
+                    {sec.example && (
+                      <div className="tax-eg">
+                        <p className="eyebrow" style={{ marginBottom: 12 }}>Worked example</p>
+                        <p className="body" style={{ fontSize: 16, marginBottom: 12 }}>{sec.example.setup}</p>
+                        <div className="steps">
+                          {sec.example.steps.map((st, j) => (
+                            <div className="step" key={j}><i>{String(j + 1).padStart(2, "0")}</i>
+                              <span className="mono calc">{st}</span></div>
+                          ))}
+                        </div>
+                        <div className="result">
+                          <span className="eyebrow">Result</span><b>{sec.example.result}</b>
+                        </div>
+                      </div>
+                    )}
+                    {sec.note && (
+                      <div className="sub" style={{ marginTop: 22, borderLeft: "2px solid var(--amber)" }}>
+                        <p className="body" style={{ fontSize: 15.5 }}>{sec.note}</p>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </section>
+            </Reveal>
+          );
+        })}
+
+        <div style={{ marginTop: 44 }}>
+          <SourceList sources={d.sources}
+            note="Every rate on this page should be confirmed against the Income Tax Department before it is relied upon. Rates change with each Budget." />
+        </div>
+
+        <Reveal>
+          <div className="chips" style={{ marginTop: 30 }}>
+            <a className="chip" href="#/concept/sip">SIP →</a>
+            <a className="chip" href="#/concept/options">Options →</a>
+            <a className="chip" href="#/concept/mutual-funds">Mutual funds →</a>
+            <a className="chip" href="#/data">Market data →</a>
+          </div>
+        </Reveal>
+      </div>
+    </>
+  );
+}
+
+/* ===========================================================================
+   THE TRADING FLOOR
+   A simulator, not a broker. No market connection, no real prices, no orders.
+   Its single purpose is to show what a trade actually costs, because the
+   charges are the part almost nobody sees until the contract note arrives.
+
+   Charge rates are read from fin-data/tax-india-aug30.json where present, so
+   they stay correct after a Budget without any change to this file.
+   =========================================================================== */
+
+const SEBI_RISK = "9 out of 10 individual traders in equity Futures and Options Segment incurred net losses. On an average, loss makers registered net trading loss close to ₹50,000. Over and above the net trading losses incurred, loss makers expended an additional 28% of net trading losses as transaction costs. Those making net trading profits incurred between 15% to 50% of such profits as transaction cost.";
+
+const DEFAULT_RATES = {
+  delivery: { brokerage: 0, sttBuy: 0.001, sttSell: 0.001, exch: 0.0000297, sebi: 0.000001, stampBuy: 0.000015, gst: 0.18, dp: 15.93 },
+  intraday: { brokerageRate: 0.0003, brokerageCap: 20, sttSell: 0.00025, exch: 0.0000297, sebi: 0.000001, stampBuy: 0.00003, gst: 0.18 },
+  futures: { brokerage: 20, sttSell: 0.0005, exch: 0.0000173, sebi: 0.000001, stampBuy: 0.00002, gst: 0.18 },
+  options: { brokerage: 20, sttSell: 0.0015, exch: 0.0003503, sebi: 0.000001, stampBuy: 0.00003, gst: 0.18 },
+  commodity: { brokerage: 20, cttSell: 0.0001, exch: 0.000026, sebi: 0.000001, stampBuy: 0.00002, gst: 0.18 },
+};
+
+const COMMODITIES = [
+  { id: "gold", name: "Gold", unit: "10 grams", lot: 100, price: 72000, tick: 1, note: "The standard contract. One rupee of price movement changes the position by ₹100." },
+  { id: "goldm", name: "Gold Mini", unit: "10 grams", lot: 10, price: 72000, tick: 1, note: "One tenth the size, so the margin required is far smaller." },
+  { id: "goldguinea", name: "Gold Guinea", unit: "8 grams", lot: 8, price: 57600, tick: 1, note: "The smallest gold contract, designed for smaller participants." },
+  { id: "silver", name: "Silver", unit: "1 kilogram", lot: 30, price: 88000, tick: 1, note: "Silver moves more sharply than gold in percentage terms." },
+  { id: "silverm", name: "Silver Mini", unit: "1 kilogram", lot: 5, price: 88000, tick: 1, note: "A fifth of the standard silver contract." },
+  { id: "crude", name: "Crude Oil", unit: "1 barrel", lot: 100, price: 6200, tick: 1, note: "Among the most volatile contracts traded." },
+];
+
+/* ---- ambient background: value moving through the frame ---------------- */
+function FloorAmbience() {
+  const reduced = useReducedMotion();
+  if (reduced) return null;
+  const bars = Array.from({ length: 26 }, (_, i) => ({
+    x: i * 44, h: 26 + ((i * 37) % 64), d: 7 + ((i * 13) % 9), delay: (i * 0.4) % 8,
+  }));
+  const coins = Array.from({ length: 14 }, (_, i) => ({
+    x: 4 + ((i * 71) % 92), s: 7 + ((i * 5) % 8), d: 11 + ((i * 7) % 10), delay: (i * 1.1) % 12,
+  }));
+  return (
+    <div className="floor-amb" aria-hidden="true">
+      <svg viewBox="0 0 1200 400" preserveAspectRatio="none" className="amb-graph">
+        {bars.map((b, i) => (
+          <rect key={i} x={b.x} y={400 - b.h} width="18" height={b.h} rx="3"
+            className="amb-bar" style={{ animationDuration: `${b.d}s`, animationDelay: `-${b.delay}s` }} />
+        ))}
+        <path className="amb-line"
+          d={bars.map((b, i) => `${i ? "L" : "M"}${b.x + 9} ${400 - b.h - 30}`).join(" ")} />
+      </svg>
+      <div className="amb-coins">
+        {coins.map((c, i) => (
+          <span key={i} className="amb-coin"
+            style={{ left: `${c.x}%`, width: c.s, height: c.s,
+              animationDuration: `${c.d}s`, animationDelay: `-${c.delay}s` }} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ---- a number that counts to its value --------------------------------- */
+function Counter({ value, prefix = "₹", decimals = 2, className = "" }) {
+  const [shown, setShown] = useState(value);
+  const raf = useRef(0);
+  const from = useRef(value);
+  useEffect(() => {
+    const start = performance.now();
+    const a = from.current, b = value;
+    const step = (t) => {
+      const k = Math.min(1, (t - start) / 420);
+      const e = 1 - Math.pow(1 - k, 3);
+      setShown(a + (b - a) * e);
+      if (k < 1) raf.current = requestAnimationFrame(step);
+      else from.current = b;
+    };
+    cancelAnimationFrame(raf.current);
+    raf.current = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(raf.current);
+  }, [value]);
+  return <span className={className}>{prefix}{fmt(shown, decimals)}</span>;
+}
+
+/* ---- charge list that cascades in --------------------------------------- */
+function Charges({ rows, total, netLabel, netValue }) {
+  return (
+    <div className="chg">
+      {rows.map((r, i) => (
+        <div className="chg-row" key={r.k} style={{ animationDelay: `${i * 55}ms` }}>
+          <span>{r.k}<em>{r.note}</em></span>
+          <b><Counter value={r.v} /></b>
+        </div>
+      ))}
+      <div className="chg-total">
+        <span>Total charges</span>
+        <b><Counter value={total} className="hi" /></b>
+      </div>
+      {netLabel && (
+        <div className="chg-net">
+          <span>{netLabel}</span>
+          <b><Counter value={netValue} /></b>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ---- 1. Equity order ticket -------------------------------------------- */
+function TradeEquity({ rates }) {
+  const [side, setSide] = useState("buy");
+  const [mode, setMode] = useState("delivery");
+  const [qty, setQty] = useState(100);
+  const [price, setPrice] = useState(1450);
+
+  const value = qty * price;
+  const r = mode === "delivery" ? rates.delivery : rates.intraday;
+  const brokerage = mode === "delivery" ? 0 : Math.min(r.brokerageCap, value * r.brokerageRate);
+  const stt = mode === "delivery"
+    ? value * (side === "buy" ? r.sttBuy : r.sttSell)
+    : (side === "sell" ? value * r.sttSell : 0);
+  const exch = value * r.exch;
+  const sebi = value * r.sebi;
+  const stamp = side === "buy" ? value * r.stampBuy : 0;
+  const gst = (brokerage + exch + sebi) * r.gst;
+  const dp = mode === "delivery" && side === "sell" ? r.dp : 0;
+  const total = brokerage + stt + exch + sebi + stamp + gst + dp;
+  const breakeven = side === "buy" && qty > 0 ? (value + total * 2) / qty : price;
+
+  const rows = [
+    { k: "Brokerage", v: brokerage, note: mode === "delivery" ? "Zero on delivery with many brokers" : "0.03% or ₹20, whichever is lower" },
+    { k: "Securities Transaction Tax", v: stt, note: mode === "delivery" ? "0.1% on both legs" : "0.025% on the sell leg only" },
+    { k: "Exchange transaction charges", v: exch, note: "Charged by the exchange on turnover" },
+    { k: "SEBI turnover fees", v: sebi, note: "₹10 per crore of turnover" },
+    { k: "Stamp duty", v: stamp, note: side === "buy" ? "Payable by the buyer" : "Not payable on the sell side" },
+    { k: "GST", v: gst, note: "18% on brokerage and transaction charges, not on the shares" },
+    { k: "Depository charges", v: dp, note: dp ? "Flat, per scrip, on delivery sell" : "Not applicable here" },
+  ];
+
+  return (
+    <div className="tk">
+      <div className="tk-toggles">
+        <div className="seg" role="tablist" aria-label="Side">
+          <button role="tab" aria-selected={side === "buy"} className={"seg-b buy" + (side === "buy" ? " on" : "")}
+            onClick={() => setSide("buy")}>Buy</button>
+          <button role="tab" aria-selected={side === "sell"} className={"seg-b sell" + (side === "sell" ? " on" : "")}
+            onClick={() => setSide("sell")}>Sell</button>
+        </div>
+        <div className="seg" role="tablist" aria-label="Product">
+          <button role="tab" aria-selected={mode === "delivery"} className={"seg-b" + (mode === "delivery" ? " on" : "")}
+            onClick={() => setMode("delivery")}>Delivery</button>
+          <button role="tab" aria-selected={mode === "intraday"} className={"seg-b" + (mode === "intraday" ? " on" : "")}
+            onClick={() => setMode("intraday")}>Intraday</button>
+        </div>
+      </div>
+
+      <div className="tk-fields">
+        <label className="tkf">
+          <span>Quantity</span>
+          <input type="number" min="1" value={qty} onChange={(e) => setQty(Math.max(0, Number(e.target.value)))} />
+        </label>
+        <label className="tkf">
+          <span>Price</span>
+          <input type="number" min="0" step="0.05" value={price} onChange={(e) => setPrice(Math.max(0, Number(e.target.value)))} />
+        </label>
+      </div>
+
+      <div className="tk-value">
+        <span>Order value</span>
+        <b><Counter value={value} decimals={2} /></b>
+      </div>
+
+      <Charges rows={rows} total={total}
+        netLabel={side === "buy" ? "Total payable" : "Net credit"}
+        netValue={side === "buy" ? value + total : value - total} />
+
+      {side === "buy" && qty > 0 && (
+        <div className="tk-be">
+          <p className="eyebrow">Break-even price</p>
+          <b><Counter value={breakeven} decimals={2} /></b>
+          <p className="small">
+            The price this share must reach before a round trip leaves you level, once the charges on
+            both the buy and the sell are counted. It is not the price you paid.
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ---- 2. Futures --------------------------------------------------------- */
+function TradeFutures({ rates }) {
+  const [lot, setLot] = useState(75);
+  const [entry, setEntry] = useState(22000);
+  const [now, setNow] = useState(22150);
+  const [marginPct, setMarginPct] = useState(12);
+
+  const value = lot * entry;
+  const margin = value * (marginPct / 100);
+  const pnl = (now - entry) * lot;
+  const pnlPctOnMargin = margin ? (pnl / margin) * 100 : 0;
+  const movePct = entry ? ((now - entry) / entry) * 100 : 0;
+  const wipeout = entry - margin / lot;
+
+  const r = rates.futures;
+  const sellValue = lot * now;
+  const brokerage = r.brokerage * 2;
+  const stt = sellValue * r.sttSell;
+  const exch = (value + sellValue) * r.exch;
+  const sebi = (value + sellValue) * r.sebi;
+  const stamp = value * r.stampBuy;
+  const gst = (brokerage + exch + sebi) * r.gst;
+  const total = brokerage + stt + exch + sebi + stamp + gst;
+
+  return (
+    <div className="tk">
+      <RiskNotice />
+      <div className="tk-fields three">
+        <label className="tkf"><span>Lot size</span>
+          <input type="number" min="1" value={lot} onChange={(e) => setLot(Math.max(1, Number(e.target.value)))} /></label>
+        <label className="tkf"><span>Entry price</span>
+          <input type="number" min="0" value={entry} onChange={(e) => setEntry(Math.max(0, Number(e.target.value)))} /></label>
+        <label className="tkf"><span>Current price</span>
+          <input type="number" min="0" value={now} onChange={(e) => setNow(Math.max(0, Number(e.target.value)))} /></label>
+      </div>
+
+      <Slider label="Margin required" value={marginPct} set={setMarginPct} min={5} max={30} suffix="%" />
+
+      <div className="tk-grid">
+        <div><span>Contract value</span><b><Counter value={value} decimals={0} /></b></div>
+        <div><span>Margin blocked</span><b><Counter value={margin} decimals={0} /></b></div>
+        <div><span>Price move</span>
+          <b className={movePct >= 0 ? "hi" : "bad"}>{movePct >= 0 ? "+" : ""}{fmt(movePct, 2)}%</b></div>
+        <div><span>Profit or loss</span>
+          <b className={pnl >= 0 ? "hi" : "bad"}><Counter value={pnl} decimals={0} /></b></div>
+        <div><span>Return on margin</span>
+          <b className={pnlPctOnMargin >= 0 ? "hi" : "bad"}>{pnlPctOnMargin >= 0 ? "+" : ""}{fmt(pnlPctOnMargin, 1)}%</b></div>
+        <div><span>Charges, round trip</span><b><Counter value={total} /></b></div>
+      </div>
+
+      <div className="marginbar">
+        <div className="mb-track">
+          <div className={"mb-fill " + (pnl >= 0 ? "up" : "down")}
+            style={{ width: `${Math.min(100, Math.abs(pnl) / Math.max(margin, 1) * 100)}%` }} />
+        </div>
+        <p className="small">
+          A move of {fmt(movePct, 2)}% in the underlying produced {fmt(pnlPctOnMargin, 1)}% on the margin
+          committed. That multiple is the leverage, and it applies identically in the other direction.
+          At an entry of {fmt(entry, 0)}, the margin would be fully consumed near {fmt(wipeout, 0)}.
+        </p>
+      </div>
+    </div>
+  );
+}
+
+/* ---- 3. Options --------------------------------------------------------- */
+function TradeOptions({ rates }) {
+  const [kind, setKind] = useState("call");
+  const [side, setSide] = useState("buy");
+  const [strike, setStrike] = useState(22000);
+  const [premium, setPremium] = useState(180);
+  const [lots, setLots] = useState(1);
+  const [expiry, setExpiry] = useState(22400);
+  const lotSize = 75;
+
+  const qty = lots * lotSize;
+  const premiumValue = premium * qty;
+  const intrinsic = kind === "call" ? Math.max(expiry - strike, 0) : Math.max(strike - expiry, 0);
+  const grossPerUnit = side === "buy" ? intrinsic - premium : premium - intrinsic;
+  const gross = grossPerUnit * qty;
+  const breakeven = kind === "call" ? strike + premium : strike - premium;
+
+  const r = rates.options;
+  const brokerage = r.brokerage * 2;
+  const stt = side === "sell" ? premiumValue * r.sttSell : 0;
+  const exch = premiumValue * r.exch * 2;
+  const sebi = premiumValue * r.sebi * 2;
+  const stamp = side === "buy" ? premiumValue * r.stampBuy : 0;
+  const gst = (brokerage + exch + sebi) * r.gst;
+  const total = brokerage + stt + exch + sebi + stamp + gst;
+  const net = gross - total;
+
+  const W = 560, H = 190, pad = 34;
+  const lo = strike * 0.94, hi = strike * 1.06;
+  const payoff = (spot) => {
+    const iv = kind === "call" ? Math.max(spot - strike, 0) : Math.max(strike - spot, 0);
+    const p = side === "buy" ? iv - premium : premium - iv;
+    return p * qty;
+  };
+  const pts = Array.from({ length: 61 }, (_, i) => {
+    const spot = lo + ((hi - lo) * i) / 60;
+    return { spot, p: payoff(spot) };
+  });
+  const maxAbs = Math.max(...pts.map((d) => Math.abs(d.p)), 1);
+  const X = (spot) => pad + ((spot - lo) / (hi - lo)) * (W - pad * 2);
+  const Y = (p) => H / 2 - (p / maxAbs) * (H / 2 - pad);
+  const path = pts.map((d, i) => `${i ? "L" : "M"}${X(d.spot).toFixed(1)} ${Y(d.p).toFixed(1)}`).join(" ");
+
+  return (
+    <div className="tk">
+      <RiskNotice />
+      <div className="tk-toggles">
+        <div className="seg">
+          <button className={"seg-b" + (kind === "call" ? " on" : "")} onClick={() => setKind("call")}>Call</button>
+          <button className={"seg-b" + (kind === "put" ? " on" : "")} onClick={() => setKind("put")}>Put</button>
+        </div>
+        <div className="seg">
+          <button className={"seg-b buy" + (side === "buy" ? " on" : "")} onClick={() => setSide("buy")}>Buy</button>
+          <button className={"seg-b sell" + (side === "sell" ? " on" : "")} onClick={() => setSide("sell")}>Sell</button>
+        </div>
+      </div>
+
+      <div className="tk-fields three">
+        <label className="tkf"><span>Strike</span>
+          <input type="number" value={strike} onChange={(e) => setStrike(Number(e.target.value))} /></label>
+        <label className="tkf"><span>Premium</span>
+          <input type="number" value={premium} onChange={(e) => setPremium(Math.max(0, Number(e.target.value)))} /></label>
+        <label className="tkf"><span>Lots</span>
+          <input type="number" min="1" value={lots} onChange={(e) => setLots(Math.max(1, Number(e.target.value)))} /></label>
+      </div>
+
+      <Slider label="Price at expiry" value={expiry} set={setExpiry} min={Math.round(strike * 0.9)} max={Math.round(strike * 1.1)} step={25} />
+
+      <svg viewBox={`0 0 ${W} ${H}`} className="sim-svg" role="img" aria-label="Payoff at expiry">
+        <rect x={pad} y={pad} width={W - pad * 2} height={H / 2 - pad} className="pay-zone up" />
+        <rect x={pad} y={H / 2} width={W - pad * 2} height={H / 2 - pad} className="pay-zone down" />
+        <line x1={pad} y1={H / 2} x2={W - pad} y2={H / 2} className="sim-axis" />
+        <line x1={X(breakeven)} y1={pad} x2={X(breakeven)} y2={H - pad} className="pay-be" />
+        <text x={X(breakeven)} y={pad - 8} textAnchor="middle" className="pay-be-t">Breakeven {fmt(breakeven, 0)}</text>
+        <path d={path} className="pay-line" />
+        <circle cx={X(Math.min(Math.max(expiry, lo), hi))} cy={Y(payoff(expiry))} r="5" className="sim-dot comp" />
+      </svg>
+
+      <div className="tk-grid">
+        <div><span>Premium paid or received</span><b><Counter value={premiumValue} decimals={0} /></b></div>
+        <div><span>Quantity</span><b>{fmt(qty)} units</b></div>
+        <div><span>Intrinsic value at expiry</span><b><Counter value={intrinsic * qty} decimals={0} /></b></div>
+        <div><span>Gross result</span>
+          <b className={gross >= 0 ? "hi" : "bad"}><Counter value={gross} decimals={0} /></b></div>
+        <div><span>Charges</span><b><Counter value={total} /></b></div>
+        <div><span>Net result</span>
+          <b className={net >= 0 ? "hi" : "bad"}><Counter value={net} decimals={0} /></b></div>
+      </div>
+
+      <p className="small" style={{ marginTop: 16 }}>
+        STT on options is charged on the premium at 0.15% on the sell side, not on the strike value.
+        {intrinsic === 0 && side === "buy" && " At this expiry price the option expires worthless and the entire premium is lost."}
+      </p>
+    </div>
+  );
+}
+
+/* ---- 4. Commodities ----------------------------------------------------- */
+function TradeCommodity({ rates }) {
+  const [id, setId] = useState("gold");
+  const [entry, setEntry] = useState(72000);
+  const [now, setNow] = useState(72400);
+  const [marginPct, setMarginPct] = useState(8);
+  const c = COMMODITIES.find((x) => x.id === id);
+
+  useEffect(() => {
+    const x = COMMODITIES.find((k) => k.id === id);
+    setEntry(x.price);
+    setNow(Math.round(x.price * 1.005));
+  }, [id]);
+
+  const value = c.lot * entry;
+  const margin = value * (marginPct / 100);
+  const pnl = (now - entry) * c.lot;
+  const onMargin = margin ? (pnl / margin) * 100 : 0;
+  const perRupee = c.lot;
+
+  const r = rates.commodity;
+  const sellValue = c.lot * now;
+  const brokerage = r.brokerage * 2;
+  const ctt = sellValue * r.cttSell;
+  const exch = (value + sellValue) * r.exch;
+  const sebi = (value + sellValue) * r.sebi;
+  const gst = (brokerage + exch + sebi) * r.gst;
+  const total = brokerage + ctt + exch + sebi + gst;
+
+  return (
+    <div className="tk">
+      <div className="cmd-picker" role="tablist" aria-label="Commodity">
+        {COMMODITIES.map((x) => (
+          <button key={x.id} role="tab" aria-selected={id === x.id}
+            className={"tab" + (id === x.id ? " on" : "")} onClick={() => setId(x.id)}>{x.name}</button>
+        ))}
+      </div>
+
+      <div className="cmd-spec">
+        <div><span>Contract unit</span><b>{c.unit}</b></div>
+        <div><span>Lot size</span><b>{c.lot}</b></div>
+        <div><span>One rupee of price move</span><b>₹{fmt(perRupee)}</b></div>
+      </div>
+
+      <div className="tk-fields">
+        <label className="tkf"><span>Entry price</span>
+          <input type="number" value={entry} onChange={(e) => setEntry(Math.max(0, Number(e.target.value)))} /></label>
+        <label className="tkf"><span>Current price</span>
+          <input type="number" value={now} onChange={(e) => setNow(Math.max(0, Number(e.target.value)))} /></label>
+      </div>
+
+      <Slider label="Margin required" value={marginPct} set={setMarginPct} min={4} max={20} suffix="%" />
+
+      <div className="tk-grid">
+        <div><span>Contract value</span><b><Counter value={value} decimals={0} /></b></div>
+        <div><span>Margin blocked</span><b><Counter value={margin} decimals={0} /></b></div>
+        <div><span>Profit or loss</span>
+          <b className={pnl >= 0 ? "hi" : "bad"}><Counter value={pnl} decimals={0} /></b></div>
+        <div><span>Return on margin</span>
+          <b className={onMargin >= 0 ? "hi" : "bad"}>{onMargin >= 0 ? "+" : ""}{fmt(onMargin, 1)}%</b></div>
+        <div><span>Charges, round trip</span><b><Counter value={total} /></b></div>
+        <div><span>Commodities Transaction Tax</span><b><Counter value={ctt} /></b></div>
+      </div>
+
+      <p className="small" style={{ marginTop: 14 }}>{c.note} Prices shown are placeholders you can change, not market quotes.</p>
+    </div>
+  );
+}
+
+function RiskNotice() {
+  return (
+    <div className="risk">
+      <p className="risk-h">Risk disclosure for Futures and Options</p>
+      <p className="risk-b">{SEBI_RISK}</p>
+    </div>
+  );
+}
+
+/* ---- the floor: entry gate, phone frame, four simulators ---------------- */
+const FLOOR_TABS = [
+  { id: "equity", name: "Stocks", el: TradeEquity },
+  { id: "futures", name: "Futures", el: TradeFutures },
+  { id: "options", name: "Options", el: TradeOptions },
+  { id: "commodity", name: "Commodities", el: TradeCommodity },
+];
+
+function TradingFloorPage() {
+  const [name, setName] = useState("");
+  const [entered, setEntered] = useState(false);
+  const [adult, setAdult] = useState(false);
+  const [tab, setTab] = useState("equity");
+  const [rates, setRates] = useState(DEFAULT_RATES);
+
+  useEffect(() => {
+    let alive = true;
+    fetch("fin-data/trade-rates.json", { cache: "no-cache" })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((j) => { if (alive && j) setRates({ ...DEFAULT_RATES, ...j }); })
+      .catch(() => {});
+    return () => { alive = false; };
+  }, []);
+
+  const Active = FLOOR_TABS.find((t) => t.id === tab).el;
+  const hour = new Date().getHours();
+  const greet = hour < 12 ? "Good morning" : hour < 17 ? "Good afternoon" : "Good evening";
+
+  if (!entered) {
+    return (
+      <>
+        <Crumbs items={[["FinHub", "#/"], ["Trading floor"]]} />
+        <div className="floor-gate">
+          <FloorAmbience />
+          <div className="wrap-n gate-in">
+            <Reveal><p className="kicker">Simulation</p></Reveal>
+            <Reveal delay={70}>
+              <h1 className="h-page" style={{ marginTop: 14 }}>The Trading Floor</h1>
+            </Reveal>
+            <Reveal delay={130}>
+              <p className="lede" style={{ marginTop: 18 }}>
+                A working model of an order screen. You set every number yourself, and it shows what a
+                trade actually costs once brokerage, taxes, exchange charges and duty are counted.
+              </p>
+            </Reveal>
+
+            <Reveal delay={190}>
+              <div className="gate-warn">
+                <p className="risk-h">This is a simulator</p>
+                <p className="risk-b">
+                  Nothing here connects to a market. There are no live prices, no orders are placed,
+                  no money moves and no account is opened. FinHub does not ask for a PAN, a bank
+                  account, a UPI identifier or any payment detail, and never will. This exists to show
+                  how the mechanics work, and it is not investment advice.
+                </p>
+              </div>
+            </Reveal>
+
+            <Reveal delay={250}>
+              <div className="gate-form">
+                <label className="tkf wide">
+                  <span>What should the screen call you</span>
+                  <input value={name} onChange={(e) => setName(e.target.value)} maxLength={24}
+                    placeholder="A first name is enough" />
+                </label>
+                <label className="gate-check">
+                  <input type="checkbox" checked={adult} onChange={(e) => setAdult(e.target.checked)} />
+                  <span>I confirm I am 18 years of age or older.</span>
+                </label>
+                <button className="btn primary" disabled={!adult}
+                  onClick={() => setEntered(true)}>Enter the floor</button>
+                <p className="small">
+                  Nothing you type is stored or sent anywhere. It stays in this browser tab and
+                  disappears when you close it.
+                </p>
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </>
+    );
+  }
+
+  return (
+    <>
+      <Crumbs items={[["FinHub", "#/"], ["Trading floor"]]} />
+      <div className="floor">
+        <FloorAmbience />
+        <div className="wrap floor-in">
+          <div className="floor-head">
+            <div>
+              <p className="kicker">Simulation only</p>
+              <h1 style={{ fontSize: "clamp(24px,4vw,34px)", marginTop: 10 }}>
+                {greet}{name ? `, ${name}` : ""}
+              </h1>
+            </div>
+            <button className="btn ghost" onClick={() => setEntered(false)}>Leave the floor</button>
+          </div>
+
+          <div className="phone">
+            <div className="phone-bar">
+              <span className="phone-dot" />
+              <span className="phone-title">FinHub Simulator</span>
+              <span className="phone-tag">Not a broker</span>
+            </div>
+
+            <div className="phone-tabs" role="tablist" aria-label="Segment">
+              {FLOOR_TABS.map((t) => (
+                <button key={t.id} role="tab" aria-selected={tab === t.id}
+                  className={"ptab" + (tab === t.id ? " on" : "")} onClick={() => setTab(t.id)}>{t.name}</button>
+              ))}
+            </div>
+
+            <div className="phone-body" key={tab}>
+              <Active rates={rates} />
+            </div>
+
+            <div className="phone-foot">
+              No orders are placed. No prices are live. Educational simulation only.
+            </div>
+          </div>
+
+          <div className="chips" style={{ marginTop: 30, justifyContent: "center" }}>
+            <a className="chip" href="#/tax">How this is taxed →</a>
+            <a className="chip" href="#/concept/options">Options concept →</a>
+            <a className="chip" href="#/concept/futures">Futures concept →</a>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
+/* ===========================================================================
+   TELEMETRY
+   Year by year price history, one chart per series. The line draws itself,
+   a playhead sweeps the timeline, values count as it moves, drawdowns shade
+   themselves and market events surface as the playhead passes them.
+
+   Reads fin-data/index-history.json. No figure is written into this file,
+   because index history is data, not code. Until the file is uploaded the
+   page says so plainly rather than showing anything invented.
+
+   Expected shape:
+   {
+     "asOf": "verified 30 August 2026",
+     "series": [
+       { "id":"sensex", "name":"BSE Sensex", "unit":"Index points",
+         "base":"1978-79 = 100", "source":"BSE India",
+         "points":[{"year":1979,"close":100}, ...] }
+     ],
+     "events": [{ "year":1992, "label":"Securities scam", "note":"..." }]
+   }
+   =========================================================================== */
+
+const MARKET_EVENTS = [
+  { year: 1987, label: "Black Monday", note: "A single day collapse in global equity markets in October." },
+  { year: 1991, label: "Balance of payments crisis", note: "Reserves fell to weeks of cover, leading to liberalisation." },
+  { year: 1992, label: "Securities scam", note: "Diverted bank funds unwound, and the market fell sharply." },
+  { year: 1997, label: "Asian financial crisis", note: "Currency and banking stress across east and southeast Asia." },
+  { year: 2000, label: "Dot com unwind", note: "Technology valuations corrected worldwide." },
+  { year: 2001, label: "Market crisis", note: "Concentrated leveraged positions unwound; carry forward ended." },
+  { year: 2004, label: "Election shock", note: "An unexpected result triggered a one day fall and trading halt." },
+  { year: 2008, label: "Global financial crisis", note: "Credit markets seized after the failure of a major investment bank." },
+  { year: 2011, label: "European debt stress", note: "Sovereign debt concerns across the euro area." },
+  { year: 2013, label: "Taper tantrum", note: "Signals of reduced US stimulus pulled capital from emerging markets." },
+  { year: 2015, label: "Global sell off", note: "Growth concerns in China and commodity weakness." },
+  { year: 2016, label: "Demonetisation", note: "High value notes withdrawn from circulation at short notice." },
+  { year: 2018, label: "NBFC liquidity crisis", note: "A large infrastructure lender defaulted, tightening credit broadly." },
+  { year: 2020, label: "Covid crash", note: "The fastest fall into a bear market on record, followed by recovery." },
+  { year: 2022, label: "Inflation and rate shock", note: "Central banks raised rates rapidly as inflation rose." },
+];
+
+function useIndexHistory() {
+  const [d, setD] = useState(null);
+  const [tried, setTried] = useState(false);
+  useEffect(() => {
+    let alive = true;
+    fetch("fin-data/index-history.json", { cache: "no-cache" })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((j) => { if (alive) { if (j) setD(j); setTried(true); } })
+      .catch(() => { if (alive) setTried(true); });
+    return () => { alive = false; };
+  }, []);
+  return { data: d, tried };
+}
+
+/* ---- one series, one chart ------------------------------------------- */
+function TelemetryChart({ s, events }) {
+  const reduced = useReducedMotion();
+  const wrapRef = useRef(null);
+  const [seen, setSeen] = useState(false);
+  const [playing, setPlaying] = useState(false);
+  const [idx, setIdx] = useState(null);
+  const [log, setLog] = useState(false);
+  const [zoom, setZoom] = useState([0, 100]);
+  const raf = useRef(0);
+
+  const pts = useMemo(
+    () => (s.points || []).filter((p) => p && typeof p.close === "number").sort((a, b) => a.year - b.year),
+    [s.points]
+  );
+
+  useEffect(() => {
+    const el = wrapRef.current; if (!el) return;
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setSeen(true); io.disconnect(); } },
+      { rootMargin: "-10% 0px" });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  const from = Math.floor((zoom[0] / 100) * (pts.length - 1));
+  const to = Math.ceil((zoom[1] / 100) * (pts.length - 1));
+  const view = pts.slice(Math.max(0, from), Math.max(from + 2, to + 1));
+
+  useEffect(() => {
+    if (!playing || view.length < 2) return;
+    let i = idx == null || idx >= view.length - 1 ? 0 : idx;
+    const tick = () => {
+      i += 1;
+      if (i >= view.length) { setPlaying(false); setIdx(view.length - 1); return; }
+      setIdx(i);
+      raf.current = window.setTimeout(tick, 420);
+    };
+    raf.current = window.setTimeout(tick, 420);
+    return () => clearTimeout(raf.current);
+  }, [playing, view.length]);
+
+  if (pts.length < 2) return null;
+
+  const W = 760, H = 300, padL = 60, padR = 24, padT = 26, padB = 42;
+  const vals = view.map((p) => p.close);
+  const lo = Math.min(...vals), hi = Math.max(...vals);
+  const tf = (v) => (log ? Math.log10(Math.max(v, 0.0001)) : v);
+  const tlo = tf(lo), thi = tf(hi);
+  const X = (i) => padL + (i / (view.length - 1)) * (W - padL - padR);
+  const Y = (v) => H - padB - ((tf(v) - tlo) / Math.max(thi - tlo, 1e-9)) * (H - padT - padB);
+
+  const line = view.map((p, i) => `${i ? "L" : "M"}${X(i).toFixed(1)} ${Y(p.close).toFixed(1)}`).join(" ");
+  const area = `${line} L${X(view.length - 1).toFixed(1)} ${H - padB} L${X(0).toFixed(1)} ${H - padB} Z`;
+
+  // peak to trough drawdown within the visible window
+  let peak = -Infinity, peakI = 0, ddStart = 0, ddEnd = 0, worst = 0;
+  view.forEach((p, i) => {
+    if (p.close > peak) { peak = p.close; peakI = i; }
+    const dd = (p.close - peak) / peak;
+    if (dd < worst) { worst = dd; ddStart = peakI; ddEnd = i; }
+  });
+
+  const cur = idx == null ? view.length - 1 : idx;
+  const point = view[cur];
+  const first = view[0];
+  const growth = first.close ? ((point.close - first.close) / first.close) * 100 : 0;
+  const cagrYears = Math.max(1, point.year - first.year);
+  const cagr = first.close > 0 ? (Math.pow(point.close / first.close, 1 / cagrYears) - 1) * 100 : 0;
+
+  const evInWindow = (events || MARKET_EVENTS).filter(
+    (e) => e.year >= view[0].year && e.year <= view[view.length - 1].year
+  );
+  const evAtOrBefore = evInWindow.filter((e) => e.year <= point.year).slice(-1)[0];
+
+  // annual movement, computed from the price series rather than supplied
+  const moves = pts.map((p, i) => ({
+    year: p.year,
+    close: p.close,
+    move: i === 0 || !pts[i - 1].close ? null : ((p.close - pts[i - 1].close) / pts[i - 1].close) * 100,
+  }));
+  const withMove = moves.filter((m) => m.move != null);
+  const best = withMove.length ? withMove.reduce((a, b) => (b.move > a.move ? b : a)) : null;
+  const worstYr = withMove.length ? withMove.reduce((a, b) => (b.move < a.move ? b : a)) : null;
+  const viewMoves = moves.filter((m) => m.year >= view[0].year && m.year <= view[view.length - 1].year);
+  const maxMove = Math.max(...viewMoves.map((m) => Math.abs(m.move || 0)), 1);
+  const curMove = moves.find((m) => m.year === point.year);
+
+  const ticks = 4;
+  const gridVals = Array.from({ length: ticks + 1 }, (_, i) => lo + ((hi - lo) * i) / ticks);
+
+  return (
+    <section className="tel" ref={wrapRef}>
+      <header className="tel-head">
+        <div>
+          <h3 className="tel-name">{s.name}</h3>
+          <p className="small">
+            {s.unit || "Index points"}
+            {s.base ? ` · ${s.base}` : ""}
+            {` · ${pts[0].year} to ${pts[pts.length - 1].year}`}
+          </p>
+        </div>
+        <div className="tel-ctl">
+          <button className={"tbtn" + (playing ? " on" : "")}
+            onClick={() => { if (!playing && (idx == null || idx >= view.length - 1)) setIdx(0); setPlaying(!playing); }}
+            aria-label={playing ? "Pause" : "Play"}>
+            {playing ? "Pause" : "Play"}
+          </button>
+          <button className="tbtn" onClick={() => { setPlaying(false); setIdx(null); }}>Reset</button>
+          <button className={"tbtn" + (log ? " on" : "")} onClick={() => setLog(!log)}
+            aria-pressed={log}>{log ? "Log" : "Linear"}</button>
+        </div>
+      </header>
+
+      <div className="tel-readout">
+        <div><span>Year</span><b>{point.year}</b></div>
+        <div><span>Close</span><b className="hi">{fmt(point.close, 2)}</b></div>
+        <div><span>Change from {first.year}</span>
+          <b className={growth >= 0 ? "hi" : "bad"}>{growth >= 0 ? "+" : ""}{fmt(growth, 1)}%</b></div>
+        <div><span>Move that year</span>
+          <b className={curMove && curMove.move != null ? (curMove.move >= 0 ? "hi" : "bad") : ""}>
+            {curMove && curMove.move != null ? `${curMove.move >= 0 ? "+" : ""}${fmt(curMove.move, 2)}%` : "—"}</b></div>
+        <div><span>Compound annual rate</span>
+          <b className={cagr >= 0 ? "hi" : "bad"}>{cagr >= 0 ? "+" : ""}{fmt(cagr, 2)}%</b></div>
+      </div>
+
+      <div className="tel-plot">
+        <svg viewBox={`0 0 ${W} ${H}`} className="tel-svg" role="img"
+          aria-label={`${s.name} yearly closing values from ${view[0].year} to ${view[view.length - 1].year}`}>
+          <defs>
+            <linearGradient id={`g-${s.id}`} x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="var(--teal)" stopOpacity=".22" />
+              <stop offset="100%" stopColor="var(--teal)" stopOpacity="0" />
+            </linearGradient>
+          </defs>
+
+          {gridVals.map((v, i) => (
+            <g key={i}>
+              <line x1={padL} y1={Y(v)} x2={W - padR} y2={Y(v)} className="tel-grid" />
+              <text x={padL - 10} y={Y(v) + 4} textAnchor="end" className="tel-axis">
+                {v >= 10000 ? `${(v / 1000).toFixed(0)}k` : fmt(v, 0)}
+              </text>
+            </g>
+          ))}
+
+          {worst < -0.08 && (
+            <rect x={X(ddStart)} y={padT} width={Math.max(2, X(ddEnd) - X(ddStart))} height={H - padT - padB}
+              className="tel-dd" />
+          )}
+
+          <path d={area} fill={`url(#g-${s.id})`} className={"tel-area" + (seen ? " in" : "")} />
+          <path d={line} className={"tel-line" + (seen && !reduced ? " draw" : " in")}
+            style={{ strokeDasharray: 4000, strokeDashoffset: seen || reduced ? 0 : 4000 }} />
+
+          {evInWindow.map((e) => {
+            const i = view.findIndex((p) => p.year === e.year);
+            if (i < 0) return null;
+            const passed = e.year <= point.year;
+            return (
+              <g key={e.year} className={"tel-ev" + (passed ? " on" : "")}>
+                <line x1={X(i)} y1={padT} x2={X(i)} y2={H - padB} />
+                <circle cx={X(i)} cy={Y(view[i].close)} r="4" />
+              </g>
+            );
+          })}
+
+          <line x1={X(cur)} y1={padT} x2={X(cur)} y2={H - padB} className="tel-head-line" />
+          <circle cx={X(cur)} cy={Y(point.close)} r="6" className="tel-dot" />
+
+          <text x={X(0)} y={H - 14} className="tel-axis">{view[0].year}</text>
+          <text x={W - padR} y={H - 14} textAnchor="end" className="tel-axis">{view[view.length - 1].year}</text>
+        </svg>
+      </div>
+
+      <div className="tel-moves">
+        <p className="eyebrow" style={{ marginBottom: 10 }}>Annual movement</p>
+        <div className="mv-rows">
+          {viewMoves.map((m) => {
+            const up = (m.move || 0) >= 0;
+            const w = (Math.abs(m.move || 0) / maxMove) * 50;
+            const on = m.year === point.year;
+            return (
+              <div className={"mv-r" + (on ? " on" : "")} key={m.year}
+                title={`${m.year}: ${m.move == null ? "no prior year" : fmt(m.move, 2) + "%"}`}>
+                <span className="mv-y">{m.year}</span>
+                <span className="mv-track">
+                  <span className={"mv-b " + (up ? "up" : "down")}
+                    style={{ width: `${w}%`, [up ? "left" : "right"]: "50%" }} />
+                  <span className="mv-zero" />
+                </span>
+                <span className={"mv-v " + (m.move == null ? "" : up ? "up" : "down")}>
+                  {m.move == null ? "—" : `${up ? "+" : ""}${fmt(m.move, 1)}%`}
+                </span>
+              </div>
+            );
+          })}
+        </div>
+        {best && worstYr && (
+          <div className="mv-extremes">
+            <div><span>Best year</span><b className="hi">{best.year} · +{fmt(best.move, 1)}%</b></div>
+            <div><span>Worst year</span><b className="bad">{worstYr.year} · {fmt(worstYr.move, 1)}%</b></div>
+          </div>
+        )}
+      </div>
+
+      <div className="tel-scrub">
+        <label>
+          <span className="small">Timeline</span>
+          <input type="range" min="0" max={view.length - 1} value={cur}
+            onChange={(e) => { setPlaying(false); setIdx(Number(e.target.value)); }} />
+        </label>
+        <div className="tel-zoom">
+          <label><span className="small">From</span>
+            <input type="range" min="0" max="90" value={zoom[0]}
+              onChange={(e) => { const v = Math.min(Number(e.target.value), zoom[1] - 10); setZoom([v, zoom[1]]); setIdx(null); }} /></label>
+          <label><span className="small">To</span>
+            <input type="range" min="10" max="100" value={zoom[1]}
+              onChange={(e) => { const v = Math.max(Number(e.target.value), zoom[0] + 10); setZoom([zoom[0], v]); setIdx(null); }} /></label>
+        </div>
+      </div>
+
+      {evAtOrBefore && (
+        <div className="tel-note" key={evAtOrBefore.year}>
+          <span className="tel-note-y">{evAtOrBefore.year}</span>
+          <span><b>{evAtOrBefore.label}</b>{evAtOrBefore.note ? ` ${evAtOrBefore.note}` : ""}</span>
+        </div>
+      )}
+
+      {worst < -0.08 && (
+        <p className="small tel-dd-note">
+          Deepest peak to trough decline in this window: {fmt(Math.abs(worst) * 100, 1)}% between{" "}
+          {view[ddStart].year} and {view[ddEnd].year}. The shaded band marks it.
+        </p>
+      )}
+
+      {s.source && <p className="small tel-src">Source: {s.source}</p>}
+    </section>
+  );
+}
+
+function TelemetryPage() {
+  const { data, tried } = useIndexHistory();
+  const series = data && Array.isArray(data.series) ? data.series : [];
+  const events = data && Array.isArray(data.events) && data.events.length ? data.events : MARKET_EVENTS;
+  const [on, setOn] = useState(null);
+
+  const visible = on ? series.filter((s) => s.id === on) : series;
+
+  return (
+    <>
+      <Crumbs items={[["FinHub", "#/"], ["Telemetry"]]} />
+      <div className="wrap">
+        <Reveal><p className="kicker">Year by year</p></Reveal>
+        <Reveal delay={60}><h1 className="h-page" style={{ marginTop: 12 }}>Telemetry</h1></Reveal>
+        <Reveal delay={120}>
+          <p className="lede" style={{ marginTop: 18, maxWidth: "62ch" }}>
+            Closing values for each series, one chart at a time. Press play and the line is walked
+            year by year, with the compound rate updating as it goes and market events surfacing as
+            the playhead reaches them. Zoom into any span to read it closely.
+          </p>
+        </Reveal>
+        {data && data.asOf && (
+          <Reveal delay={160}>
+            <div className="tax-stamp"><span className="badge">{data.asOf}</span></div>
+          </Reveal>
+        )}
+      </div>
+
+      <div className="wrap" style={{ paddingTop: 36, paddingBottom: 100 }}>
+        {!data && tried && (
+          <div className="sub">
+            <p className="body">
+              The history file has not been uploaded yet. When
+              <code> fin-data/index-history.json </code> is present, every chart on this page fills
+              itself. No values are written into the platform, because index history is data and it
+              has to come from the exchange rather than from memory.
+            </p>
+            <p className="small" style={{ marginTop: 14 }}>
+              Expected: yearly closing values for each series, with the source named. Sensex from BSE,
+              the Nifty family from NSE Indices, gold and silver from the IBJA benchmark rates.
+            </p>
+          </div>
+        )}
+
+        {!tried && <div className="sub"><p className="small">Loading history.</p></div>}
+
+        {series.length > 1 && (
+          <Reveal>
+            <div className="tel-tabs" role="tablist" aria-label="Series">
+              <button role="tab" aria-selected={!on} className={"tab" + (!on ? " on" : "")}
+                onClick={() => setOn(null)}>All</button>
+              {series.map((s) => (
+                <button key={s.id} role="tab" aria-selected={on === s.id}
+                  className={"tab" + (on === s.id ? " on" : "")} onClick={() => setOn(s.id)}>{s.name}</button>
+              ))}
+            </div>
+          </Reveal>
+        )}
+
+        <div className="tel-list">
+          {visible.map((s, i) => (
+            <Reveal key={s.id} delay={Math.min(i * 70, 300)}>
+              <TelemetryChart s={s} events={events} />
+            </Reveal>
+          ))}
+        </div>
+
+        {series.length > 0 && (
+          <Reveal>
+            <div className="sub" style={{ marginTop: 34, borderLeft: "2px solid var(--amber)" }}>
+              <p className="body" style={{ fontSize: 15.5 }}>
+                Index values are points, not prices, and gold and silver are quoted per unit weight.
+                They are shown on separate charts because they are not comparable quantities. Past
+                movement describes what happened, and carries no information about what follows.
+              </p>
+            </div>
+          </Reveal>
+        )}
+      </div>
+    </>
+  );
+}
+
 /* ===========================================================================
    FINHUB SIMULATOR
    An educational market simulation. No live prices, no real orders, no money.
@@ -5724,6 +7002,8 @@ function SimulatorPage() {
   const [exec, setExec] = useState(null);
   const [orders, setOrders] = useState([]);
   const [positions, setPositions] = useState([]);
+  const positionsRef = useRef([]);
+  useEffect(() => { positionsRef.current = positions; }, [positions]);
   const [cash, setCash] = useState(SIM_START_CAPITAL);
   const [realised, setRealised] = useState(0);
   const [toast, setToast] = useState(null);
@@ -5794,31 +7074,31 @@ function SimulatorPage() {
       setOrders((o) => [{ id, t: clockOf(minute), inst: inst.name, side, otype, qty, price: fill, status: "Executed" }, ...o]);
       setCash((c) => c - r.margin - r.charges);
 
-      setPositions((ps) => {
-        const i = ps.findIndex((p) => p.id === inst.id && p.side === side);
-        const opp = ps.findIndex((p) => p.id === inst.id && p.side !== side);
-        if (opp >= 0) {
-          const p = ps[opp];
-          const closeQty = Math.min(p.qty, qty);
-          const dir = p.side === "buy" ? 1 : -1;
-          const pnl = (fill - p.avg) * dir * inst.lot * closeQty;
-          setRealised((x) => x + pnl);
-          setCash((c) => c + p.margin * (closeQty / p.qty) + pnl);
-          notify("Position closed", `Realised ${pnl >= 0 ? "gain" : "loss"} of ₹${fmt(Math.abs(pnl))}.`, pnl >= 0 ? "up" : "down");
-          const left = p.qty - closeQty;
-          const rest = ps.filter((_, k) => k !== opp);
-          return left > 0 ? [...rest, { ...p, qty: left, margin: p.margin * (left / p.qty) }] : rest;
-        }
-        if (i >= 0) {
-          const p = ps[i];
-          const total = p.qty + qty;
-          const avg = (p.avg * p.qty + fill * qty) / total;
-          const copy = [...ps];
-          copy[i] = { ...p, qty: total, avg, margin: p.margin + r.margin };
-          return copy;
-        }
-        return [...ps, { id: inst.id, name: inst.name, lot: inst.lot, side, qty, avg: fill, margin: r.margin }];
-      });
+      const ps = positionsRef.current;
+      const oppIdx = ps.findIndex((p) => p.id === inst.id && p.side !== side);
+      const sameIdx = ps.findIndex((p) => p.id === inst.id && p.side === side);
+      if (oppIdx >= 0) {
+        const p = ps[oppIdx];
+        const closeQty = Math.min(p.qty, qty);
+        const dir = p.side === "buy" ? 1 : -1;
+        const pnl = (fill - p.avg) * dir * inst.lot * closeQty;
+        const freed = p.margin * (closeQty / p.qty);
+        const left = p.qty - closeQty;
+        const rest = ps.filter((_, k) => k !== oppIdx);
+        setPositions(left > 0 ? [...rest, { ...p, qty: left, margin: p.margin - freed }] : rest);
+        setRealised((x) => x + pnl);
+        setCash((c) => c + freed + pnl);
+        notify("Position closed", `Realised ${pnl >= 0 ? "gain" : "loss"} of ₹${fmt(Math.abs(pnl))}.`, pnl >= 0 ? "up" : "down");
+      } else if (sameIdx >= 0) {
+        const p = ps[sameIdx];
+        const total = p.qty + qty;
+        const avg = (p.avg * p.qty + fill * qty) / total;
+        const copy = [...ps];
+        copy[sameIdx] = { ...p, qty: total, avg, margin: p.margin + r.margin };
+        setPositions(copy);
+      } else {
+        setPositions([...ps, { id: inst.id, name: inst.name, lot: inst.lot, side, qty, avg: fill, margin: r.margin }]);
+      }
 
       notify("Order executed", `${side === "buy" ? "Bought" : "Sold"} ${qty} lot${qty > 1 ? "s" : ""} of ${inst.name} at ${fmt(fill, 2)}.`, "up");
       setInsight({
@@ -6223,6 +7503,29 @@ function NotFound() {
    APP
    =========================================================================== */
 
+
+/* A failure in one view should never take the whole platform down. */
+class ViewBoundary extends React.Component {
+  constructor(p) { super(p); this.state = { err: null }; }
+  static getDerivedStateFromError(err) { return { err }; }
+  componentDidUpdate(prev) { if (prev.route !== this.props.route && this.state.err) this.setState({ err: null }); }
+  render() {
+    if (this.state.err) {
+      return (
+        <div className="wrap-n" style={{ padding: "80px 20px 120px" }}>
+          <p className="eyebrow">Something went wrong on this page</p>
+          <h1 style={{ fontSize: 32, marginTop: 12 }}>This section could not load</h1>
+          <p className="lede" style={{ marginTop: 14 }}>
+            The rest of FinHub is unaffected. Use the navigation above, or return to the universe map.
+          </p>
+          <div className="cta-row"><a className="btn primary" href="#/universe">Go to the universe</a></div>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
 export default function FinHub() {
   const hash = useHash();
   const [searchOpen, setSearchOpen] = useState(false);
@@ -6281,7 +7584,9 @@ export default function FinHub() {
       <style>{CSS}</style>
       <ReadingBar />
       <Nav hash={hash} onSearch={() => setSearchOpen(true)} />
-      <main key={path + ":" + version}>{view}</main>
+      <main key={path + ":" + version}>
+        <ViewBoundary route={path}>{view}</ViewBoundary>
+      </main>
       <footer className="foot">
         <div className="wrap" style={{ display: "flex", flexWrap: "wrap", gap: 24, justifyContent: "space-between" }}>
           <div style={{ maxWidth: "34ch" }}>
