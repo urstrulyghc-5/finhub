@@ -149,9 +149,6 @@ const DOMAINS = [
     kicker: 'Numbers you can move',
     blurb: 'Calculators that connect back to the concept behind them.', route: '#/tools' },
 
-  { id: 'ai', icon: 'ai', name: 'FinHub AI',
-    kicker: 'A guide through the structure',
-    blurb: 'Ask where to start, what connects, and what to read next.', route: '#/ai' },
 ];
 
 
@@ -2586,6 +2583,142 @@ button[disabled] .sym{opacity:.4}
 @media(max-width:520px){.mv-r{grid-template-columns:44px minmax(0,1fr) 62px;gap:8px}}
 @media(prefers-reduced-motion:reduce){.mv-b{transition:none}}
 
+/* ---- simulator ---- */
+.notice-card{margin-top:28px;padding:30px;border:1px solid var(--line);border-radius:18px;
+  background:var(--surface);box-shadow:var(--shadow)}
+.notice-h{font-family:var(--serif);font-size:24px;font-weight:600;letter-spacing:-.02em}
+.notice-sub{font-family:var(--mono);font-size:11px;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--teal);margin-top:6px}
+.notice-body{margin-top:20px;font-size:16px;line-height:1.7;color:var(--text)}
+.notice-body ul{margin:14px 0;padding-left:20px;display:grid;gap:7px}
+.notice-body p+p{margin-top:14px}
+
+.sim{padding:0 0 90px}
+.sim-top{position:sticky;top:60px;z-index:30;display:flex;flex-wrap:wrap;gap:14px;
+  justify-content:space-between;align-items:center;padding:14px 20px;
+  background:var(--surface);border-bottom:1px solid var(--line)}
+.sim-brand{display:flex;align-items:center;gap:10px;font-size:15px}
+.sim-dot{width:8px;height:8px;border-radius:50%;background:var(--teal);animation:pdot 2.4s ease-in-out infinite}
+.sim-flag{font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--amber);border:1px solid var(--amber);padding:3px 8px;border-radius:999px}
+.sim-top-r{display:flex;flex-wrap:wrap;gap:20px;align-items:center}
+.sim-stat{display:grid;gap:2px}
+.sim-stat span{font-size:10.5px;font-family:var(--mono);letter-spacing:.12em;
+  text-transform:uppercase;color:var(--faint)}
+.sim-stat b{font-family:var(--mono);font-size:16px;font-weight:700}
+.sim-stat b.hi{color:var(--teal)} .sim-stat b.bad{color:var(--rose)}
+
+.sim-grid{display:grid;grid-template-columns:230px minmax(0,1fr) 300px;gap:1px;
+  background:var(--line);border-bottom:1px solid var(--line)}
+@media(max-width:1080px){.sim-grid{grid-template-columns:200px minmax(0,1fr)}
+  .sim-order{grid-column:1 / -1}}
+@media(max-width:720px){.sim-grid{grid-template-columns:minmax(0,1fr)}}
+.sim-watch,.sim-main,.sim-order{background:var(--bg);padding:18px}
+.sim-h{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--faint);margin-bottom:12px}
+.sim-watch{display:grid;gap:2px;align-content:start;max-height:520px;overflow-y:auto}
+@media(max-width:720px){.sim-watch{max-height:none;grid-auto-flow:column;grid-auto-columns:150px;
+  overflow-x:auto;gap:8px}}
+.wrow{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:10px 12px;
+  border-radius:9px;text-align:left;transition:background .2s;min-height:52px;border:1px solid transparent}
+.wrow:hover{background:var(--surface-2)}
+.wrow.on{background:var(--teal-soft);border-color:var(--teal)}
+.wname{font-size:14px;font-weight:600;display:grid;gap:2px;min-width:0}
+.wname em{font-style:normal;font-size:10.5px;font-weight:400;color:var(--faint);
+  font-family:var(--mono);letter-spacing:.1em}
+.wpx{font-family:var(--mono);font-size:14px;font-weight:700;text-align:right;display:grid;gap:2px}
+.wpx em{font-style:normal;font-size:11px;font-weight:600}
+.up{color:var(--teal)} .down{color:var(--rose)}
+
+.sim-inst{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
+  align-items:flex-start;margin-bottom:16px}
+.sim-inst-n{font-family:var(--serif);font-size:24px;font-weight:600;letter-spacing:-.02em}
+.sim-inst-n span{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--faint);
+  margin-left:10px;text-transform:uppercase}
+.sim-price{text-align:right}
+.sim-price b{font-family:var(--mono);font-size:clamp(24px,4vw,32px);font-weight:700;
+  letter-spacing:-.02em;display:block}
+.sim-price span{font-family:var(--mono);font-size:14px;font-weight:600}
+.simchart{display:block;width:100%;height:auto}
+.simchart-empty{height:200px}
+.simchart-open{stroke:var(--line);stroke-dasharray:4 4}
+.simchart-line{fill:none;stroke-width:2.2;stroke-linejoin:round}
+.simchart-line.up{stroke:var(--teal)} .simchart-line.down{stroke:var(--rose)}
+.simchart-area{opacity:.1}
+.simchart-area.up{fill:var(--teal)} .simchart-area.down{fill:var(--rose)}
+.simchart-dot.up{fill:var(--teal)} .simchart-dot.down{fill:var(--rose)}
+.sim-phase-note{margin-top:14px;font-size:14px;color:var(--muted);line-height:1.6}
+
+.sim-calc{display:grid;gap:2px;margin:16px 0;border:1px solid var(--line);
+  border-radius:10px;overflow:hidden;background:var(--line)}
+.sim-calc div{background:var(--surface);display:flex;justify-content:space-between;
+  gap:10px;padding:11px 13px;font-size:13.5px}
+.sim-calc b{font-family:var(--mono);font-weight:700;color:var(--text)}
+.sim-calc b.hi{color:var(--teal)}
+.sim-review{width:100%;justify-content:center}
+.sim-review.sell{background:var(--rose);border-color:var(--rose)}
+.sim-fine{margin-top:12px;font-size:12.5px;color:var(--faint);line-height:1.55}
+
+.sim-book{padding:22px 20px}
+.sim-tabs{display:flex;gap:0;border-bottom:1px solid var(--line);margin-bottom:18px;
+  overflow-x:auto;scrollbar-width:none}
+.sim-tabs::-webkit-scrollbar{display:none}
+.sim-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.sim-empty{padding:26px 0;color:var(--muted);font-size:15px}
+.pill{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  padding:3px 9px;border-radius:999px;font-weight:700}
+.pill.buy{background:var(--teal-soft);color:var(--teal)}
+.pill.sell{background:#FBE9EB;color:var(--rose)}
+.pill.done{background:var(--surface-2);color:var(--muted)}
+.sim-port{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2px;
+  border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--line)}
+@media(max-width:720px){.sim-port{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.sim-port div{background:var(--surface);padding:16px 18px;display:grid;gap:5px}
+.sim-port span{font-size:12.5px;color:var(--muted)}
+.sim-port b{font-family:var(--mono);font-size:19px;font-weight:700}
+
+.sim-insight{margin:22px 20px 0;padding:20px 22px;border-radius:14px;background:var(--teal-soft);
+  border-left:3px solid var(--teal);display:flex;gap:18px;align-items:flex-start;
+  animation:fadeUp .45s ease both}
+.sim-insight-t{font-family:var(--serif);font-size:19px;font-weight:600}
+
+.rev{width:100%;max-width:460px;background:var(--surface);border:1px solid var(--line);
+  border-radius:18px;padding:28px;height:max-content;
+  box-shadow:0 30px 70px -20px rgba(11,18,32,.4);animation:fadeUp .3s ease both}
+.rev.wide{max-width:540px}
+.rev-h{font-family:var(--serif);font-size:22px;font-weight:600;letter-spacing:-.02em}
+.rev-sub{font-size:14px;color:var(--muted);margin-top:6px}
+.rev-rows{display:grid;gap:2px;margin:20px 0;border:1px solid var(--line);
+  border-radius:10px;overflow:hidden;background:var(--line)}
+.rev-rows div{background:var(--surface);display:flex;justify-content:space-between;
+  gap:12px;padding:12px 14px;font-size:14px}
+.rev-rows b{font-family:var(--mono);font-weight:700}
+.rev-flag{font-size:12.5px;color:var(--faint);line-height:1.55}
+.rev-btns{display:flex;gap:10px;margin-top:20px}
+.rev-btns .btn{flex:1;justify-content:center}
+.btn.primary.sell{background:var(--rose);border-color:var(--rose)}
+
+.execbar{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:90;
+  display:flex;align-items:center;gap:10px;padding:12px 20px;border-radius:999px;
+  background:var(--text);color:var(--bg);font-size:14px;font-weight:600;
+  box-shadow:0 12px 30px -8px rgba(11,18,32,.5);animation:fadeUp .3s ease both}
+.execdot{width:8px;height:8px;border-radius:50%;background:var(--amber)}
+.execdot.executing{animation:pdot .7s ease-in-out infinite}
+.execdot.done{background:var(--teal)}
+
+.toast{position:fixed;top:80px;right:20px;z-index:95;max-width:340px;padding:16px 18px;
+  border-radius:12px;background:var(--surface);border:1px solid var(--line);
+  border-left:3px solid var(--muted);box-shadow:0 16px 40px -12px rgba(11,18,32,.32);
+  animation:fadeUp .3s ease both}
+.toast.up{border-left-color:var(--teal)} .toast.down{border-left-color:var(--rose)}
+.toast b{font-size:14.5px;display:block}
+.toast p{font-size:13.5px;color:var(--muted);margin-top:5px;line-height:1.55}
+@media(max-width:560px){.toast{left:14px;right:14px;max-width:none;top:70px}}
+@media(prefers-reduced-motion:reduce){
+  .sim-dot,.execdot.executing{animation:none}
+  .toast,.execbar,.rev,.sim-insight{animation:none}
+}
+
 .foot{border-top:1px solid var(--line);padding:44px 0 60px;color:var(--faint);font-size:13.5px}
 .foot a:hover{color:var(--teal)}
 `;
@@ -3279,8 +3412,8 @@ function ConceptGraph({ id }) {
    =========================================================================== */
 
 const NAV = [
-  ["Universe", "#/universe"], ["Origins", "#/origins"], ["History", "#/history"], ["Data", "#/data"], ["Tax", "#/tax"], ["Trading floor", "#/floor"], ["Telemetry", "#/telemetry"], ["Concepts", "#/concepts"], ["Cases", "#/cases"],
-  ["Scenarios", "#/scenarios"], ["Glossary", "#/glossary"], ["Tools", "#/tools"], ["FinHub AI", "#/ai"],
+  ["Universe", "#/universe"], ["Origins", "#/origins"], ["History", "#/history"], ["Data", "#/data"], ["Tax", "#/tax"], ["Simulator", "#/floor"], ["Telemetry", "#/telemetry"], ["Concepts", "#/concepts"], ["Cases", "#/cases"],
+  ["Scenarios", "#/scenarios"], ["Glossary", "#/glossary"], ["Tools", "#/tools"],
 ];
 
 function Nav({ hash, onSearch }) {
@@ -5463,1336 +5596,612 @@ function ToolsPage({ query }) {
    FINHUB AI — a guide over the structure, not a chatbot pretending to know more
    =========================================================================== */
 
-function AiPage() {
-  const [q, setQ] = useState("");
-  const [log, setLog] = useState([{
-    role: "ai",
-    text: "I navigate what FinHub contains. Ask me where to start, what a term means, what connects to a concept, or what to read next.",
-    links: [{ label: "Where should I start?", href: null }],
-  }]);
-
-  const answer = (raw) => {
-    const text = raw.trim(); if (!text) return;
-    const low = text.toLowerCase();
-    let reply = "", links = [];
-
-    if (/start|begin|new|beginner|first/.test(low)) {
-      reply = "Begin with the time value of money. Every valuation method in finance is built on it, and the rest of the fundamentals follow from there.";
-      links = [["Time Value of Money", "#/concept/time-value-of-money"], ["Compounding", "#/concept/compounding"], ["Inflation", "#/concept/inflation"]];
-    } else if (/path|learn|route|order/.test(low)) {
-      reply = "A workable path through what is written: time value of money → compounding → inflation → real return → interest rates → bond pricing → discount rate and NPV → leverage.";
-      links = [["Time Value of Money", "#/concept/time-value-of-money"], ["All concepts", "#/concepts"]];
-    } else {
-      const hits = search(text);
-      if (hits.length) {
-        const top = hits[0];
-        reply = `${top.title} — ${top.sub}`;
-        links = hits.slice(0, 5).map((h) => [`${h.title} · ${h.type}`, h.href]);
-      } else {
-        reply = "Nothing in FinHub matches that yet. The written concepts are listed below — I will not invent an answer outside them.";
-        links = [["Browse concepts", "#/concepts"], ["Glossary", "#/glossary"]];
-      }
-    }
-    setLog((l) => [...l, { role: "you", text }, { role: "ai", text: reply, links }]);
-    setQ("");
-  };
-
-  return (
-    <>
-      <Crumbs items={[["FinHub", "#/"], ["FinHub AI"]]} />
-      <div className="wrap-n" style={{ paddingBottom: 80 }}>
-        <Reveal><h1 className="h-page">FinHub AI</h1></Reveal>
-        <Reveal delay={70}>
-          <p className="lede" style={{ marginTop: 14 }}>
-            A guide across the FinHub structure. It answers from what is actually written here and
-            points you to it — it does not generate finance content of its own.
-          </p>
-        </Reveal>
-        <div style={{ marginTop: 30, display: "grid", gap: 14 }}>
-          {log.map((m, i) => (
-            <div key={i} className={m.role === "you" ? "sub" : "card"}
-              style={m.role === "you" ? { marginLeft: "auto", maxWidth: "80%" } : { maxWidth: "92%" }}>
-              <p className="eyebrow" style={{ marginBottom: 8 }}>{m.role === "you" ? "You" : "FinHub AI"}</p>
-              <p className="body" style={{ fontSize: 15.5 }}>{m.text}</p>
-              {m.links?.length > 0 && m.links[0][1] && (
-                <div className="chips" style={{ marginTop: 12 }}>
-                  {m.links.map(([l, h]) => <a className="chip" key={h + l} href={h}>{l} →</a>)}
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-        <div style={{ display: "flex", gap: 10, marginTop: 22, flexWrap: "wrap" }}>
-          <input value={q} onChange={(e) => setQ(e.target.value)}
-            onKeyDown={(e) => { if (e.key === "Enter") answer(q); }}
-            placeholder="Ask about a concept, or where to start…" aria-label="Ask FinHub AI"
-            style={{
-              flex: "1 1 220px", minWidth: 0, background: "#0B101C", border: "1px solid var(--line)",
-              borderRadius: 10, padding: "12px 14px", color: "var(--paper)", fontSize: 15, outline: "none",
-            }} />
-          <button className="btn primary" onClick={() => answer(q)}>Ask</button>
-        </div>
-        <div className="chips" style={{ marginTop: 14 }}>
-          {["Where should I start?", "What connects to inflation?", "leverage", "real return"].map((s) => (
-            <button className="chip" key={s} onClick={() => answer(s)}>{s}</button>
-          ))}
-        </div>
-      </div>
-    </>
-  );
-}
-
-
 /* ===========================================================================
-   MARKET DATA
-   Figures that change are never written into the code. This page reads
-   fin-data/market-data-aug30.json, states the period it covers, names its
-   sources, and labels its own data quality. When the numbers move, the file
-   is replaced and nothing else changes.
+   FINHUB SIMULATOR
+   An educational market simulation. No live prices, no real orders, no money.
+   Every price is produced by an internal engine and every execution follows a
+   simulated workflow, because the purpose is to teach what an action means
+   rather than to imitate a broker.
    =========================================================================== */
 
-function useMarketData() {
-  const [d, setD] = useState(null);
-  useEffect(() => {
-    let alive = true;
-    fetch("fin-data/market-data-aug30.json", { cache: "no-cache" })
-      .then((r) => (r.ok ? r.json() : null))
-      .then((j) => { if (alive && j) setD(j); })
-      .catch(() => {});
-    return () => { alive = false; };
-  }, []);
-  return d;
-}
+const SIM_START_CAPITAL = 500000;
 
-function BrokerChart({ data }) {
-  const ref = useRef(null);
-  const [play, setPlay] = useState(false);
-  const [active, setActive] = useState(null);
-  useEffect(() => {
-    const el = ref.current; if (!el) return;
-    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setPlay(true); io.disconnect(); } },
-      { rootMargin: "-8% 0px" });
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
+const INSTRUMENTS = [
+  { id: "gold", name: "Gold", exch: "MCX", contract: "GOLD DEC", lot: 100, unit: "10 grams",
+    price: 72400, vol: 0.0032, margin: 0.08, kind: "commodity", tick: 1 },
+  { id: "silver", name: "Silver", exch: "MCX", contract: "SILVER DEC", lot: 30, unit: "1 kilogram",
+    price: 88600, vol: 0.0058, margin: 0.09, kind: "commodity", tick: 1 },
+  { id: "crude", name: "Crude Oil", exch: "MCX", contract: "CRUDEOIL SEP", lot: 100, unit: "1 barrel",
+    price: 6240, vol: 0.0071, margin: 0.10, kind: "commodity", tick: 1 },
+  { id: "natgas", name: "Natural Gas", exch: "MCX", contract: "NATURALGAS SEP", lot: 1250, unit: "mmBtu",
+    price: 248, vol: 0.0095, margin: 0.12, kind: "commodity", tick: 0.1 },
+  { id: "copper", name: "Copper", exch: "MCX", contract: "COPPER SEP", lot: 2500, unit: "1 kilogram",
+    price: 842, vol: 0.0041, margin: 0.09, kind: "commodity", tick: 0.05 },
+  { id: "nifty", name: "Nifty 50", exch: "NSE", contract: "NIFTY FUT", lot: 75, unit: "index point",
+    price: 24180, vol: 0.0026, margin: 0.12, kind: "index", tick: 0.05 },
+  { id: "banknifty", name: "Bank Nifty", exch: "NSE", contract: "BANKNIFTY FUT", lot: 35, unit: "index point",
+    price: 51420, vol: 0.0036, margin: 0.13, kind: "index", tick: 0.05 },
+  { id: "usdinr", name: "USD / INR", exch: "NSE", contract: "USDINR SEP", lot: 1000, unit: "US dollar",
+    price: 87.4, vol: 0.0014, margin: 0.03, kind: "currency", tick: 0.0025 },
+];
 
-  const rows = data.rows;
-  const max = Math.max(...rows.map((r) => r.clients));
-  const named = rows.reduce((n, r) => n + r.clients, 0);
-  const others = Math.max(0, data.industryTotal - named);
-
-  return (
-    <div ref={ref}>
-      <div className="bchart">
-        {rows.map((r, i) => {
-          const w = (r.clients / max) * 100;
-          const on = active === r.name;
-          return (
-            <div className={"brow" + (on ? " on" : "")} key={r.name}
-              onMouseEnter={() => setActive(r.name)} onMouseLeave={() => setActive(null)}>
-              <span className="brank">{String(r.rank).padStart(2, "0")}</span>
-              <span className="bname">
-                {r.name}
-                <em>{r.type}</em>
-              </span>
-              <span className="btrack">
-                <span className="bfill" style={{ width: play ? `${w}%` : 0, transitionDelay: `${i * 90}ms` }} />
-              </span>
-              <span className="bval">
-                {(r.clients / 10000000).toFixed(2)} cr
-                {r.share != null && <em>{r.share}%</em>}
-              </span>
-              <span className={"bchg " + (r.change >= 0 ? "up" : "down")}>
-                {r.change >= 0 ? "+" : ""}{fmt(r.change)}
-              </span>
-            </div>
-          );
-        })}
-        <div className="brow others">
-          <span className="brank">—</span>
-          <span className="bname">All other members<em>Not individually listed</em></span>
-          <span className="btrack">
-            <span className="bfill muted" style={{ width: play ? `${(others / max) * 100}%` : 0, transitionDelay: `${rows.length * 90}ms` }} />
-          </span>
-          <span className="bval">{(others / 10000000).toFixed(2)} cr</span>
-          <span className="bchg" />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function MarketDataPage() {
-  const md = useMarketData();
-  const b = md && md.brokers;
-
-  return (
-    <>
-      <Crumbs items={[["FinHub", "#/"], ["Market data"]]} />
-      <div className="wrap">
-        <Reveal><p className="kicker">Sourced and dated</p></Reveal>
-        <Reveal delay={60}><h1 className="h-page" style={{ marginTop: 12 }}>Market Data</h1></Reveal>
-        <Reveal delay={120}>
-          <p className="lede" style={{ marginTop: 18, maxWidth: "62ch" }}>
-            Everything on this page carries the month it describes and the source it came from.
-            Figures that change over time are held in a data file rather than written into the
-            platform, so nothing here silently goes stale.
-          </p>
-        </Reveal>
-      </div>
-
-      <div className="wrap" style={{ paddingTop: 44, paddingBottom: 100 }}>
-        {!b && (
-          <div className="sub">
-            <p className="body">
-              The market data file has not been uploaded yet. When
-              <code> fin-data/market-data-aug30.json </code> is present, this page fills itself.
-            </p>
-          </div>
-        )}
-
-        {b && (
-          <>
-            <Reveal>
-              <div className="md-head">
-                <div>
-                  <h2 style={{ fontSize: 26 }}>{b.title}</h2>
-                  <p className="small" style={{ marginTop: 8 }}>{b.industryNote}</p>
-                </div>
-                <div className="md-stamp">
-                  <span className="badge aqua">{b.period}</span>
-                  <span className="badge">{b.quality}</span>
-                </div>
-              </div>
-            </Reveal>
-
-            <Reveal delay={80}>
-              <div className="sub" style={{ margin: "26px 0 30px", borderLeft: "2px solid var(--teal)" }}>
-                <p className="eyebrow" style={{ marginBottom: 8 }}>What an active client means</p>
-                <p className="body" style={{ fontSize: 16 }}>{b.definition}</p>
-              </div>
-            </Reveal>
-
-            <Reveal delay={120}><BrokerChart data={b} /></Reveal>
-
-            <Reveal delay={160}>
-              <div style={{ marginTop: 36 }}>
-                <p className="eyebrow" style={{ marginBottom: 14 }}>Notes on this data</p>
-                <div className="list">
-                  {b.notes.map((n, i) => <div className="li" key={i}><s>→</s><span style={{ fontSize: 15.5 }}>{n}</span></div>)}
-                </div>
-              </div>
-            </Reveal>
-
-            <div style={{ marginTop: 40 }}>
-              <SourceList sources={b.sources}
-                note="Where a figure could not be confirmed, it is left out rather than estimated." />
-            </div>
-
-            <Reveal>
-              <div className="chips" style={{ marginTop: 30 }}>
-                <a className="chip" href="#/concept/market-participants">Market participants →</a>
-                <a className="chip" href="#/concept/equity-markets">Equity markets →</a>
-                <a className="chip" href="#/history">History of markets →</a>
-              </div>
-            </Reveal>
-          </>
-        )}
-      </div>
-    </>
-  );
-}
-
-
-/* ===========================================================================
-   TAXATION
-   Tax rates change with every Budget, so none of them live in this file. The
-   page reads fin-data/tax-india-aug30.json, states the year it covers and the
-   date it was verified, and carries its own disclaimer. Replace the file after
-   a Budget and the page is current again.
-   =========================================================================== */
-
-function useTaxData() {
-  const [d, setD] = useState(null);
-  useEffect(() => {
-    let alive = true;
-    fetch("fin-data/tax-india-aug30.json", { cache: "no-cache" })
-      .then((r) => (r.ok ? r.json() : null))
-      .then((j) => { if (alive && j) setD(j); })
-      .catch(() => {});
-    return () => { alive = false; };
-  }, []);
-  return d;
-}
-
-function TaxTable({ t }) {
-  return (
-    <div className="ttable-wrap">
-      <table className="ttable">
-        <thead>
-          <tr>{t.head.map((h, i) => <th key={i} className={i === 0 ? "first" : ""}>{h}</th>)}</tr>
-        </thead>
-        <tbody>
-          {t.rows.map((r, i) => (
-            <tr key={i}>
-              {r.map((c, j) => <td key={j} className={j === 0 ? "first" : ""}>{c}</td>)}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-}
-
-function TaxPage() {
-  const d = useTaxData();
-  const [open, setOpen] = useState(0);
-
-  if (!d) {
-    return (
-      <>
-        <Crumbs items={[["FinHub", "#/"], ["Taxation"]]} />
-        <div className="wrap" style={{ paddingBottom: 90 }}>
-          <h1 className="h-page">Taxation</h1>
-          <div className="sub" style={{ marginTop: 26 }}>
-            <p className="body">
-              The tax data file has not been uploaded yet. When
-              <code> fin-data/tax-india-aug30.json </code> is present, this page fills itself.
-            </p>
-          </div>
-        </div>
-      </>
-    );
-  }
-
-  return (
-    <>
-      <Crumbs items={[["FinHub", "#/"], ["Taxation"]]} />
-      <div className="wrap">
-        <Reveal><p className="kicker">{d.period}</p></Reveal>
-        <Reveal delay={60}><h1 className="h-page" style={{ marginTop: 12 }}>{d.title}</h1></Reveal>
-        <Reveal delay={120}>
-          <div className="tax-stamp">
-            <span className="badge aqua">{d.period}</span>
-            <span className="badge">{d.asOf}</span>
-          </div>
-        </Reveal>
-        <Reveal delay={160}>
-          <div className="tax-warn">
-            <p className="eyebrow" style={{ marginBottom: 8, color: "var(--amber)" }}>Read this first</p>
-            <p className="body" style={{ fontSize: 16 }}>{d.disclaimer}</p>
-            <p className="small" style={{ marginTop: 12 }}>{d.quality}</p>
-          </div>
-        </Reveal>
-        {d.notice && (
-          <Reveal delay={200}>
-            <div className="sub" style={{ marginTop: 18, borderLeft: "2px solid var(--teal)" }}>
-              <p className="body" style={{ fontSize: 16 }}>{d.notice}</p>
-            </div>
-          </Reveal>
-        )}
-      </div>
-
-      <div className="wrap" style={{ paddingTop: 40, paddingBottom: 100 }}>
-        {d.sections.map((sec, i) => {
-          const isOpen = open === i;
-          return (
-            <Reveal key={sec.id} delay={Math.min(i * 40, 240)}>
-              <section className={"tsec" + (isOpen ? " on" : "")}>
-                <button className="tsec-head" onClick={() => setOpen(isOpen ? -1 : i)} aria-expanded={isOpen}>
-                  <span className="tsec-n">{String(i + 1).padStart(2, "0")}</span>
-                  <span className="tsec-t">{sec.title}</span>
-                  <span className="org-x">{isOpen ? "−" : "+"}</span>
-                </button>
-                {isOpen && (
-                  <div className="tsec-body">
-                    {sec.intro && <p className="body" style={{ marginBottom: 22 }}>{sec.intro}</p>}
-                    {sec.table && <TaxTable t={sec.table} />}
-                    {sec.points && (
-                      <div className="list" style={{ marginTop: sec.table ? 24 : 0 }}>
-                        {sec.points.map((p, j) => (
-                          <div className="li" key={j}><s>→</s><span style={{ fontSize: 16 }}>{p}</span></div>
-                        ))}
-                      </div>
-                    )}
-                    {sec.example && (
-                      <div className="tax-eg">
-                        <p className="eyebrow" style={{ marginBottom: 12 }}>Worked example</p>
-                        <p className="body" style={{ fontSize: 16, marginBottom: 12 }}>{sec.example.setup}</p>
-                        <div className="steps">
-                          {sec.example.steps.map((st, j) => (
-                            <div className="step" key={j}><i>{String(j + 1).padStart(2, "0")}</i>
-                              <span className="mono calc">{st}</span></div>
-                          ))}
-                        </div>
-                        <div className="result">
-                          <span className="eyebrow">Result</span><b>{sec.example.result}</b>
-                        </div>
-                      </div>
-                    )}
-                    {sec.note && (
-                      <div className="sub" style={{ marginTop: 22, borderLeft: "2px solid var(--amber)" }}>
-                        <p className="body" style={{ fontSize: 15.5 }}>{sec.note}</p>
-                      </div>
-                    )}
-                  </div>
-                )}
-              </section>
-            </Reveal>
-          );
-        })}
-
-        <div style={{ marginTop: 44 }}>
-          <SourceList sources={d.sources}
-            note="Every rate on this page should be confirmed against the Income Tax Department before it is relied upon. Rates change with each Budget." />
-        </div>
-
-        <Reveal>
-          <div className="chips" style={{ marginTop: 30 }}>
-            <a className="chip" href="#/concept/sip">SIP →</a>
-            <a className="chip" href="#/concept/options">Options →</a>
-            <a className="chip" href="#/concept/mutual-funds">Mutual funds →</a>
-            <a className="chip" href="#/data">Market data →</a>
-          </div>
-        </Reveal>
-      </div>
-    </>
-  );
-}
-
-/* ===========================================================================
-   THE TRADING FLOOR
-   A simulator, not a broker. No market connection, no real prices, no orders.
-   Its single purpose is to show what a trade actually costs, because the
-   charges are the part almost nobody sees until the contract note arrives.
-
-   Charge rates are read from fin-data/tax-india-aug30.json where present, so
-   they stay correct after a Budget without any change to this file.
-   =========================================================================== */
-
-const SEBI_RISK = "9 out of 10 individual traders in equity Futures and Options Segment incurred net losses. On an average, loss makers registered net trading loss close to ₹50,000. Over and above the net trading losses incurred, loss makers expended an additional 28% of net trading losses as transaction costs. Those making net trading profits incurred between 15% to 50% of such profits as transaction cost.";
-
-const DEFAULT_RATES = {
-  delivery: { brokerage: 0, sttBuy: 0.001, sttSell: 0.001, exch: 0.0000297, sebi: 0.000001, stampBuy: 0.000015, gst: 0.18, dp: 15.93 },
-  intraday: { brokerageRate: 0.0003, brokerageCap: 20, sttSell: 0.00025, exch: 0.0000297, sebi: 0.000001, stampBuy: 0.00003, gst: 0.18 },
-  futures: { brokerage: 20, sttSell: 0.0005, exch: 0.0000173, sebi: 0.000001, stampBuy: 0.00002, gst: 0.18 },
-  options: { brokerage: 20, sttSell: 0.0015, exch: 0.0003503, sebi: 0.000001, stampBuy: 0.00003, gst: 0.18 },
-  commodity: { brokerage: 20, cttSell: 0.0001, exch: 0.000026, sebi: 0.000001, stampBuy: 0.00002, gst: 0.18 },
+/* Session phases, driven by an internal clock rather than any exchange feed. */
+const PHASES = [
+  { id: "preopen", label: "Pre-open", from: 0, to: 15, note: "Orders are collected before the session begins. Nothing executes yet." },
+  { id: "opening", label: "Opening", from: 15, to: 30, note: "The session has opened. Early prices reflect participants responding to whatever changed while the market was shut." },
+  { id: "first15", label: "First 15 minutes", from: 30, to: 45, note: "The opening window. Activity is often heavier here. Observing before acting is a reasonable choice." },
+  { id: "main", label: "Main session", from: 45, to: 300, note: "The steady part of the session." },
+  { id: "closing", label: "Closing phase", from: 300, to: 330, note: "The session is heading toward its close. Review open positions and exposure." },
+  { id: "final10", label: "Final 10 minutes", from: 330, to: 345, note: "The last stretch of the simulated session." },
+  { id: "closed", label: "Closed", from: 345, to: 999, note: "The simulated session has ended. Orders cannot execute." },
+];
+const phaseAt = (m) => PHASES.find((p) => m >= p.from && m < p.to) || PHASES[PHASES.length - 1];
+const clockOf = (m) => {
+  const t = 9 * 60 + 15 + m;
+  return `${String(Math.floor(t / 60) % 24).padStart(2, "0")}:${String(t % 60).padStart(2, "0")}`;
 };
 
-const COMMODITIES = [
-  { id: "gold", name: "Gold", unit: "10 grams", lot: 100, price: 72000, tick: 1, note: "The standard contract. One rupee of price movement changes the position by ₹100." },
-  { id: "goldm", name: "Gold Mini", unit: "10 grams", lot: 10, price: 72000, tick: 1, note: "One tenth the size, so the margin required is far smaller." },
-  { id: "goldguinea", name: "Gold Guinea", unit: "8 grams", lot: 8, price: 57600, tick: 1, note: "The smallest gold contract, designed for smaller participants." },
-  { id: "silver", name: "Silver", unit: "1 kilogram", lot: 30, price: 88000, tick: 1, note: "Silver moves more sharply than gold in percentage terms." },
-  { id: "silverm", name: "Silver Mini", unit: "1 kilogram", lot: 5, price: 88000, tick: 1, note: "A fifth of the standard silver contract." },
-  { id: "crude", name: "Crude Oil", unit: "1 barrel", lot: 100, price: 6200, tick: 1, note: "Among the most volatile contracts traded." },
-];
-
-/* ---- ambient background: value moving through the frame ---------------- */
-function FloorAmbience() {
-  const reduced = useReducedMotion();
-  if (reduced) return null;
-  const bars = Array.from({ length: 26 }, (_, i) => ({
-    x: i * 44, h: 26 + ((i * 37) % 64), d: 7 + ((i * 13) % 9), delay: (i * 0.4) % 8,
-  }));
-  const coins = Array.from({ length: 14 }, (_, i) => ({
-    x: 4 + ((i * 71) % 92), s: 7 + ((i * 5) % 8), d: 11 + ((i * 7) % 10), delay: (i * 1.1) % 12,
-  }));
-  return (
-    <div className="floor-amb" aria-hidden="true">
-      <svg viewBox="0 0 1200 400" preserveAspectRatio="none" className="amb-graph">
-        {bars.map((b, i) => (
-          <rect key={i} x={b.x} y={400 - b.h} width="18" height={b.h} rx="3"
-            className="amb-bar" style={{ animationDuration: `${b.d}s`, animationDelay: `-${b.delay}s` }} />
-        ))}
-        <path className="amb-line"
-          d={bars.map((b, i) => `${i ? "L" : "M"}${b.x + 9} ${400 - b.h - 30}`).join(" ")} />
-      </svg>
-      <div className="amb-coins">
-        {coins.map((c, i) => (
-          <span key={i} className="amb-coin"
-            style={{ left: `${c.x}%`, width: c.s, height: c.s,
-              animationDuration: `${c.d}s`, animationDelay: `-${c.delay}s` }} />
-        ))}
-      </div>
-    </div>
-  );
+/* A controlled price path. Trend plus mean reversion plus phase-dependent
+   volatility, so movement looks plausible without being random noise. */
+function stepPrice(inst, state) {
+  const ph = state.phase;
+  const heat = ph === "opening" || ph === "first15" ? 1.9 : ph === "final10" ? 1.5 : ph === "preopen" ? 0.2 : 1;
+  const drift = state.trend * inst.vol * 0.35;
+  const revert = ((inst.price - state.last) / inst.price) * 0.06;
+  const shock = (Math.random() - 0.5) * 2 * inst.vol * heat;
+  const next = state.last * (1 + drift + revert + shock);
+  const t = inst.tick;
+  return Math.max(t, Math.round(next / t) * t);
 }
 
-/* ---- a number that counts to its value --------------------------------- */
-function Counter({ value, prefix = "₹", decimals = 2, className = "" }) {
-  const [shown, setShown] = useState(value);
-  const raf = useRef(0);
-  const from = useRef(value);
-  useEffect(() => {
-    const start = performance.now();
-    const a = from.current, b = value;
-    const step = (t) => {
-      const k = Math.min(1, (t - start) / 420);
-      const e = 1 - Math.pow(1 - k, 3);
-      setShown(a + (b - a) * e);
-      if (k < 1) raf.current = requestAnimationFrame(step);
-      else from.current = b;
-    };
-    cancelAnimationFrame(raf.current);
-    raf.current = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(raf.current);
-  }, [value]);
-  return <span className={className}>{prefix}{fmt(shown, decimals)}</span>;
-}
-
-/* ---- charge list that cascades in --------------------------------------- */
-function Charges({ rows, total, netLabel, netValue }) {
-  return (
-    <div className="chg">
-      {rows.map((r, i) => (
-        <div className="chg-row" key={r.k} style={{ animationDelay: `${i * 55}ms` }}>
-          <span>{r.k}<em>{r.note}</em></span>
-          <b><Counter value={r.v} /></b>
-        </div>
-      ))}
-      <div className="chg-total">
-        <span>Total charges</span>
-        <b><Counter value={total} className="hi" /></b>
-      </div>
-      {netLabel && (
-        <div className="chg-net">
-          <span>{netLabel}</span>
-          <b><Counter value={netValue} /></b>
-        </div>
-      )}
-    </div>
-  );
-}
-
-/* ---- 1. Equity order ticket -------------------------------------------- */
-function TradeEquity({ rates }) {
-  const [side, setSide] = useState("buy");
-  const [mode, setMode] = useState("delivery");
-  const [qty, setQty] = useState(100);
-  const [price, setPrice] = useState(1450);
-
-  const value = qty * price;
-  const r = mode === "delivery" ? rates.delivery : rates.intraday;
-  const brokerage = mode === "delivery" ? 0 : Math.min(r.brokerageCap, value * r.brokerageRate);
-  const stt = mode === "delivery"
-    ? value * (side === "buy" ? r.sttBuy : r.sttSell)
-    : (side === "sell" ? value * r.sttSell : 0);
-  const exch = value * r.exch;
-  const sebi = value * r.sebi;
-  const stamp = side === "buy" ? value * r.stampBuy : 0;
-  const gst = (brokerage + exch + sebi) * r.gst;
-  const dp = mode === "delivery" && side === "sell" ? r.dp : 0;
-  const total = brokerage + stt + exch + sebi + stamp + gst + dp;
-  const breakeven = side === "buy" && qty > 0 ? (value + total * 2) / qty : price;
-
-  const rows = [
-    { k: "Brokerage", v: brokerage, note: mode === "delivery" ? "Zero on delivery with many brokers" : "0.03% or ₹20, whichever is lower" },
-    { k: "Securities Transaction Tax", v: stt, note: mode === "delivery" ? "0.1% on both legs" : "0.025% on the sell leg only" },
-    { k: "Exchange transaction charges", v: exch, note: "Charged by the exchange on turnover" },
-    { k: "SEBI turnover fees", v: sebi, note: "₹10 per crore of turnover" },
-    { k: "Stamp duty", v: stamp, note: side === "buy" ? "Payable by the buyer" : "Not payable on the sell side" },
-    { k: "GST", v: gst, note: "18% on brokerage and transaction charges, not on the shares" },
-    { k: "Depository charges", v: dp, note: dp ? "Flat, per scrip, on delivery sell" : "Not applicable here" },
-  ];
-
-  return (
-    <div className="tk">
-      <div className="tk-toggles">
-        <div className="seg" role="tablist" aria-label="Side">
-          <button role="tab" aria-selected={side === "buy"} className={"seg-b buy" + (side === "buy" ? " on" : "")}
-            onClick={() => setSide("buy")}>Buy</button>
-          <button role="tab" aria-selected={side === "sell"} className={"seg-b sell" + (side === "sell" ? " on" : "")}
-            onClick={() => setSide("sell")}>Sell</button>
-        </div>
-        <div className="seg" role="tablist" aria-label="Product">
-          <button role="tab" aria-selected={mode === "delivery"} className={"seg-b" + (mode === "delivery" ? " on" : "")}
-            onClick={() => setMode("delivery")}>Delivery</button>
-          <button role="tab" aria-selected={mode === "intraday"} className={"seg-b" + (mode === "intraday" ? " on" : "")}
-            onClick={() => setMode("intraday")}>Intraday</button>
-        </div>
-      </div>
-
-      <div className="tk-fields">
-        <label className="tkf">
-          <span>Quantity</span>
-          <input type="number" min="1" value={qty} onChange={(e) => setQty(Math.max(0, Number(e.target.value)))} />
-        </label>
-        <label className="tkf">
-          <span>Price</span>
-          <input type="number" min="0" step="0.05" value={price} onChange={(e) => setPrice(Math.max(0, Number(e.target.value)))} />
-        </label>
-      </div>
-
-      <div className="tk-value">
-        <span>Order value</span>
-        <b><Counter value={value} decimals={2} /></b>
-      </div>
-
-      <Charges rows={rows} total={total}
-        netLabel={side === "buy" ? "Total payable" : "Net credit"}
-        netValue={side === "buy" ? value + total : value - total} />
-
-      {side === "buy" && qty > 0 && (
-        <div className="tk-be">
-          <p className="eyebrow">Break-even price</p>
-          <b><Counter value={breakeven} decimals={2} /></b>
-          <p className="small">
-            The price this share must reach before a round trip leaves you level, once the charges on
-            both the buy and the sell are counted. It is not the price you paid.
-          </p>
-        </div>
-      )}
-    </div>
-  );
-}
-
-/* ---- 2. Futures --------------------------------------------------------- */
-function TradeFutures({ rates }) {
-  const [lot, setLot] = useState(75);
-  const [entry, setEntry] = useState(22000);
-  const [now, setNow] = useState(22150);
-  const [marginPct, setMarginPct] = useState(12);
-
-  const value = lot * entry;
-  const margin = value * (marginPct / 100);
-  const pnl = (now - entry) * lot;
-  const pnlPctOnMargin = margin ? (pnl / margin) * 100 : 0;
-  const movePct = entry ? ((now - entry) / entry) * 100 : 0;
-  const wipeout = entry - margin / lot;
-
-  const r = rates.futures;
-  const sellValue = lot * now;
-  const brokerage = r.brokerage * 2;
-  const stt = sellValue * r.sttSell;
-  const exch = (value + sellValue) * r.exch;
-  const sebi = (value + sellValue) * r.sebi;
-  const stamp = value * r.stampBuy;
-  const gst = (brokerage + exch + sebi) * r.gst;
-  const total = brokerage + stt + exch + sebi + stamp + gst;
-
-  return (
-    <div className="tk">
-      <RiskNotice />
-      <div className="tk-fields three">
-        <label className="tkf"><span>Lot size</span>
-          <input type="number" min="1" value={lot} onChange={(e) => setLot(Math.max(1, Number(e.target.value)))} /></label>
-        <label className="tkf"><span>Entry price</span>
-          <input type="number" min="0" value={entry} onChange={(e) => setEntry(Math.max(0, Number(e.target.value)))} /></label>
-        <label className="tkf"><span>Current price</span>
-          <input type="number" min="0" value={now} onChange={(e) => setNow(Math.max(0, Number(e.target.value)))} /></label>
-      </div>
-
-      <Slider label="Margin required" value={marginPct} set={setMarginPct} min={5} max={30} suffix="%" />
-
-      <div className="tk-grid">
-        <div><span>Contract value</span><b><Counter value={value} decimals={0} /></b></div>
-        <div><span>Margin blocked</span><b><Counter value={margin} decimals={0} /></b></div>
-        <div><span>Price move</span>
-          <b className={movePct >= 0 ? "hi" : "bad"}>{movePct >= 0 ? "+" : ""}{fmt(movePct, 2)}%</b></div>
-        <div><span>Profit or loss</span>
-          <b className={pnl >= 0 ? "hi" : "bad"}><Counter value={pnl} decimals={0} /></b></div>
-        <div><span>Return on margin</span>
-          <b className={pnlPctOnMargin >= 0 ? "hi" : "bad"}>{pnlPctOnMargin >= 0 ? "+" : ""}{fmt(pnlPctOnMargin, 1)}%</b></div>
-        <div><span>Charges, round trip</span><b><Counter value={total} /></b></div>
-      </div>
-
-      <div className="marginbar">
-        <div className="mb-track">
-          <div className={"mb-fill " + (pnl >= 0 ? "up" : "down")}
-            style={{ width: `${Math.min(100, Math.abs(pnl) / Math.max(margin, 1) * 100)}%` }} />
-        </div>
-        <p className="small">
-          A move of {fmt(movePct, 2)}% in the underlying produced {fmt(pnlPctOnMargin, 1)}% on the margin
-          committed. That multiple is the leverage, and it applies identically in the other direction.
-          At an entry of {fmt(entry, 0)}, the margin would be fully consumed near {fmt(wipeout, 0)}.
-        </p>
-      </div>
-    </div>
-  );
-}
-
-/* ---- 3. Options --------------------------------------------------------- */
-function TradeOptions({ rates }) {
-  const [kind, setKind] = useState("call");
-  const [side, setSide] = useState("buy");
-  const [strike, setStrike] = useState(22000);
-  const [premium, setPremium] = useState(180);
-  const [lots, setLots] = useState(1);
-  const [expiry, setExpiry] = useState(22400);
-  const lotSize = 75;
-
-  const qty = lots * lotSize;
-  const premiumValue = premium * qty;
-  const intrinsic = kind === "call" ? Math.max(expiry - strike, 0) : Math.max(strike - expiry, 0);
-  const grossPerUnit = side === "buy" ? intrinsic - premium : premium - intrinsic;
-  const gross = grossPerUnit * qty;
-  const breakeven = kind === "call" ? strike + premium : strike - premium;
-
-  const r = rates.options;
-  const brokerage = r.brokerage * 2;
-  const stt = side === "sell" ? premiumValue * r.sttSell : 0;
-  const exch = premiumValue * r.exch * 2;
-  const sebi = premiumValue * r.sebi * 2;
-  const stamp = side === "buy" ? premiumValue * r.stampBuy : 0;
-  const gst = (brokerage + exch + sebi) * r.gst;
-  const total = brokerage + stt + exch + sebi + stamp + gst;
-  const net = gross - total;
-
-  const W = 560, H = 190, pad = 34;
-  const lo = strike * 0.94, hi = strike * 1.06;
-  const payoff = (spot) => {
-    const iv = kind === "call" ? Math.max(spot - strike, 0) : Math.max(strike - spot, 0);
-    const p = side === "buy" ? iv - premium : premium - iv;
-    return p * qty;
-  };
-  const pts = Array.from({ length: 61 }, (_, i) => {
-    const spot = lo + ((hi - lo) * i) / 60;
-    return { spot, p: payoff(spot) };
+function useSimEngine(running) {
+  const [minute, setMinute] = useState(0);
+  const [prices, setPrices] = useState(() => {
+    const o = {};
+    INSTRUMENTS.forEach((i) => { o[i.id] = { last: i.price, open: i.price, hist: [i.price], trend: (Math.random() - 0.45) * 2 }; });
+    return o;
   });
-  const maxAbs = Math.max(...pts.map((d) => Math.abs(d.p)), 1);
-  const X = (spot) => pad + ((spot - lo) / (hi - lo)) * (W - pad * 2);
-  const Y = (p) => H / 2 - (p / maxAbs) * (H / 2 - pad);
-  const path = pts.map((d, i) => `${i ? "L" : "M"}${X(d.spot).toFixed(1)} ${Y(d.p).toFixed(1)}`).join(" ");
-
-  return (
-    <div className="tk">
-      <RiskNotice />
-      <div className="tk-toggles">
-        <div className="seg">
-          <button className={"seg-b" + (kind === "call" ? " on" : "")} onClick={() => setKind("call")}>Call</button>
-          <button className={"seg-b" + (kind === "put" ? " on" : "")} onClick={() => setKind("put")}>Put</button>
-        </div>
-        <div className="seg">
-          <button className={"seg-b buy" + (side === "buy" ? " on" : "")} onClick={() => setSide("buy")}>Buy</button>
-          <button className={"seg-b sell" + (side === "sell" ? " on" : "")} onClick={() => setSide("sell")}>Sell</button>
-        </div>
-      </div>
-
-      <div className="tk-fields three">
-        <label className="tkf"><span>Strike</span>
-          <input type="number" value={strike} onChange={(e) => setStrike(Number(e.target.value))} /></label>
-        <label className="tkf"><span>Premium</span>
-          <input type="number" value={premium} onChange={(e) => setPremium(Math.max(0, Number(e.target.value)))} /></label>
-        <label className="tkf"><span>Lots</span>
-          <input type="number" min="1" value={lots} onChange={(e) => setLots(Math.max(1, Number(e.target.value)))} /></label>
-      </div>
-
-      <Slider label="Price at expiry" value={expiry} set={setExpiry} min={Math.round(strike * 0.9)} max={Math.round(strike * 1.1)} step={25} />
-
-      <svg viewBox={`0 0 ${W} ${H}`} className="sim-svg" role="img" aria-label="Payoff at expiry">
-        <rect x={pad} y={pad} width={W - pad * 2} height={H / 2 - pad} className="pay-zone up" />
-        <rect x={pad} y={H / 2} width={W - pad * 2} height={H / 2 - pad} className="pay-zone down" />
-        <line x1={pad} y1={H / 2} x2={W - pad} y2={H / 2} className="sim-axis" />
-        <line x1={X(breakeven)} y1={pad} x2={X(breakeven)} y2={H - pad} className="pay-be" />
-        <text x={X(breakeven)} y={pad - 8} textAnchor="middle" className="pay-be-t">Breakeven {fmt(breakeven, 0)}</text>
-        <path d={path} className="pay-line" />
-        <circle cx={X(Math.min(Math.max(expiry, lo), hi))} cy={Y(payoff(expiry))} r="5" className="sim-dot comp" />
-      </svg>
-
-      <div className="tk-grid">
-        <div><span>Premium paid or received</span><b><Counter value={premiumValue} decimals={0} /></b></div>
-        <div><span>Quantity</span><b>{fmt(qty)} units</b></div>
-        <div><span>Intrinsic value at expiry</span><b><Counter value={intrinsic * qty} decimals={0} /></b></div>
-        <div><span>Gross result</span>
-          <b className={gross >= 0 ? "hi" : "bad"}><Counter value={gross} decimals={0} /></b></div>
-        <div><span>Charges</span><b><Counter value={total} /></b></div>
-        <div><span>Net result</span>
-          <b className={net >= 0 ? "hi" : "bad"}><Counter value={net} decimals={0} /></b></div>
-      </div>
-
-      <p className="small" style={{ marginTop: 16 }}>
-        STT on options is charged on the premium at 0.15% on the sell side, not on the strike value.
-        {intrinsic === 0 && side === "buy" && " At this expiry price the option expires worthless and the entire premium is lost."}
-      </p>
-    </div>
-  );
-}
-
-/* ---- 4. Commodities ----------------------------------------------------- */
-function TradeCommodity({ rates }) {
-  const [id, setId] = useState("gold");
-  const [entry, setEntry] = useState(72000);
-  const [now, setNow] = useState(72400);
-  const [marginPct, setMarginPct] = useState(8);
-  const c = COMMODITIES.find((x) => x.id === id);
 
   useEffect(() => {
-    const x = COMMODITIES.find((k) => k.id === id);
-    setEntry(x.price);
-    setNow(Math.round(x.price * 1.005));
-  }, [id]);
+    if (!running) return;
+    const id = setInterval(() => {
+      setMinute((m) => (m >= 345 ? m : m + 1));
+    }, 1100);
+    return () => clearInterval(id);
+  }, [running]);
 
-  const value = c.lot * entry;
-  const margin = value * (marginPct / 100);
-  const pnl = (now - entry) * c.lot;
-  const onMargin = margin ? (pnl / margin) * 100 : 0;
-  const perRupee = c.lot;
+  useEffect(() => {
+    if (!running) return;
+    const ph = phaseAt(minute).id;
+    setPrices((prev) => {
+      const next = { ...prev };
+      INSTRUMENTS.forEach((i) => {
+        const st = prev[i.id];
+        if (ph === "closed") { next[i.id] = st; return; }
+        const p = stepPrice(i, { last: st.last, trend: st.trend, phase: ph });
+        const trend = Math.max(-1.6, Math.min(1.6, st.trend + (Math.random() - 0.5) * 0.22));
+        next[i.id] = { ...st, last: p, trend, hist: [...st.hist.slice(-179), p] };
+      });
+      return next;
+    });
+  }, [minute, running]);
 
-  const r = rates.commodity;
-  const sellValue = c.lot * now;
-  const brokerage = r.brokerage * 2;
-  const ctt = sellValue * r.cttSell;
-  const exch = (value + sellValue) * r.exch;
-  const sebi = (value + sellValue) * r.sebi;
-  const gst = (brokerage + exch + sebi) * r.gst;
-  const total = brokerage + ctt + exch + sebi + gst;
+  return { minute, prices, setMinute };
+}
 
+/* ---- chart ---- */
+function SimChart({ hist, open }) {
+  const W = 640, H = 200, pad = 8;
+  if (!hist || hist.length < 2) return <div className="simchart-empty" />;
+  const lo = Math.min(...hist, open), hi = Math.max(...hist, open);
+  const X = (i) => pad + (i / (hist.length - 1)) * (W - pad * 2);
+  const Y = (v) => H - pad - ((v - lo) / Math.max(hi - lo, 1e-9)) * (H - pad * 2);
+  const line = hist.map((v, i) => `${i ? "L" : "M"}${X(i).toFixed(1)} ${Y(v).toFixed(1)}`).join(" ");
+  const up = hist[hist.length - 1] >= open;
   return (
-    <div className="tk">
-      <div className="cmd-picker" role="tablist" aria-label="Commodity">
-        {COMMODITIES.map((x) => (
-          <button key={x.id} role="tab" aria-selected={id === x.id}
-            className={"tab" + (id === x.id ? " on" : "")} onClick={() => setId(x.id)}>{x.name}</button>
-        ))}
-      </div>
-
-      <div className="cmd-spec">
-        <div><span>Contract unit</span><b>{c.unit}</b></div>
-        <div><span>Lot size</span><b>{c.lot}</b></div>
-        <div><span>One rupee of price move</span><b>₹{fmt(perRupee)}</b></div>
-      </div>
-
-      <div className="tk-fields">
-        <label className="tkf"><span>Entry price</span>
-          <input type="number" value={entry} onChange={(e) => setEntry(Math.max(0, Number(e.target.value)))} /></label>
-        <label className="tkf"><span>Current price</span>
-          <input type="number" value={now} onChange={(e) => setNow(Math.max(0, Number(e.target.value)))} /></label>
-      </div>
-
-      <Slider label="Margin required" value={marginPct} set={setMarginPct} min={4} max={20} suffix="%" />
-
-      <div className="tk-grid">
-        <div><span>Contract value</span><b><Counter value={value} decimals={0} /></b></div>
-        <div><span>Margin blocked</span><b><Counter value={margin} decimals={0} /></b></div>
-        <div><span>Profit or loss</span>
-          <b className={pnl >= 0 ? "hi" : "bad"}><Counter value={pnl} decimals={0} /></b></div>
-        <div><span>Return on margin</span>
-          <b className={onMargin >= 0 ? "hi" : "bad"}>{onMargin >= 0 ? "+" : ""}{fmt(onMargin, 1)}%</b></div>
-        <div><span>Charges, round trip</span><b><Counter value={total} /></b></div>
-        <div><span>Commodities Transaction Tax</span><b><Counter value={ctt} /></b></div>
-      </div>
-
-      <p className="small" style={{ marginTop: 14 }}>{c.note} Prices shown are placeholders you can change, not market quotes.</p>
-    </div>
+    <svg viewBox={`0 0 ${W} ${H}`} className="simchart" role="img" aria-label="Simulated price path">
+      <line x1={pad} y1={Y(open)} x2={W - pad} y2={Y(open)} className="simchart-open" />
+      <path d={`${line} L${X(hist.length - 1)} ${H - pad} L${X(0)} ${H - pad} Z`}
+        className={"simchart-area " + (up ? "up" : "down")} />
+      <path d={line} className={"simchart-line " + (up ? "up" : "down")} />
+      <circle cx={X(hist.length - 1)} cy={Y(hist[hist.length - 1])} r="4"
+        className={"simchart-dot " + (up ? "up" : "down")} />
+    </svg>
   );
 }
 
-function RiskNotice() {
-  return (
-    <div className="risk">
-      <p className="risk-h">Risk disclosure for Futures and Options</p>
-      <p className="risk-b">{SEBI_RISK}</p>
-    </div>
-  );
-}
-
-/* ---- the floor: entry gate, phone frame, four simulators ---------------- */
-const FLOOR_TABS = [
-  { id: "equity", name: "Stocks", el: TradeEquity },
-  { id: "futures", name: "Futures", el: TradeFutures },
-  { id: "options", name: "Options", el: TradeOptions },
-  { id: "commodity", name: "Commodities", el: TradeCommodity },
-];
-
-function TradingFloorPage() {
+/* ---- the simulator ---- */
+function SimulatorPage() {
   const [name, setName] = useState("");
-  const [entered, setEntered] = useState(false);
+  const [stage, setStage] = useState("gate");      // gate, notice, live
   const [adult, setAdult] = useState(false);
-  const [tab, setTab] = useState("equity");
-  const [rates, setRates] = useState(DEFAULT_RATES);
+  const [sel, setSel] = useState("gold");
+  const [side, setSide] = useState("buy");
+  const [otype, setOtype] = useState("market");
+  const [qty, setQty] = useState(1);
+  const [limit, setLimit] = useState(0);
+  const [review, setReview] = useState(null);
+  const [exec, setExec] = useState(null);
+  const [orders, setOrders] = useState([]);
+  const [positions, setPositions] = useState([]);
+  const [cash, setCash] = useState(SIM_START_CAPITAL);
+  const [realised, setRealised] = useState(0);
+  const [toast, setToast] = useState(null);
+  const [tab, setTab] = useState("positions");
+  const [insight, setInsight] = useState(null);
+  const [seenPhase, setSeenPhase] = useState({});
+  const [summary, setSummary] = useState(false);
+  const [confirmReset, setConfirmReset] = useState(false);
+
+  const { minute, prices } = useSimEngine(stage === "live");
+  const phase = phaseAt(minute);
+  const inst = INSTRUMENTS.find((i) => i.id === sel);
+  const px = prices[sel];
+  const last = px.last;
+  const chg = last - px.open;
+  const chgPct = (chg / px.open) * 100;
+  const tradable = ["opening", "first15", "main", "closing", "final10"].includes(phase.id);
+
+  const notify = (title, body, tone = "") => {
+    setToast({ title, body, tone, k: Date.now() });
+    setTimeout(() => setToast((t) => (t && t.k ? null : t)), 3600);
+  };
 
   useEffect(() => {
-    let alive = true;
-    fetch("fin-data/trade-rates.json", { cache: "no-cache" })
-      .then((r) => (r.ok ? r.json() : null))
-      .then((j) => { if (alive && j) setRates({ ...DEFAULT_RATES, ...j }); })
-      .catch(() => {});
-    return () => { alive = false; };
-  }, []);
+    if (stage !== "live") return;
+    if (["opening", "first15", "closing", "final10", "closed"].includes(phase.id) && !seenPhase[phase.id]) {
+      setSeenPhase((s) => ({ ...s, [phase.id]: true }));
+      notify(phase.label, phase.note);
+      if (phase.id === "closed") setSummary(true);
+    }
+  }, [phase.id, stage]);
 
-  const Active = FLOOR_TABS.find((t) => t.id === tab).el;
-  const hour = new Date().getHours();
-  const greet = hour < 12 ? "Good morning" : hour < 17 ? "Good afternoon" : "Good evening";
+  const contractValue = (i, price, q) => i.lot * price * q;
+  const marginFor = (i, price, q) => contractValue(i, price, q) * i.margin;
+  const chargesFor = (i, price, q) => {
+    const v = contractValue(i, price, q);
+    const brokerage = 20;
+    const txn = v * 0.000026;
+    const stt = side === "sell" ? v * 0.0001 : 0;
+    const gst = (brokerage + txn) * 0.18;
+    return brokerage + txn + stt + gst;
+  };
 
-  if (!entered) {
+  const openReview = () => {
+    if (!tradable) { notify("Market closed", "This simulated session is not accepting orders in the current phase."); return; }
+    if (!qty || qty < 1) { notify("Invalid quantity", "Enter a quantity of at least one lot."); return; }
+    const price = otype === "market" ? last : Number(limit) || last;
+    const margin = marginFor(inst, price, qty);
+    const charges = chargesFor(inst, price, qty);
+    if (margin + charges > cash) {
+      notify("Insufficient simulated balance",
+        `This order needs ₹${fmt(margin + charges)} of simulated capital. You have ₹${fmt(cash)}. Reduce the quantity or choose a smaller contract.`);
+      return;
+    }
+    setReview({ price, margin, charges, value: contractValue(inst, price, qty) });
+  };
+
+  const confirmOrder = () => {
+    const r = review;
+    setReview(null);
+    setExec("submitted");
+    const id = `FH-20260830-${String(orders.length + 1).padStart(4, "0")}`;
+    notify("Order submitted", `${id} sent to the simulator.`);
+    setTimeout(() => setExec("executing"), 450);
+    setTimeout(() => {
+      const fill = otype === "market" ? last : r.price;
+      setExec("done");
+      setOrders((o) => [{ id, t: clockOf(minute), inst: inst.name, side, otype, qty, price: fill, status: "Executed" }, ...o]);
+      setCash((c) => c - r.margin - r.charges);
+
+      setPositions((ps) => {
+        const i = ps.findIndex((p) => p.id === inst.id && p.side === side);
+        const opp = ps.findIndex((p) => p.id === inst.id && p.side !== side);
+        if (opp >= 0) {
+          const p = ps[opp];
+          const closeQty = Math.min(p.qty, qty);
+          const dir = p.side === "buy" ? 1 : -1;
+          const pnl = (fill - p.avg) * dir * inst.lot * closeQty;
+          setRealised((x) => x + pnl);
+          setCash((c) => c + p.margin * (closeQty / p.qty) + pnl);
+          notify("Position closed", `Realised ${pnl >= 0 ? "gain" : "loss"} of ₹${fmt(Math.abs(pnl))}.`, pnl >= 0 ? "up" : "down");
+          const left = p.qty - closeQty;
+          const rest = ps.filter((_, k) => k !== opp);
+          return left > 0 ? [...rest, { ...p, qty: left, margin: p.margin * (left / p.qty) }] : rest;
+        }
+        if (i >= 0) {
+          const p = ps[i];
+          const total = p.qty + qty;
+          const avg = (p.avg * p.qty + fill * qty) / total;
+          const copy = [...ps];
+          copy[i] = { ...p, qty: total, avg, margin: p.margin + r.margin };
+          return copy;
+        }
+        return [...ps, { id: inst.id, name: inst.name, lot: inst.lot, side, qty, avg: fill, margin: r.margin }];
+      });
+
+      notify("Order executed", `${side === "buy" ? "Bought" : "Sold"} ${qty} lot${qty > 1 ? "s" : ""} of ${inst.name} at ${fmt(fill, 2)}.`, "up");
+      setInsight({
+        title: side === "buy" ? "You opened a long position" : "You opened a short position",
+        body: side === "buy"
+          ? `Simulated capital of ₹${fmt(r.margin)} is now blocked as margin. Your exposure to ${inst.name} is ₹${fmt(r.value)}, which is ${(r.value / r.margin).toFixed(1)} times the capital committed. Profit and loss will now respond to every price move, in both directions.`
+          : `You have agreed to deliver at ${fmt(fill, 2)}. A fall in price now produces a gain and a rise produces a loss, which is the reverse of a long position. Margin of ₹${fmt(r.margin)} is blocked.`,
+      });
+      setTimeout(() => setExec(null), 900);
+    }, 1250);
+  };
+
+  const closePosition = (p) => {
+    if (!tradable) { notify("Market closed", "Positions cannot be closed in the current phase."); return; }
+    const price = prices[p.id].last;
+    const i = INSTRUMENTS.find((x) => x.id === p.id);
+    const dir = p.side === "buy" ? 1 : -1;
+    const pnl = (price - p.avg) * dir * i.lot * p.qty;
+    const charges = 20 + contractValue(i, price, p.qty) * 0.000026;
+    setRealised((x) => x + pnl);
+    setCash((c) => c + p.margin + pnl - charges);
+    setPositions((ps) => ps.filter((x) => !(x.id === p.id && x.side === p.side)));
+    setOrders((o) => [{
+      id: `FH-20260830-${String(o.length + 1).padStart(4, "0")}`, t: clockOf(minute), inst: p.name,
+      side: p.side === "buy" ? "sell" : "buy", otype: "market", qty: p.qty, price, status: "Executed",
+    }, ...o]);
+    notify("Position closed", `Realised ${pnl >= 0 ? "gain" : "loss"} of ₹${fmt(Math.abs(pnl))}.`, pnl >= 0 ? "up" : "down");
+  };
+
+  const unreal = positions.reduce((sum, p) => {
+    const i = INSTRUMENTS.find((x) => x.id === p.id);
+    const dir = p.side === "buy" ? 1 : -1;
+    return sum + (prices[p.id].last - p.avg) * dir * i.lot * p.qty;
+  }, 0);
+  const blocked = positions.reduce((s, p) => s + p.margin, 0);
+  const portfolio = cash + blocked + unreal;
+
+  const resetAll = () => {
+    setOrders([]); setPositions([]); setCash(SIM_START_CAPITAL); setRealised(0);
+    setInsight(null); setSummary(false); setConfirmReset(false);
+    notify("Simulation reset", "Positions, orders and profit and loss have been cleared.");
+  };
+
+  /* ---- entry ---- */
+  if (stage !== "live") {
     return (
       <>
-        <Crumbs items={[["FinHub", "#/"], ["Trading floor"]]} />
+        <Crumbs items={[["FinHub", "#/"], ["Simulator"]]} />
         <div className="floor-gate">
           <FloorAmbience />
           <div className="wrap-n gate-in">
-            <Reveal><p className="kicker">Simulation</p></Reveal>
-            <Reveal delay={70}>
-              <h1 className="h-page" style={{ marginTop: 14 }}>The Trading Floor</h1>
-            </Reveal>
+            <Reveal><p className="kicker">Educational market simulation</p></Reveal>
+            <Reveal delay={70}><h1 className="h-page" style={{ marginTop: 14 }}>FinHub Simulator</h1></Reveal>
             <Reveal delay={130}>
               <p className="lede" style={{ marginTop: 18 }}>
-                A working model of an order screen. You set every number yourself, and it shows what a
-                trade actually costs once brokerage, taxes, exchange charges and duty are counted.
+                A complete market workflow, from session open to close. Place an order, watch it
+                execute, hold a position while the price moves, and see what your decision actually did.
               </p>
             </Reveal>
 
-            <Reveal delay={190}>
-              <div className="gate-warn">
-                <p className="risk-h">This is a simulator</p>
-                <p className="risk-b">
-                  Nothing here connects to a market. There are no live prices, no orders are placed,
-                  no money moves and no account is opened. FinHub does not ask for a PAN, a bank
-                  account, a UPI identifier or any payment detail, and never will. This exists to show
-                  how the mechanics work, and it is not investment advice.
-                </p>
-              </div>
-            </Reveal>
+            {stage === "gate" && (
+              <Reveal delay={200}>
+                <div className="gate-form">
+                  <label className="tkf wide">
+                    <span>What should the screen call you</span>
+                    <input value={name} onChange={(e) => setName(e.target.value)} maxLength={24}
+                      placeholder="A first name is enough"
+                      onKeyDown={(e) => { if (e.key === "Enter" && adult) setStage("notice"); }} />
+                  </label>
+                  <label className="gate-check">
+                    <input type="checkbox" checked={adult} onChange={(e) => setAdult(e.target.checked)} />
+                    <span>I confirm I am 18 years of age or older.</span>
+                  </label>
+                  <button className="btn primary" disabled={!adult} onClick={() => setStage("notice")}>
+                    Continue
+                  </button>
+                  <p className="small">
+                    Nothing you type is stored or sent anywhere. It stays in this browser tab.
+                  </p>
+                </div>
+              </Reveal>
+            )}
 
-            <Reveal delay={250}>
-              <div className="gate-form">
-                <label className="tkf wide">
-                  <span>What should the screen call you</span>
-                  <input value={name} onChange={(e) => setName(e.target.value)} maxLength={24}
-                    placeholder="A first name is enough" />
-                </label>
-                <label className="gate-check">
-                  <input type="checkbox" checked={adult} onChange={(e) => setAdult(e.target.checked)} />
-                  <span>I confirm I am 18 years of age or older.</span>
-                </label>
-                <button className="btn primary" disabled={!adult}
-                  onClick={() => setEntered(true)}>Enter the floor</button>
-                <p className="small">
-                  Nothing you type is stored or sent anywhere. It stays in this browser tab and
-                  disappears when you close it.
-                </p>
-              </div>
-            </Reveal>
+            {stage === "notice" && (
+              <Reveal>
+                <div className="notice-card">
+                  <p className="notice-h">FinHub Simulator</p>
+                  <p className="notice-sub">Educational market simulation</p>
+                  <div className="notice-body">
+                    <p>This simulator is designed for educational purposes only.</p>
+                    <ul>
+                      <li>No real orders are placed.</li>
+                      <li>No live market prices are used.</li>
+                      <li>No real money is involved.</li>
+                      <li>All prices, market movements and executions are simulated.</li>
+                    </ul>
+                    <p>
+                      It exists to help you understand how trading workflows, orders, positions, risk
+                      and market behaviour work. FinHub does not ask for a PAN, a bank account, a UPI
+                      identifier or any payment detail, and never will.
+                    </p>
+                  </div>
+                  <div className="risk" style={{ marginTop: 18 }}>
+                    <p className="risk-h">Risk disclosure for Futures and Options</p>
+                    <p className="risk-b">{SEBI_RISK}</p>
+                    <p className="risk-b" style={{ marginTop: 10, fontWeight: 600 }}>
+                      No orders are placed. No prices are live. Educational simulation only.
+                    </p>
+                  </div>
+                  <button className="btn primary" style={{ marginTop: 22 }}
+                    onClick={() => setStage("live")}>Enter the simulator</button>
+                </div>
+              </Reveal>
+            )}
           </div>
         </div>
       </>
     );
   }
 
+  /* ---- live simulator ---- */
   return (
     <>
-      <Crumbs items={[["FinHub", "#/"], ["Trading floor"]]} />
-      <div className="floor">
-        <FloorAmbience />
-        <div className="wrap floor-in">
-          <div className="floor-head">
-            <div>
-              <p className="kicker">Simulation only</p>
-              <h1 style={{ fontSize: "clamp(24px,4vw,34px)", marginTop: 10 }}>
-                {greet}{name ? `, ${name}` : ""}
-              </h1>
-            </div>
-            <button className="btn ghost" onClick={() => setEntered(false)}>Leave the floor</button>
+      <div className="sim">
+        <div className="sim-top">
+          <div className="sim-brand">
+            <span className="sim-dot" />
+            <b>FinHub Simulator</b>
+            <span className="sim-flag">Simulated market</span>
           </div>
-
-          <div className="phone">
-            <div className="phone-bar">
-              <span className="phone-dot" />
-              <span className="phone-title">FinHub Simulator</span>
-              <span className="phone-tag">Not a broker</span>
-            </div>
-
-            <div className="phone-tabs" role="tablist" aria-label="Segment">
-              {FLOOR_TABS.map((t) => (
-                <button key={t.id} role="tab" aria-selected={tab === t.id}
-                  className={"ptab" + (tab === t.id ? " on" : "")} onClick={() => setTab(t.id)}>{t.name}</button>
-              ))}
-            </div>
-
-            <div className="phone-body" key={tab}>
-              <Active rates={rates} />
-            </div>
-
-            <div className="phone-foot">
-              No orders are placed. No prices are live. Educational simulation only.
-            </div>
-          </div>
-
-          <div className="chips" style={{ marginTop: 30, justifyContent: "center" }}>
-            <a className="chip" href="#/tax">How this is taxed →</a>
-            <a className="chip" href="#/concept/options">Options concept →</a>
-            <a className="chip" href="#/concept/futures">Futures concept →</a>
+          <div className="sim-top-r">
+            <div className="sim-stat"><span>Session</span><b>{clockOf(minute)}</b></div>
+            <div className="sim-stat"><span>Phase</span><b className={phase.id === "closed" ? "bad" : "hi"}>{phase.label}</b></div>
+            <div className="sim-stat"><span>Portfolio</span><b><Counter value={portfolio} decimals={0} /></b></div>
+            <button className="tbtn" onClick={() => setConfirmReset(true)}>Reset</button>
           </div>
         </div>
-      </div>
-    </>
-  );
-}
 
-/* ===========================================================================
-   TELEMETRY
-   Year by year price history, one chart per series. The line draws itself,
-   a playhead sweeps the timeline, values count as it moves, drawdowns shade
-   themselves and market events surface as the playhead passes them.
+        <div className="sim-grid">
+          <aside className="sim-watch">
+            <p className="sim-h">Watchlist</p>
+            {INSTRUMENTS.map((i) => {
+              const p = prices[i.id];
+              const d = ((p.last - p.open) / p.open) * 100;
+              return (
+                <button key={i.id} className={"wrow" + (sel === i.id ? " on" : "")}
+                  onClick={() => { setSel(i.id); setLimit(0); }}>
+                  <span className="wname">{i.name}<em>{i.exch}</em></span>
+                  <span className="wpx">
+                    {fmt(p.last, i.tick < 1 ? 2 : 0)}
+                    <em className={d >= 0 ? "up" : "down"}>{d >= 0 ? "+" : ""}{fmt(d, 2)}%</em>
+                  </span>
+                </button>
+              );
+            })}
+          </aside>
 
-   Reads fin-data/index-history.json. No figure is written into this file,
-   because index history is data, not code. Until the file is uploaded the
-   page says so plainly rather than showing anything invented.
-
-   Expected shape:
-   {
-     "asOf": "verified 30 August 2026",
-     "series": [
-       { "id":"sensex", "name":"BSE Sensex", "unit":"Index points",
-         "base":"1978-79 = 100", "source":"BSE India",
-         "points":[{"year":1979,"close":100}, ...] }
-     ],
-     "events": [{ "year":1992, "label":"Securities scam", "note":"..." }]
-   }
-   =========================================================================== */
-
-const MARKET_EVENTS = [
-  { year: 1987, label: "Black Monday", note: "A single day collapse in global equity markets in October." },
-  { year: 1991, label: "Balance of payments crisis", note: "Reserves fell to weeks of cover, leading to liberalisation." },
-  { year: 1992, label: "Securities scam", note: "Diverted bank funds unwound, and the market fell sharply." },
-  { year: 1997, label: "Asian financial crisis", note: "Currency and banking stress across east and southeast Asia." },
-  { year: 2000, label: "Dot com unwind", note: "Technology valuations corrected worldwide." },
-  { year: 2001, label: "Market crisis", note: "Concentrated leveraged positions unwound; carry forward ended." },
-  { year: 2004, label: "Election shock", note: "An unexpected result triggered a one day fall and trading halt." },
-  { year: 2008, label: "Global financial crisis", note: "Credit markets seized after the failure of a major investment bank." },
-  { year: 2011, label: "European debt stress", note: "Sovereign debt concerns across the euro area." },
-  { year: 2013, label: "Taper tantrum", note: "Signals of reduced US stimulus pulled capital from emerging markets." },
-  { year: 2015, label: "Global sell off", note: "Growth concerns in China and commodity weakness." },
-  { year: 2016, label: "Demonetisation", note: "High value notes withdrawn from circulation at short notice." },
-  { year: 2018, label: "NBFC liquidity crisis", note: "A large infrastructure lender defaulted, tightening credit broadly." },
-  { year: 2020, label: "Covid crash", note: "The fastest fall into a bear market on record, followed by recovery." },
-  { year: 2022, label: "Inflation and rate shock", note: "Central banks raised rates rapidly as inflation rose." },
-];
-
-function useIndexHistory() {
-  const [d, setD] = useState(null);
-  const [tried, setTried] = useState(false);
-  useEffect(() => {
-    let alive = true;
-    fetch("fin-data/index-history.json", { cache: "no-cache" })
-      .then((r) => (r.ok ? r.json() : null))
-      .then((j) => { if (alive) { if (j) setD(j); setTried(true); } })
-      .catch(() => { if (alive) setTried(true); });
-    return () => { alive = false; };
-  }, []);
-  return { data: d, tried };
-}
-
-/* ---- one series, one chart ------------------------------------------- */
-function TelemetryChart({ s, events }) {
-  const reduced = useReducedMotion();
-  const wrapRef = useRef(null);
-  const [seen, setSeen] = useState(false);
-  const [playing, setPlaying] = useState(false);
-  const [idx, setIdx] = useState(null);
-  const [log, setLog] = useState(false);
-  const [zoom, setZoom] = useState([0, 100]);
-  const raf = useRef(0);
-
-  const pts = useMemo(
-    () => (s.points || []).filter((p) => p && typeof p.close === "number").sort((a, b) => a.year - b.year),
-    [s.points]
-  );
-
-  useEffect(() => {
-    const el = wrapRef.current; if (!el) return;
-    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setSeen(true); io.disconnect(); } },
-      { rootMargin: "-10% 0px" });
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
-
-  const from = Math.floor((zoom[0] / 100) * (pts.length - 1));
-  const to = Math.ceil((zoom[1] / 100) * (pts.length - 1));
-  const view = pts.slice(Math.max(0, from), Math.max(from + 2, to + 1));
-
-  useEffect(() => {
-    if (!playing || view.length < 2) return;
-    let i = idx == null || idx >= view.length - 1 ? 0 : idx;
-    const tick = () => {
-      i += 1;
-      if (i >= view.length) { setPlaying(false); setIdx(view.length - 1); return; }
-      setIdx(i);
-      raf.current = window.setTimeout(tick, 420);
-    };
-    raf.current = window.setTimeout(tick, 420);
-    return () => clearTimeout(raf.current);
-  }, [playing, view.length]);
-
-  if (pts.length < 2) return null;
-
-  const W = 760, H = 300, padL = 60, padR = 24, padT = 26, padB = 42;
-  const vals = view.map((p) => p.close);
-  const lo = Math.min(...vals), hi = Math.max(...vals);
-  const tf = (v) => (log ? Math.log10(Math.max(v, 0.0001)) : v);
-  const tlo = tf(lo), thi = tf(hi);
-  const X = (i) => padL + (i / (view.length - 1)) * (W - padL - padR);
-  const Y = (v) => H - padB - ((tf(v) - tlo) / Math.max(thi - tlo, 1e-9)) * (H - padT - padB);
-
-  const line = view.map((p, i) => `${i ? "L" : "M"}${X(i).toFixed(1)} ${Y(p.close).toFixed(1)}`).join(" ");
-  const area = `${line} L${X(view.length - 1).toFixed(1)} ${H - padB} L${X(0).toFixed(1)} ${H - padB} Z`;
-
-  // peak to trough drawdown within the visible window
-  let peak = -Infinity, peakI = 0, ddStart = 0, ddEnd = 0, worst = 0;
-  view.forEach((p, i) => {
-    if (p.close > peak) { peak = p.close; peakI = i; }
-    const dd = (p.close - peak) / peak;
-    if (dd < worst) { worst = dd; ddStart = peakI; ddEnd = i; }
-  });
-
-  const cur = idx == null ? view.length - 1 : idx;
-  const point = view[cur];
-  const first = view[0];
-  const growth = first.close ? ((point.close - first.close) / first.close) * 100 : 0;
-  const cagrYears = Math.max(1, point.year - first.year);
-  const cagr = first.close > 0 ? (Math.pow(point.close / first.close, 1 / cagrYears) - 1) * 100 : 0;
-
-  const evInWindow = (events || MARKET_EVENTS).filter(
-    (e) => e.year >= view[0].year && e.year <= view[view.length - 1].year
-  );
-  const evAtOrBefore = evInWindow.filter((e) => e.year <= point.year).slice(-1)[0];
-
-  // annual movement, computed from the price series rather than supplied
-  const moves = pts.map((p, i) => ({
-    year: p.year,
-    close: p.close,
-    move: i === 0 || !pts[i - 1].close ? null : ((p.close - pts[i - 1].close) / pts[i - 1].close) * 100,
-  }));
-  const withMove = moves.filter((m) => m.move != null);
-  const best = withMove.length ? withMove.reduce((a, b) => (b.move > a.move ? b : a)) : null;
-  const worstYr = withMove.length ? withMove.reduce((a, b) => (b.move < a.move ? b : a)) : null;
-  const viewMoves = moves.filter((m) => m.year >= view[0].year && m.year <= view[view.length - 1].year);
-  const maxMove = Math.max(...viewMoves.map((m) => Math.abs(m.move || 0)), 1);
-  const curMove = moves.find((m) => m.year === point.year);
-
-  const ticks = 4;
-  const gridVals = Array.from({ length: ticks + 1 }, (_, i) => lo + ((hi - lo) * i) / ticks);
-
-  return (
-    <section className="tel" ref={wrapRef}>
-      <header className="tel-head">
-        <div>
-          <h3 className="tel-name">{s.name}</h3>
-          <p className="small">
-            {s.unit || "Index points"}
-            {s.base ? ` · ${s.base}` : ""}
-            {` · ${pts[0].year} to ${pts[pts.length - 1].year}`}
-          </p>
-        </div>
-        <div className="tel-ctl">
-          <button className={"tbtn" + (playing ? " on" : "")}
-            onClick={() => { if (!playing && (idx == null || idx >= view.length - 1)) setIdx(0); setPlaying(!playing); }}
-            aria-label={playing ? "Pause" : "Play"}>
-            {playing ? "Pause" : "Play"}
-          </button>
-          <button className="tbtn" onClick={() => { setPlaying(false); setIdx(null); }}>Reset</button>
-          <button className={"tbtn" + (log ? " on" : "")} onClick={() => setLog(!log)}
-            aria-pressed={log}>{log ? "Log" : "Linear"}</button>
-        </div>
-      </header>
-
-      <div className="tel-readout">
-        <div><span>Year</span><b>{point.year}</b></div>
-        <div><span>Close</span><b className="hi">{fmt(point.close, 2)}</b></div>
-        <div><span>Change from {first.year}</span>
-          <b className={growth >= 0 ? "hi" : "bad"}>{growth >= 0 ? "+" : ""}{fmt(growth, 1)}%</b></div>
-        <div><span>Move that year</span>
-          <b className={curMove && curMove.move != null ? (curMove.move >= 0 ? "hi" : "bad") : ""}>
-            {curMove && curMove.move != null ? `${curMove.move >= 0 ? "+" : ""}${fmt(curMove.move, 2)}%` : "—"}</b></div>
-        <div><span>Compound annual rate</span>
-          <b className={cagr >= 0 ? "hi" : "bad"}>{cagr >= 0 ? "+" : ""}{fmt(cagr, 2)}%</b></div>
-      </div>
-
-      <div className="tel-plot">
-        <svg viewBox={`0 0 ${W} ${H}`} className="tel-svg" role="img"
-          aria-label={`${s.name} yearly closing values from ${view[0].year} to ${view[view.length - 1].year}`}>
-          <defs>
-            <linearGradient id={`g-${s.id}`} x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="var(--teal)" stopOpacity=".22" />
-              <stop offset="100%" stopColor="var(--teal)" stopOpacity="0" />
-            </linearGradient>
-          </defs>
-
-          {gridVals.map((v, i) => (
-            <g key={i}>
-              <line x1={padL} y1={Y(v)} x2={W - padR} y2={Y(v)} className="tel-grid" />
-              <text x={padL - 10} y={Y(v) + 4} textAnchor="end" className="tel-axis">
-                {v >= 10000 ? `${(v / 1000).toFixed(0)}k` : fmt(v, 0)}
-              </text>
-            </g>
-          ))}
-
-          {worst < -0.08 && (
-            <rect x={X(ddStart)} y={padT} width={Math.max(2, X(ddEnd) - X(ddStart))} height={H - padT - padB}
-              className="tel-dd" />
-          )}
-
-          <path d={area} fill={`url(#g-${s.id})`} className={"tel-area" + (seen ? " in" : "")} />
-          <path d={line} className={"tel-line" + (seen && !reduced ? " draw" : " in")}
-            style={{ strokeDasharray: 4000, strokeDashoffset: seen || reduced ? 0 : 4000 }} />
-
-          {evInWindow.map((e) => {
-            const i = view.findIndex((p) => p.year === e.year);
-            if (i < 0) return null;
-            const passed = e.year <= point.year;
-            return (
-              <g key={e.year} className={"tel-ev" + (passed ? " on" : "")}>
-                <line x1={X(i)} y1={padT} x2={X(i)} y2={H - padB} />
-                <circle cx={X(i)} cy={Y(view[i].close)} r="4" />
-              </g>
-            );
-          })}
-
-          <line x1={X(cur)} y1={padT} x2={X(cur)} y2={H - padB} className="tel-head-line" />
-          <circle cx={X(cur)} cy={Y(point.close)} r="6" className="tel-dot" />
-
-          <text x={X(0)} y={H - 14} className="tel-axis">{view[0].year}</text>
-          <text x={W - padR} y={H - 14} textAnchor="end" className="tel-axis">{view[view.length - 1].year}</text>
-        </svg>
-      </div>
-
-      <div className="tel-moves">
-        <p className="eyebrow" style={{ marginBottom: 10 }}>Annual movement</p>
-        <div className="mv-rows">
-          {viewMoves.map((m) => {
-            const up = (m.move || 0) >= 0;
-            const w = (Math.abs(m.move || 0) / maxMove) * 50;
-            const on = m.year === point.year;
-            return (
-              <div className={"mv-r" + (on ? " on" : "")} key={m.year}
-                title={`${m.year}: ${m.move == null ? "no prior year" : fmt(m.move, 2) + "%"}`}>
-                <span className="mv-y">{m.year}</span>
-                <span className="mv-track">
-                  <span className={"mv-b " + (up ? "up" : "down")}
-                    style={{ width: `${w}%`, [up ? "left" : "right"]: "50%" }} />
-                  <span className="mv-zero" />
-                </span>
-                <span className={"mv-v " + (m.move == null ? "" : up ? "up" : "down")}>
-                  {m.move == null ? "—" : `${up ? "+" : ""}${fmt(m.move, 1)}%`}
+          <main className="sim-main">
+            <div className="sim-inst">
+              <div>
+                <p className="sim-inst-n">{inst.name}<span>{inst.contract}</span></p>
+                <p className="small">{inst.exch} · Lot {inst.lot} · {inst.unit}</p>
+              </div>
+              <div className="sim-price">
+                <b><Counter value={last} prefix="" decimals={inst.tick < 1 ? 2 : 0} /></b>
+                <span className={chg >= 0 ? "up" : "down"}>
+                  {chg >= 0 ? "+" : ""}{fmt(chg, 2)} ({chg >= 0 ? "+" : ""}{fmt(chgPct, 2)}%)
                 </span>
               </div>
-            );
-          })}
-        </div>
-        {best && worstYr && (
-          <div className="mv-extremes">
-            <div><span>Best year</span><b className="hi">{best.year} · +{fmt(best.move, 1)}%</b></div>
-            <div><span>Worst year</span><b className="bad">{worstYr.year} · {fmt(worstYr.move, 1)}%</b></div>
-          </div>
-        )}
-      </div>
+            </div>
+            <SimChart hist={px.hist} open={px.open} />
+            <p className="sim-phase-note">{phase.note}</p>
+          </main>
 
-      <div className="tel-scrub">
-        <label>
-          <span className="small">Timeline</span>
-          <input type="range" min="0" max={view.length - 1} value={cur}
-            onChange={(e) => { setPlaying(false); setIdx(Number(e.target.value)); }} />
-        </label>
-        <div className="tel-zoom">
-          <label><span className="small">From</span>
-            <input type="range" min="0" max="90" value={zoom[0]}
-              onChange={(e) => { const v = Math.min(Number(e.target.value), zoom[1] - 10); setZoom([v, zoom[1]]); setIdx(null); }} /></label>
-          <label><span className="small">To</span>
-            <input type="range" min="10" max="100" value={zoom[1]}
-              onChange={(e) => { const v = Math.max(Number(e.target.value), zoom[0] + 10); setZoom([zoom[0], v]); setIdx(null); }} /></label>
-        </div>
-      </div>
-
-      {evAtOrBefore && (
-        <div className="tel-note" key={evAtOrBefore.year}>
-          <span className="tel-note-y">{evAtOrBefore.year}</span>
-          <span><b>{evAtOrBefore.label}</b>{evAtOrBefore.note ? ` ${evAtOrBefore.note}` : ""}</span>
-        </div>
-      )}
-
-      {worst < -0.08 && (
-        <p className="small tel-dd-note">
-          Deepest peak to trough decline in this window: {fmt(Math.abs(worst) * 100, 1)}% between{" "}
-          {view[ddStart].year} and {view[ddEnd].year}. The shaded band marks it.
-        </p>
-      )}
-
-      {s.source && <p className="small tel-src">Source: {s.source}</p>}
-    </section>
-  );
-}
-
-function TelemetryPage() {
-  const { data, tried } = useIndexHistory();
-  const series = data && Array.isArray(data.series) ? data.series : [];
-  const events = data && Array.isArray(data.events) && data.events.length ? data.events : MARKET_EVENTS;
-  const [on, setOn] = useState(null);
-
-  const visible = on ? series.filter((s) => s.id === on) : series;
-
-  return (
-    <>
-      <Crumbs items={[["FinHub", "#/"], ["Telemetry"]]} />
-      <div className="wrap">
-        <Reveal><p className="kicker">Year by year</p></Reveal>
-        <Reveal delay={60}><h1 className="h-page" style={{ marginTop: 12 }}>Telemetry</h1></Reveal>
-        <Reveal delay={120}>
-          <p className="lede" style={{ marginTop: 18, maxWidth: "62ch" }}>
-            Closing values for each series, one chart at a time. Press play and the line is walked
-            year by year, with the compound rate updating as it goes and market events surfacing as
-            the playhead reaches them. Zoom into any span to read it closely.
-          </p>
-        </Reveal>
-        {data && data.asOf && (
-          <Reveal delay={160}>
-            <div className="tax-stamp"><span className="badge">{data.asOf}</span></div>
-          </Reveal>
-        )}
-      </div>
-
-      <div className="wrap" style={{ paddingTop: 36, paddingBottom: 100 }}>
-        {!data && tried && (
-          <div className="sub">
-            <p className="body">
-              The history file has not been uploaded yet. When
-              <code> fin-data/index-history.json </code> is present, every chart on this page fills
-              itself. No values are written into the platform, because index history is data and it
-              has to come from the exchange rather than from memory.
-            </p>
-            <p className="small" style={{ marginTop: 14 }}>
-              Expected: yearly closing values for each series, with the source named. Sensex from BSE,
-              the Nifty family from NSE Indices, gold and silver from the IBJA benchmark rates.
-            </p>
-          </div>
-        )}
-
-        {!tried && <div className="sub"><p className="small">Loading history.</p></div>}
-
-        {series.length > 1 && (
-          <Reveal>
-            <div className="tel-tabs" role="tablist" aria-label="Series">
-              <button role="tab" aria-selected={!on} className={"tab" + (!on ? " on" : "")}
-                onClick={() => setOn(null)}>All</button>
-              {series.map((s) => (
-                <button key={s.id} role="tab" aria-selected={on === s.id}
-                  className={"tab" + (on === s.id ? " on" : "")} onClick={() => setOn(s.id)}>{s.name}</button>
+          <aside className="sim-order">
+            <div className="seg" style={{ marginBottom: 14 }}>
+              <button className={"seg-b buy" + (side === "buy" ? " on" : "")} onClick={() => setSide("buy")}>Buy</button>
+              <button className={"seg-b sell" + (side === "sell" ? " on" : "")} onClick={() => setSide("sell")}>Sell</button>
+            </div>
+            <div className="seg" style={{ marginBottom: 16 }}>
+              {[["market", "Market"], ["limit", "Limit"]].map(([k, l]) => (
+                <button key={k} className={"seg-b" + (otype === k ? " on" : "")} onClick={() => setOtype(k)}>{l}</button>
               ))}
             </div>
-          </Reveal>
-        )}
-
-        <div className="tel-list">
-          {visible.map((s, i) => (
-            <Reveal key={s.id} delay={Math.min(i * 70, 300)}>
-              <TelemetryChart s={s} events={events} />
-            </Reveal>
-          ))}
+            <label className="tkf"><span>Quantity in lots</span>
+              <input type="number" min="1" value={qty} onChange={(e) => setQty(Math.max(0, Number(e.target.value)))} /></label>
+            {otype === "limit" && (
+              <label className="tkf" style={{ marginTop: 12 }}><span>Limit price</span>
+                <input type="number" value={limit || Math.round(last)} onChange={(e) => setLimit(Number(e.target.value))} /></label>
+            )}
+            <div className="sim-calc">
+              <div><span>Contract value</span><b>₹{fmt(contractValue(inst, otype === "market" ? last : (limit || last), qty || 0))}</b></div>
+              <div><span>Margin required</span><b className="hi">₹{fmt(marginFor(inst, otype === "market" ? last : (limit || last), qty || 0))}</b></div>
+              <div><span>Estimated charges</span><b>₹{fmt(chargesFor(inst, otype === "market" ? last : (limit || last), qty || 0), 2)}</b></div>
+              <div><span>Available balance</span><b>₹{fmt(cash)}</b></div>
+            </div>
+            <button className={"btn primary sim-review " + side} onClick={openReview}>Review order</button>
+            <p className="sim-fine">
+              {otype === "market"
+                ? "A market order attempts simulated execution at the simulator's current price."
+                : "A limit order attempts simulated execution at your price or better, under the simulator's rules."}
+            </p>
+          </aside>
         </div>
 
-        {series.length > 0 && (
-          <Reveal>
-            <div className="sub" style={{ marginTop: 34, borderLeft: "2px solid var(--amber)" }}>
-              <p className="body" style={{ fontSize: 15.5 }}>
-                Index values are points, not prices, and gold and silver are quoted per unit weight.
-                They are shown on separate charts because they are not comparable quantities. Past
-                movement describes what happened, and carries no information about what follows.
-              </p>
+        <div className="sim-book">
+          <div className="sim-tabs">
+            {[["positions", `Positions (${positions.length})`], ["orders", `Orders (${orders.length})`], ["portfolio", "Portfolio"]].map(([k, l]) => (
+              <button key={k} className={"ptab" + (tab === k ? " on" : "")} onClick={() => setTab(k)}>{l}</button>
+            ))}
+          </div>
+
+          {tab === "positions" && (
+            <div className="sim-table-wrap">
+              {positions.length === 0
+                ? <p className="sim-empty">No open positions. Place an order to create one.</p>
+                : (
+                  <table className="ttable">
+                    <thead><tr>
+                      <th className="first">Instrument</th><th>Side</th><th>Lots</th>
+                      <th>Average</th><th>Current</th><th>Unrealised</th><th></th>
+                    </tr></thead>
+                    <tbody>
+                      {positions.map((p, k) => {
+                        const i = INSTRUMENTS.find((x) => x.id === p.id);
+                        const cur = prices[p.id].last;
+                        const dir = p.side === "buy" ? 1 : -1;
+                        const pnl = (cur - p.avg) * dir * i.lot * p.qty;
+                        return (
+                          <tr key={k}>
+                            <td className="first">{p.name}</td>
+                            <td><span className={"pill " + p.side}>{p.side === "buy" ? "Long" : "Short"}</span></td>
+                            <td>{p.qty}</td>
+                            <td>{fmt(p.avg, 2)}</td>
+                            <td>{fmt(cur, 2)}</td>
+                            <td className={pnl >= 0 ? "up" : "down"}>{pnl >= 0 ? "+" : ""}₹{fmt(pnl)}</td>
+                            <td><button className="tbtn" onClick={() => closePosition(p)}>Close</button></td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                )}
             </div>
-          </Reveal>
+          )}
+
+          {tab === "orders" && (
+            <div className="sim-table-wrap">
+              {orders.length === 0
+                ? <p className="sim-empty">No orders yet.</p>
+                : (
+                  <table className="ttable">
+                    <thead><tr>
+                      <th className="first">Order ID</th><th>Time</th><th>Instrument</th>
+                      <th>Side</th><th>Type</th><th>Lots</th><th>Price</th><th>Status</th>
+                    </tr></thead>
+                    <tbody>
+                      {orders.map((o) => (
+                        <tr key={o.id}>
+                          <td className="first mono">{o.id}</td><td>{o.t}</td><td>{o.inst}</td>
+                          <td><span className={"pill " + o.side}>{o.side === "buy" ? "Buy" : "Sell"}</span></td>
+                          <td>{o.otype === "market" ? "Market" : "Limit"}</td>
+                          <td>{o.qty}</td><td>{fmt(o.price, 2)}</td>
+                          <td><span className="pill done">{o.status}</span></td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                )}
+            </div>
+          )}
+
+          {tab === "portfolio" && (
+            <div className="sim-port">
+              {[
+                ["Starting capital", SIM_START_CAPITAL, ""],
+                ["Available cash", cash, ""],
+                ["Margin blocked", blocked, ""],
+                ["Unrealised profit and loss", unreal, unreal >= 0 ? "up" : "down"],
+                ["Realised profit and loss", realised, realised >= 0 ? "up" : "down"],
+                ["Total portfolio value", portfolio, portfolio >= SIM_START_CAPITAL ? "up" : "down"],
+              ].map(([l, v, tone]) => (
+                <div key={l}><span>{l}</span><b className={tone}>₹{fmt(v)}</b></div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {insight && (
+          <div className="sim-insight">
+            <div>
+              <p className="eyebrow" style={{ marginBottom: 8 }}>What just happened</p>
+              <p className="sim-insight-t">{insight.title}</p>
+              <p className="body" style={{ fontSize: 15.5, marginTop: 8 }}>{insight.body}</p>
+            </div>
+            <button className="tbtn" onClick={() => setInsight(null)}>Dismiss</button>
+          </div>
         )}
       </div>
+
+      {review && (
+        <div className="ov" onMouseDown={(e) => { if (e.target === e.currentTarget) setReview(null); }}>
+          <div className="rev" role="dialog" aria-modal="true">
+            <p className="rev-h">Review order</p>
+            <p className="rev-sub">{side === "buy" ? "Buy" : "Sell"} {inst.name} · {inst.contract}</p>
+            <div className="rev-rows">
+              <div><span>Quantity</span><b>{qty} lot{qty > 1 ? "s" : ""} · {qty * inst.lot} {inst.unit}</b></div>
+              <div><span>Order type</span><b>{otype === "market" ? "Market" : "Limit"}</b></div>
+              <div><span>Simulated price</span><b>{fmt(review.price, 2)}</b></div>
+              <div><span>Contract value</span><b>₹{fmt(review.value)}</b></div>
+              <div><span>Margin required</span><b>₹{fmt(review.margin)}</b></div>
+              <div><span>Estimated charges</span><b>₹{fmt(review.charges, 2)}</b></div>
+              <div><span>Balance after</span><b>₹{fmt(cash - review.margin - review.charges)}</b></div>
+            </div>
+            <p className="rev-flag">Simulated order. Nothing is sent to any exchange.</p>
+            <div className="rev-btns">
+              <button className="btn ghost" onClick={() => setReview(null)}>Cancel</button>
+              <button className={"btn primary " + side} onClick={confirmOrder}>
+                Confirm {side === "buy" ? "buy" : "sell"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {exec && (
+        <div className="execbar">
+          <span className={"execdot " + exec} />
+          {exec === "submitted" && "Order submitted"}
+          {exec === "executing" && "Simulating execution"}
+          {exec === "done" && "Executed"}
+        </div>
+      )}
+
+      {toast && (
+        <div className={"toast " + (toast.tone || "")} key={toast.k}>
+          <b>{toast.title}</b>
+          <p>{toast.body}</p>
+        </div>
+      )}
+
+      {confirmReset && (
+        <div className="ov" onMouseDown={(e) => { if (e.target === e.currentTarget) setConfirmReset(false); }}>
+          <div className="rev" role="dialog" aria-modal="true">
+            <p className="rev-h">Reset simulation?</p>
+            <p className="body" style={{ marginTop: 10, fontSize: 15.5 }}>
+              This clears your simulated positions, orders, trade history and profit and loss.
+            </p>
+            <div className="rev-btns">
+              <button className="btn ghost" onClick={() => setConfirmReset(false)}>Cancel</button>
+              <button className="btn primary" onClick={resetAll}>Reset</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {summary && (
+        <div className="ov">
+          <div className="rev wide" role="dialog" aria-modal="true">
+            <p className="rev-h">Simulated market closed</p>
+            <p className="rev-sub">{name ? `${name}, here is your session.` : "Here is your session."}</p>
+            <div className="rev-rows">
+              <div><span>Starting capital</span><b>₹{fmt(SIM_START_CAPITAL)}</b></div>
+              <div><span>Ending value</span><b>₹{fmt(portfolio)}</b></div>
+              <div><span>Total profit and loss</span>
+                <b className={portfolio - SIM_START_CAPITAL >= 0 ? "up" : "down"}>
+                  {portfolio - SIM_START_CAPITAL >= 0 ? "+" : ""}₹{fmt(portfolio - SIM_START_CAPITAL)}</b></div>
+              <div><span>Orders placed</span><b>{orders.length}</b></div>
+              <div><span>Positions still open</span><b>{positions.length}</b></div>
+              <div><span>Realised</span><b className={realised >= 0 ? "up" : "down"}>₹{fmt(realised)}</b></div>
+              <div><span>Unrealised</span><b className={unreal >= 0 ? "up" : "down"}>₹{fmt(unreal)}</b></div>
+            </div>
+            <p className="rev-flag">
+              Every figure above came from a simulated price engine. Real markets do not behave on a
+              schedule, and a simulated result says nothing about what any real position would do.
+            </p>
+            <div className="rev-btns">
+              <button className="btn ghost" onClick={() => setSummary(false)}>Close</button>
+              <button className="btn primary" onClick={resetAll}>Run another session</button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }
@@ -6858,11 +6267,10 @@ export default function FinHub() {
     case "graph": view = <GraphPage />; break;
     case "data": view = <MarketDataPage />; break;
     case "tax": view = <TaxPage />; break;
-    case "floor": view = <TradingFloorPage />; break;
+    case "floor": view = <SimulatorPage />; break;
     case "telemetry": view = <TelemetryPage />; break;
     case "glossary": view = <Glossary />; break;
     case "tools": view = <ToolsPage query={query} />; break;
-    case "ai": view = <AiPage />; break;
     default: view = <NotFound />;
   }
 
