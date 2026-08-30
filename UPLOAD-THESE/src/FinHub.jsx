@@ -2492,6 +2492,71 @@ button[disabled] .sym{opacity:.4}
 .cmd-spec span{font-size:11.5px;color:var(--muted)}
 .cmd-spec b{font-size:15px;font-weight:700;color:var(--text)}
 
+/* ---- telemetry ---- */
+.tel-tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:16px;margin-bottom:24px;scrollbar-width:none}
+.tel-tabs::-webkit-scrollbar{display:none}
+.tel-tabs .tab{flex:0 0 auto}
+.tel-list{display:grid;gap:30px}
+.tel{border:1px solid var(--line);border-radius:20px;background:var(--surface);
+  padding:26px;box-shadow:var(--shadow);overflow:hidden}
+@media(max-width:600px){.tel{padding:18px 14px}}
+.tel-head{display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;
+  align-items:flex-start;margin-bottom:20px}
+.tel-name{font-size:22px;letter-spacing:-.02em}
+.tel-ctl{display:flex;gap:8px;flex-wrap:wrap}
+.tbtn{min-height:38px;padding:0 15px;border:1px solid var(--line);border-radius:999px;
+  font-size:13.5px;color:var(--muted);background:var(--surface);transition:.22s}
+.tbtn:hover{border-color:var(--teal);color:var(--teal)}
+.tbtn.on{background:var(--teal);border-color:var(--teal);color:#fff;font-weight:600}
+.tel-readout{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:2px;
+  border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--line);margin-bottom:20px}
+@media(max-width:660px){.tel-readout{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.tel-readout div{background:var(--surface);padding:13px 15px;display:grid;gap:4px;min-width:0}
+.tel-readout span{font-size:11.5px;color:var(--muted)}
+.tel-readout b{font-family:var(--mono);font-size:18px;font-weight:700;color:var(--text)}
+.tel-readout b.hi{color:var(--teal)}
+.tel-readout b.bad{color:var(--rose)}
+.tel-plot{position:relative;border-radius:14px;overflow:hidden;background:
+  linear-gradient(180deg,var(--surface-2),var(--surface))}
+.tel-svg{display:block;width:100%;height:auto}
+.tel-grid{stroke:var(--line);stroke-width:1}
+.tel-axis{fill:var(--faint);font-size:11px;font-family:var(--mono)}
+.tel-dd{fill:var(--rose);opacity:.07}
+.tel-area{opacity:0;transition:opacity 1.4s ease .5s}
+.tel-area.in{opacity:1}
+.tel-line{fill:none;stroke:var(--teal);stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round}
+.tel-line.draw{animation:telDraw 2.4s cubic-bezier(.25,.7,.3,1) forwards}
+@keyframes telDraw{to{stroke-dashoffset:0}}
+.tel-ev line{stroke:var(--line);stroke-width:1;stroke-dasharray:3 4}
+.tel-ev circle{fill:var(--line)}
+.tel-ev.on line{stroke:var(--amber);stroke-opacity:.5}
+.tel-ev.on circle{fill:var(--amber)}
+.tel-head-line{stroke:var(--text);stroke-width:1;stroke-opacity:.28;
+  transition:x1 .35s cubic-bezier(.3,.8,.3,1),x2 .35s cubic-bezier(.3,.8,.3,1)}
+.tel-dot{fill:var(--teal);stroke:var(--surface);stroke-width:3;
+  transition:cx .35s cubic-bezier(.3,.8,.3,1),cy .35s cubic-bezier(.3,.8,.3,1)}
+.tel-scrub{display:grid;gap:14px;margin-top:20px}
+.tel-scrub label{display:grid;gap:7px}
+.tel-scrub input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:4px;
+  border-radius:3px;background:var(--line);outline:none}
+.tel-scrub input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;
+  border-radius:50%;background:var(--teal);border:3px solid var(--surface);cursor:grab;
+  box-shadow:0 1px 5px rgba(11,18,32,.26)}
+.tel-scrub input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;
+  background:var(--teal);border:3px solid var(--surface);cursor:grab}
+.tel-zoom{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.tel-note{display:flex;gap:14px;align-items:flex-start;margin-top:20px;padding:15px 18px;
+  border-radius:12px;background:var(--amber-soft);border-left:3px solid var(--amber);
+  animation:fadeUp .4s ease both;font-size:14.5px;line-height:1.6;color:var(--text)}
+.tel-note-y{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--amber);flex:none}
+.tel-dd-note{margin-top:14px}
+.tel-src{margin-top:16px;padding-top:14px;border-top:1px solid var(--line);font-size:12.5px}
+@media(prefers-reduced-motion:reduce){
+  .tel-line.draw{animation:none;stroke-dashoffset:0!important}
+  .tel-area{opacity:1;transition:none}
+  .tel-dot,.tel-head-line,.tel-note{transition:none;animation:none}
+}
+
 .foot{border-top:1px solid var(--line);padding:44px 0 60px;color:var(--faint);font-size:13.5px}
 .foot a:hover{color:var(--teal)}
 `;
@@ -3185,7 +3250,7 @@ function ConceptGraph({ id }) {
    =========================================================================== */
 
 const NAV = [
-  ["Universe", "#/universe"], ["Origins", "#/origins"], ["History", "#/history"], ["Data", "#/data"], ["Tax", "#/tax"], ["Trading floor", "#/floor"], ["Concepts", "#/concepts"], ["Cases", "#/cases"],
+  ["Universe", "#/universe"], ["Origins", "#/origins"], ["History", "#/history"], ["Data", "#/data"], ["Tax", "#/tax"], ["Trading floor", "#/floor"], ["Telemetry", "#/telemetry"], ["Concepts", "#/concepts"], ["Cases", "#/cases"],
   ["Scenarios", "#/scenarios"], ["Glossary", "#/glossary"], ["Tools", "#/tools"], ["FinHub AI", "#/ai"],
 ];
 
@@ -6327,6 +6392,335 @@ function TradingFloorPage() {
   );
 }
 
+/* ===========================================================================
+   TELEMETRY
+   Year by year price history, one chart per series. The line draws itself,
+   a playhead sweeps the timeline, values count as it moves, drawdowns shade
+   themselves and market events surface as the playhead passes them.
+
+   Reads fin-data/index-history.json. No figure is written into this file,
+   because index history is data, not code. Until the file is uploaded the
+   page says so plainly rather than showing anything invented.
+
+   Expected shape:
+   {
+     "asOf": "verified 30 August 2026",
+     "series": [
+       { "id":"sensex", "name":"BSE Sensex", "unit":"Index points",
+         "base":"1978-79 = 100", "source":"BSE India",
+         "points":[{"year":1979,"close":100}, ...] }
+     ],
+     "events": [{ "year":1992, "label":"Securities scam", "note":"..." }]
+   }
+   =========================================================================== */
+
+const MARKET_EVENTS = [
+  { year: 1987, label: "Black Monday", note: "A single day collapse in global equity markets in October." },
+  { year: 1991, label: "Balance of payments crisis", note: "Reserves fell to weeks of cover, leading to liberalisation." },
+  { year: 1992, label: "Securities scam", note: "Diverted bank funds unwound, and the market fell sharply." },
+  { year: 1997, label: "Asian financial crisis", note: "Currency and banking stress across east and southeast Asia." },
+  { year: 2000, label: "Dot com unwind", note: "Technology valuations corrected worldwide." },
+  { year: 2001, label: "Market crisis", note: "Concentrated leveraged positions unwound; carry forward ended." },
+  { year: 2004, label: "Election shock", note: "An unexpected result triggered a one day fall and trading halt." },
+  { year: 2008, label: "Global financial crisis", note: "Credit markets seized after the failure of a major investment bank." },
+  { year: 2011, label: "European debt stress", note: "Sovereign debt concerns across the euro area." },
+  { year: 2013, label: "Taper tantrum", note: "Signals of reduced US stimulus pulled capital from emerging markets." },
+  { year: 2015, label: "Global sell off", note: "Growth concerns in China and commodity weakness." },
+  { year: 2016, label: "Demonetisation", note: "High value notes withdrawn from circulation at short notice." },
+  { year: 2018, label: "NBFC liquidity crisis", note: "A large infrastructure lender defaulted, tightening credit broadly." },
+  { year: 2020, label: "Covid crash", note: "The fastest fall into a bear market on record, followed by recovery." },
+  { year: 2022, label: "Inflation and rate shock", note: "Central banks raised rates rapidly as inflation rose." },
+];
+
+function useIndexHistory() {
+  const [d, setD] = useState(null);
+  const [tried, setTried] = useState(false);
+  useEffect(() => {
+    let alive = true;
+    fetch("fin-data/index-history.json", { cache: "no-cache" })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((j) => { if (alive) { if (j) setD(j); setTried(true); } })
+      .catch(() => { if (alive) setTried(true); });
+    return () => { alive = false; };
+  }, []);
+  return { data: d, tried };
+}
+
+/* ---- one series, one chart ------------------------------------------- */
+function TelemetryChart({ s, events }) {
+  const reduced = useReducedMotion();
+  const wrapRef = useRef(null);
+  const [seen, setSeen] = useState(false);
+  const [playing, setPlaying] = useState(false);
+  const [idx, setIdx] = useState(null);
+  const [log, setLog] = useState(false);
+  const [zoom, setZoom] = useState([0, 100]);
+  const raf = useRef(0);
+
+  const pts = useMemo(
+    () => (s.points || []).filter((p) => p && typeof p.close === "number").sort((a, b) => a.year - b.year),
+    [s.points]
+  );
+
+  useEffect(() => {
+    const el = wrapRef.current; if (!el) return;
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setSeen(true); io.disconnect(); } },
+      { rootMargin: "-10% 0px" });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  const from = Math.floor((zoom[0] / 100) * (pts.length - 1));
+  const to = Math.ceil((zoom[1] / 100) * (pts.length - 1));
+  const view = pts.slice(Math.max(0, from), Math.max(from + 2, to + 1));
+
+  useEffect(() => {
+    if (!playing || view.length < 2) return;
+    let i = idx == null || idx >= view.length - 1 ? 0 : idx;
+    const tick = () => {
+      i += 1;
+      if (i >= view.length) { setPlaying(false); setIdx(view.length - 1); return; }
+      setIdx(i);
+      raf.current = window.setTimeout(tick, 420);
+    };
+    raf.current = window.setTimeout(tick, 420);
+    return () => clearTimeout(raf.current);
+  }, [playing, view.length]);
+
+  if (pts.length < 2) return null;
+
+  const W = 760, H = 300, padL = 60, padR = 24, padT = 26, padB = 42;
+  const vals = view.map((p) => p.close);
+  const lo = Math.min(...vals), hi = Math.max(...vals);
+  const tf = (v) => (log ? Math.log10(Math.max(v, 0.0001)) : v);
+  const tlo = tf(lo), thi = tf(hi);
+  const X = (i) => padL + (i / (view.length - 1)) * (W - padL - padR);
+  const Y = (v) => H - padB - ((tf(v) - tlo) / Math.max(thi - tlo, 1e-9)) * (H - padT - padB);
+
+  const line = view.map((p, i) => `${i ? "L" : "M"}${X(i).toFixed(1)} ${Y(p.close).toFixed(1)}`).join(" ");
+  const area = `${line} L${X(view.length - 1).toFixed(1)} ${H - padB} L${X(0).toFixed(1)} ${H - padB} Z`;
+
+  // peak to trough drawdown within the visible window
+  let peak = -Infinity, peakI = 0, ddStart = 0, ddEnd = 0, worst = 0;
+  view.forEach((p, i) => {
+    if (p.close > peak) { peak = p.close; peakI = i; }
+    const dd = (p.close - peak) / peak;
+    if (dd < worst) { worst = dd; ddStart = peakI; ddEnd = i; }
+  });
+
+  const cur = idx == null ? view.length - 1 : idx;
+  const point = view[cur];
+  const first = view[0];
+  const growth = first.close ? ((point.close - first.close) / first.close) * 100 : 0;
+  const cagrYears = Math.max(1, point.year - first.year);
+  const cagr = first.close > 0 ? (Math.pow(point.close / first.close, 1 / cagrYears) - 1) * 100 : 0;
+
+  const evInWindow = (events || MARKET_EVENTS).filter(
+    (e) => e.year >= view[0].year && e.year <= view[view.length - 1].year
+  );
+  const evAtOrBefore = evInWindow.filter((e) => e.year <= point.year).slice(-1)[0];
+
+  const ticks = 4;
+  const gridVals = Array.from({ length: ticks + 1 }, (_, i) => lo + ((hi - lo) * i) / ticks);
+
+  return (
+    <section className="tel" ref={wrapRef}>
+      <header className="tel-head">
+        <div>
+          <h3 className="tel-name">{s.name}</h3>
+          <p className="small">
+            {s.unit || "Index points"}
+            {s.base ? ` · ${s.base}` : ""}
+            {` · ${pts[0].year} to ${pts[pts.length - 1].year}`}
+          </p>
+        </div>
+        <div className="tel-ctl">
+          <button className={"tbtn" + (playing ? " on" : "")}
+            onClick={() => { if (!playing && (idx == null || idx >= view.length - 1)) setIdx(0); setPlaying(!playing); }}
+            aria-label={playing ? "Pause" : "Play"}>
+            {playing ? "Pause" : "Play"}
+          </button>
+          <button className="tbtn" onClick={() => { setPlaying(false); setIdx(null); }}>Reset</button>
+          <button className={"tbtn" + (log ? " on" : "")} onClick={() => setLog(!log)}
+            aria-pressed={log}>{log ? "Log" : "Linear"}</button>
+        </div>
+      </header>
+
+      <div className="tel-readout">
+        <div><span>Year</span><b>{point.year}</b></div>
+        <div><span>Close</span><b className="hi">{fmt(point.close, 2)}</b></div>
+        <div><span>Change from {first.year}</span>
+          <b className={growth >= 0 ? "hi" : "bad"}>{growth >= 0 ? "+" : ""}{fmt(growth, 1)}%</b></div>
+        <div><span>Compound annual rate</span>
+          <b className={cagr >= 0 ? "hi" : "bad"}>{cagr >= 0 ? "+" : ""}{fmt(cagr, 2)}%</b></div>
+      </div>
+
+      <div className="tel-plot">
+        <svg viewBox={`0 0 ${W} ${H}`} className="tel-svg" role="img"
+          aria-label={`${s.name} yearly closing values from ${view[0].year} to ${view[view.length - 1].year}`}>
+          <defs>
+            <linearGradient id={`g-${s.id}`} x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="var(--teal)" stopOpacity=".22" />
+              <stop offset="100%" stopColor="var(--teal)" stopOpacity="0" />
+            </linearGradient>
+          </defs>
+
+          {gridVals.map((v, i) => (
+            <g key={i}>
+              <line x1={padL} y1={Y(v)} x2={W - padR} y2={Y(v)} className="tel-grid" />
+              <text x={padL - 10} y={Y(v) + 4} textAnchor="end" className="tel-axis">
+                {v >= 10000 ? `${(v / 1000).toFixed(0)}k` : fmt(v, 0)}
+              </text>
+            </g>
+          ))}
+
+          {worst < -0.08 && (
+            <rect x={X(ddStart)} y={padT} width={Math.max(2, X(ddEnd) - X(ddStart))} height={H - padT - padB}
+              className="tel-dd" />
+          )}
+
+          <path d={area} fill={`url(#g-${s.id})`} className={"tel-area" + (seen ? " in" : "")} />
+          <path d={line} className={"tel-line" + (seen && !reduced ? " draw" : " in")}
+            style={{ strokeDasharray: 4000, strokeDashoffset: seen || reduced ? 0 : 4000 }} />
+
+          {evInWindow.map((e) => {
+            const i = view.findIndex((p) => p.year === e.year);
+            if (i < 0) return null;
+            const passed = e.year <= point.year;
+            return (
+              <g key={e.year} className={"tel-ev" + (passed ? " on" : "")}>
+                <line x1={X(i)} y1={padT} x2={X(i)} y2={H - padB} />
+                <circle cx={X(i)} cy={Y(view[i].close)} r="4" />
+              </g>
+            );
+          })}
+
+          <line x1={X(cur)} y1={padT} x2={X(cur)} y2={H - padB} className="tel-head-line" />
+          <circle cx={X(cur)} cy={Y(point.close)} r="6" className="tel-dot" />
+
+          <text x={X(0)} y={H - 14} className="tel-axis">{view[0].year}</text>
+          <text x={W - padR} y={H - 14} textAnchor="end" className="tel-axis">{view[view.length - 1].year}</text>
+        </svg>
+      </div>
+
+      <div className="tel-scrub">
+        <label>
+          <span className="small">Timeline</span>
+          <input type="range" min="0" max={view.length - 1} value={cur}
+            onChange={(e) => { setPlaying(false); setIdx(Number(e.target.value)); }} />
+        </label>
+        <div className="tel-zoom">
+          <label><span className="small">From</span>
+            <input type="range" min="0" max="90" value={zoom[0]}
+              onChange={(e) => { const v = Math.min(Number(e.target.value), zoom[1] - 10); setZoom([v, zoom[1]]); setIdx(null); }} /></label>
+          <label><span className="small">To</span>
+            <input type="range" min="10" max="100" value={zoom[1]}
+              onChange={(e) => { const v = Math.max(Number(e.target.value), zoom[0] + 10); setZoom([zoom[0], v]); setIdx(null); }} /></label>
+        </div>
+      </div>
+
+      {evAtOrBefore && (
+        <div className="tel-note" key={evAtOrBefore.year}>
+          <span className="tel-note-y">{evAtOrBefore.year}</span>
+          <span><b>{evAtOrBefore.label}</b>{evAtOrBefore.note ? ` ${evAtOrBefore.note}` : ""}</span>
+        </div>
+      )}
+
+      {worst < -0.08 && (
+        <p className="small tel-dd-note">
+          Deepest peak to trough decline in this window: {fmt(Math.abs(worst) * 100, 1)}% between{" "}
+          {view[ddStart].year} and {view[ddEnd].year}. The shaded band marks it.
+        </p>
+      )}
+
+      {s.source && <p className="small tel-src">Source: {s.source}</p>}
+    </section>
+  );
+}
+
+function TelemetryPage() {
+  const { data, tried } = useIndexHistory();
+  const series = data && Array.isArray(data.series) ? data.series : [];
+  const events = data && Array.isArray(data.events) && data.events.length ? data.events : MARKET_EVENTS;
+  const [on, setOn] = useState(null);
+
+  const visible = on ? series.filter((s) => s.id === on) : series;
+
+  return (
+    <>
+      <Crumbs items={[["FinHub", "#/"], ["Telemetry"]]} />
+      <div className="wrap">
+        <Reveal><p className="kicker">Year by year</p></Reveal>
+        <Reveal delay={60}><h1 className="h-page" style={{ marginTop: 12 }}>Telemetry</h1></Reveal>
+        <Reveal delay={120}>
+          <p className="lede" style={{ marginTop: 18, maxWidth: "62ch" }}>
+            Closing values for each series, one chart at a time. Press play and the line is walked
+            year by year, with the compound rate updating as it goes and market events surfacing as
+            the playhead reaches them. Zoom into any span to read it closely.
+          </p>
+        </Reveal>
+        {data && data.asOf && (
+          <Reveal delay={160}>
+            <div className="tax-stamp"><span className="badge">{data.asOf}</span></div>
+          </Reveal>
+        )}
+      </div>
+
+      <div className="wrap" style={{ paddingTop: 36, paddingBottom: 100 }}>
+        {!data && tried && (
+          <div className="sub">
+            <p className="body">
+              The history file has not been uploaded yet. When
+              <code> fin-data/index-history.json </code> is present, every chart on this page fills
+              itself. No values are written into the platform, because index history is data and it
+              has to come from the exchange rather than from memory.
+            </p>
+            <p className="small" style={{ marginTop: 14 }}>
+              Expected: yearly closing values for each series, with the source named. Sensex from BSE,
+              the Nifty family from NSE Indices, gold and silver from the IBJA benchmark rates.
+            </p>
+          </div>
+        )}
+
+        {!tried && <div className="sub"><p className="small">Loading history.</p></div>}
+
+        {series.length > 1 && (
+          <Reveal>
+            <div className="tel-tabs" role="tablist" aria-label="Series">
+              <button role="tab" aria-selected={!on} className={"tab" + (!on ? " on" : "")}
+                onClick={() => setOn(null)}>All</button>
+              {series.map((s) => (
+                <button key={s.id} role="tab" aria-selected={on === s.id}
+                  className={"tab" + (on === s.id ? " on" : "")} onClick={() => setOn(s.id)}>{s.name}</button>
+              ))}
+            </div>
+          </Reveal>
+        )}
+
+        <div className="tel-list">
+          {visible.map((s, i) => (
+            <Reveal key={s.id} delay={Math.min(i * 70, 300)}>
+              <TelemetryChart s={s} events={events} />
+            </Reveal>
+          ))}
+        </div>
+
+        {series.length > 0 && (
+          <Reveal>
+            <div className="sub" style={{ marginTop: 34, borderLeft: "2px solid var(--amber)" }}>
+              <p className="body" style={{ fontSize: 15.5 }}>
+                Index values are points, not prices, and gold and silver are quoted per unit weight.
+                They are shown on separate charts because they are not comparable quantities. Past
+                movement describes what happened, and carries no information about what follows.
+              </p>
+            </div>
+          </Reveal>
+        )}
+      </div>
+    </>
+  );
+}
+
 function NotFound() {
   return (
     <div className="wrap-n" style={{ padding: "90px 20px 120px" }}>
@@ -6389,6 +6783,7 @@ export default function FinHub() {
     case "data": view = <MarketDataPage />; break;
     case "tax": view = <TaxPage />; break;
     case "floor": view = <TradingFloorPage />; break;
+    case "telemetry": view = <TelemetryPage />; break;
     case "glossary": view = <Glossary />; break;
     case "tools": view = <ToolsPage query={query} />; break;
     case "ai": view = <AiPage />; break;
