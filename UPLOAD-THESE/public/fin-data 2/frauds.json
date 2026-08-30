@@ -1,0 +1,189 @@
+[
+  {
+    "id": "securities-scam-1992",
+    "title": "The 1992 Indian Securities Scam",
+    "tag": "Market manipulation & banking controls",
+    "period": "1990 – 1992",
+    "visual": "loop",
+    "visualCaption": "Bank funds intended for inter-bank settlement were routed into equities, and the position depended on fresh funds continuing to arrive.",
+    "sourceNote": "Summarised from the report of the Joint Parliamentary Committee, the Janakiraman Committee report of the Reserve Bank of India, and subsequent judgments of the Special Court.",
+    "background": "In the early 1990s Indian banks settled government securities transactions among themselves using bank receipts, instruments acknowledging that securities were held on another bank's behalf. Settlement relied heavily on trust between institutions and back-office verification was weak. Stockbrokers acted as intermediaries between banks in these transactions.",
+    "happened": "Money that banks believed was deployed in government securities was instead diverted into the stock market, financing large positions in a small group of shares. Prices in those shares rose sharply. When the diversion was reported in April 1992 the mechanism unwound, share prices fell heavily, and several banks and institutions were left with claims they could not recover.",
+    "mechanism": [
+      "Bank receipts were issued without the underlying government securities existing or being properly segregated, so a bank could believe it held a claim on securities that were never delivered.",
+      "Funds released against those receipts were routed through broker accounts and deployed into equities rather than into the securities market they were intended for.",
+      "Rising share prices increased the value of the positions, which supported further borrowing against them. This was a self-reinforcing loop that depended entirely on prices continuing to rise.",
+      "Because the funding was short-term inter-bank money while the positions were illiquid equity holdings, any interruption in the flow of new funds forced selling into a falling market."
+    ],
+    "conceptsInvolved": ["liquidity-risk", "leverage", "market-risk", "commercial-banking"],
+    "warnings": [
+      "Settlement instruments accepted without verifying that the underlying securities existed.",
+      "A small number of shares rising far faster than the market with no corresponding change in the businesses.",
+      "Brokers holding large balances of bank funds, blurring the line between intermediary and principal.",
+      "Reconciliation of inter-bank positions consistently delayed."
+    ],
+    "impact": "Banks and public institutions suffered substantial losses. The equity market fell sharply and small investors were badly affected. Public confidence in both banking controls and market integrity was severely damaged.",
+    "response": "A Joint Parliamentary Committee investigated the events. The Reserve Bank of India constituted the Janakiraman Committee to examine irregularities in securities transactions. The Special Court (Trial of Offences Relating to Transactions in Securities) Act was enacted in 1992. The Securities and Exchange Board of India was given statutory powers in 1992, and settlement and depository reform followed through the decade.",
+    "lessons": [
+      "A settlement system that depends on trust rather than verification will eventually be tested by someone who has noticed.",
+      "When short-term borrowed money funds illiquid positions, the exit closes before the problem becomes visible.",
+      "Rapid price rises confined to a few securities, unaccompanied by any change in the underlying businesses, are a question worth asking early."
+    ],
+    "connected": ["liquidity-risk", "market-risk", "leverage"],
+    "sources": [
+      { "title": "Report of the Joint Parliamentary Committee to enquire into irregularities in securities and banking transactions", "publisher": "Parliament of India", "year": "1993" },
+      { "title": "Report of the Committee to enquire into securities transactions of banks and financial institutions (Janakiraman Committee)", "publisher": "Reserve Bank of India", "year": "1992" },
+      { "title": "The Special Court (Trial of Offences Relating to Transactions in Securities) Act", "publisher": "Government of India", "year": "1992" }
+    ]
+  },
+  {
+    "id": "market-scam-2001",
+    "title": "The 2001 Stock Market Scam",
+    "tag": "Concentrated positions & borrowed funding",
+    "period": "1999 – 2001",
+    "visual": "concentration",
+    "visualCaption": "Positions spread across several names but funded from the same sources, so every one of them depended on the same thing continuing.",
+    "sourceNote": "Summarised from the report of the Joint Parliamentary Committee on stock market scam and matters relating thereto, and orders of the Securities and Exchange Board of India.",
+    "background": "During the technology boom of 1999 and 2000, a group of information technology, media and telecommunications shares rose dramatically on Indian exchanges. Settlement at the time still permitted carry-forward of positions, allowing exposure to be held without full payment.",
+    "happened": "Large concentrated positions were built in a small set of shares using borrowed funds, including funds from entities not permitted to lend for that purpose. When technology valuations fell globally through 2000 and 2001, the positions could not be sustained. Payment defaults followed, a cooperative bank that had lent heavily against these positions failed, and the exposures became public.",
+    "mechanism": [
+      "Positions in a narrow group of shares were built far larger than the capital supporting them, using borrowed funds and settlement practices that allowed positions to be carried forward.",
+      "Part of that funding came from banking entities lending against shares in ways that exceeded prudential limits.",
+      "Because the same small group of shares both secured the borrowing and constituted the positions, a fall in those shares destroyed the asset and the collateral simultaneously.",
+      "A global decline in technology valuations removed the price support the entire structure depended on."
+    ],
+    "conceptsInvolved": ["leverage", "liquidity-risk", "diversification", "market-risk"],
+    "warnings": [
+      "Extreme concentration of exposure in a small number of correlated shares.",
+      "Borrowing secured by the very assets the borrowing was used to purchase.",
+      "A banking entity with lending exposure far in excess of prudential norms to a single set of borrowers.",
+      "Valuations detached from measurable earnings, sustained by momentum alone."
+    ],
+    "impact": "Investors suffered heavy losses. A cooperative bank failed, affecting its depositors. Confidence in market settlement and in bank lending against shares was significantly damaged.",
+    "response": "A Joint Parliamentary Committee investigated. SEBI passed orders against several market participants. Carry-forward settlement was discontinued in favour of rolling settlement, exchange-traded derivatives were introduced to provide a regulated route for leveraged exposure, and limits on bank lending against shares were tightened.",
+    "lessons": [
+      "Diversification across several names is meaningless when they share the same driver and the same funding.",
+      "Collateral that consists of the position it secures provides no protection, because both fail together.",
+      "Settlement design is not an administrative detail. It determines how much leverage a system can quietly accumulate."
+    ],
+    "connected": ["leverage", "diversification", "liquidity-risk"],
+    "sources": [
+      { "title": "Report of the Joint Parliamentary Committee on stock market scam and matters relating thereto", "publisher": "Parliament of India", "year": "2002" },
+      { "title": "Investigation reports and orders concerning market participants", "publisher": "Securities and Exchange Board of India", "year": "2001-2008" }
+    ]
+  },
+  {
+    "id": "satyam",
+    "title": "Satyam Computer Services",
+    "tag": "Fabricated assets & audit failure",
+    "period": "Disclosed January 2009",
+    "img": "fraud-satyam",
+    "visual": "hollow",
+    "visualCaption": "Cash and receivables recorded in the accounts, against a materially smaller balance actually held.",
+    "sourceNote": "Summarised from the chairman's letter to the board dated 7 January 2009, orders of the Securities and Exchange Board of India, findings of the Serious Fraud Investigation Office, and subsequent court proceedings.",
+    "background": "Satyam Computer Services was one of India's largest information technology services companies, listed in India and on international exchanges, employing tens of thousands of people and serving global clients.",
+    "happened": "On 7 January 2009 the company's chairman resigned in a letter to the board stating that the balance sheet carried inflated cash and bank balances, understated liabilities and overstated debtors, and that revenue and margins reported over a period of years did not reflect the actual position. The share price collapsed and a crisis of confidence in Indian corporate governance followed.",
+    "mechanism": [
+      "Revenue and profit were overstated over an extended period. Profits that do not exist must be matched by assets that also do not exist, so the balance sheet had to carry the difference.",
+      "Cash and bank balances were recorded at amounts materially above what was actually held, supported by documentation presented as bank confirmations.",
+      "Because the reported profits were not real they generated no cash, so the gap between reported earnings and actual cash generation widened with every period the misstatement continued.",
+      "The misstatement had to keep growing, because each period's reported performance had to build on the last."
+    ],
+    "conceptsInvolved": ["balance-sheet", "cash-flow-statement", "income-statement", "financial-ratios"],
+    "warnings": [
+      "Very large cash balances reported on the balance sheet while the company continued to borrow.",
+      "Reported profitability consistently ahead of comparable peers without a clear operational explanation.",
+      "Reported earnings failing to convert into operating cash flow across successive periods.",
+      "A proposed related-party acquisition that would have consumed the reported cash, opposed by institutional shareholders shortly before the disclosure."
+    ],
+    "impact": "Shareholders lost a very substantial portion of their investment. Tens of thousands of employees and a large number of clients faced acute uncertainty. Confidence in Indian audit and governance standards was seriously affected internationally.",
+    "response": "The Government of India superseded the board and appointed nominee directors. The company was sold through a government-supervised process to Tech Mahindra in April 2009 and continued operating. SEBI passed orders against those involved and against the audit firm's Indian affiliate. The Serious Fraud Investigation Office investigated and criminal proceedings followed. The case contributed directly to strengthened audit, disclosure and independent-director provisions in the Companies Act, 2013.",
+    "lessons": [
+      "Cash is the hardest line to fabricate for long, because it must be confirmed externally and it must eventually be spent.",
+      "A company reporting large cash reserves while continuing to borrow is describing two incompatible positions.",
+      "Reported profit that does not convert into operating cash flow is the most reliable published warning available to an outside reader.",
+      "Audit independence is not a formality. It is the only external check on figures no outsider can otherwise verify."
+    ],
+    "connected": ["cash-flow-statement", "balance-sheet", "financial-ratios"],
+    "sources": [
+      { "title": "Letter of resignation from the chairman to the board of directors, 7 January 2009", "publisher": "Satyam Computer Services Limited", "year": "2009" },
+      { "title": "Orders in the matter of Satyam Computer Services Limited", "publisher": "Securities and Exchange Board of India", "year": "2014-2018" },
+      { "title": "Investigation report on Satyam Computer Services Limited", "publisher": "Serious Fraud Investigation Office, Ministry of Corporate Affairs", "year": "2009" },
+      { "title": "The Companies Act, 2013 — provisions on audit, disclosure and independent directors", "publisher": "Government of India", "year": "2013" }
+    ]
+  },
+  {
+    "id": "madoff",
+    "title": "The Madoff Ponzi Scheme",
+    "tag": "Ponzi structure",
+    "period": "Collapsed December 2008",
+    "img": "fraud-ponzi",
+    "visual": "loop",
+    "visualCaption": "Withdrawals paid from incoming subscriptions rather than from investment returns.",
+    "sourceNote": "Summarised from filings of the U.S. Securities and Exchange Commission, the report of the SEC Office of Inspector General on the failure to detect the scheme, and United States federal court records.",
+    "background": "A long-established New York investment operation reported steady positive returns to clients over many years, across market conditions in which such consistency was itself unusual. Investors included individuals, charitable foundations and funds that allocated client money to it.",
+    "happened": "In December 2008 the operation was revealed to be a Ponzi scheme. No substantial investment strategy had been carried out. Account statements reported holdings and returns that did not exist, and withdrawals had been paid from money deposited by other investors. Redemption requests during the 2008 crisis exceeded incoming funds and the structure could not continue.",
+    "mechanism": [
+      "Investors received account statements reporting trades and returns that had not taken place.",
+      "Withdrawals were paid from the deposits of other investors, so the operation required continuous net inflows to remain solvent in practice.",
+      "Reported returns were remarkably stable, which attracted further investment. The very consistency that should have prompted questions functioned instead as marketing.",
+      "Administration, custody and reporting were kept within the operation rather than verified independently, so no external party ever confirmed the assets existed."
+    ],
+    "conceptsInvolved": ["risk-return", "liquidity-risk", "diversification"],
+    "warnings": [
+      "Returns consistently positive and unusually stable across very different market environments.",
+      "A strategy described in terms that did not fully explain how the reported results were produced.",
+      "Custody, administration and reporting concentrated in-house rather than with independent third parties.",
+      "Concerns raised by outside analysts over a period of years that did not result in effective examination."
+    ],
+    "impact": "Individuals, charities and institutional investors sustained very large losses. A court-appointed trustee undertook recovery and distribution to victims over many subsequent years.",
+    "response": "Criminal prosecution followed and a prison sentence was imposed. The SEC's Inspector General examined why repeated warnings had not led to detection. Rules on custody of client assets and on verification of adviser holdings were subsequently tightened.",
+    "lessons": [
+      "Independent custody is the single most effective structural protection an investor has. If the same party holds the assets and reports on them, nothing has been verified.",
+      "Stability of returns is not evidence of skill. Genuine returns vary, and unvarying performance is a question rather than a reassurance.",
+      "A structure that depends on net inflows to meet withdrawals is not an investment. It is arithmetic with a deadline."
+    ],
+    "connected": ["risk-return", "liquidity-risk"],
+    "sources": [
+      { "title": "Complaint and litigation filings, SEC v. Bernard L. Madoff Investment Securities LLC", "publisher": "U.S. Securities and Exchange Commission", "year": "2008-2009" },
+      { "title": "Investigation of Failure of the SEC to Uncover Bernard Madoff's Ponzi Scheme", "publisher": "SEC Office of Inspector General", "year": "2009" }
+    ]
+  },
+  {
+    "id": "wirecard",
+    "title": "Wirecard",
+    "tag": "Fabricated assets & audit failure",
+    "period": "Collapsed June 2020",
+    "visual": "hollow",
+    "visualCaption": "Escrow balances reported in the accounts, against balances the banks concerned confirmed did not exist.",
+    "sourceNote": "Summarised from the insolvency filing, the report of the German parliamentary committee of inquiry, and published findings of the German financial supervisory authority.",
+    "background": "Wirecard was a German payments company that grew rapidly and joined the country's leading share index. A substantial portion of its reported profits was attributed to business conducted through third-party acquiring partners in Asia.",
+    "happened": "In June 2020 the company stated that bank balances of approximately €1.9 billion, reported as held in trustee accounts, could not be located. The banks named said the accounts did not exist. The company filed for insolvency within days, and the third-party business that had generated much of its reported profit was found to have been substantially overstated.",
+    "mechanism": [
+      "A large share of reported profit came from partner businesses whose operations were difficult for outsiders to verify independently.",
+      "Cash from that business was reported as held in trustee escrow accounts rather than in the company's own accounts, placing it a further step away from direct confirmation.",
+      "Confirmation of those balances relied on documentation rather than direct verification with the banks named.",
+      "Journalists and short sellers raised detailed concerns over several years. The initial regulatory response included action concerning market conduct rather than examination of the underlying accounts."
+    ],
+    "conceptsInvolved": ["balance-sheet", "cash-flow-statement", "financial-ratios"],
+    "warnings": [
+      "A large proportion of profit generated through third parties in jurisdictions where verification was difficult.",
+      "Cash held via trustees rather than directly, adding a layer between the reported balance and independent confirmation.",
+      "Persistent, specific and documented allegations from outside analysts over a period of years.",
+      "Reported growth and margins substantially ahead of comparable payment businesses."
+    ],
+    "impact": "Shareholders and lenders sustained very large losses. The company was removed from the leading index, and confidence in German financial supervision and audit quality was seriously damaged.",
+    "response": "The German parliament established a committee of inquiry. Supervisory arrangements were restructured and the financial regulator's powers over corporate reporting were extended. Criminal proceedings followed against former executives, and audit oversight action was pursued against the firm involved.",
+    "lessons": [
+      "Where cash sits matters as much as how much is reported. Each layer between a balance and its direct confirmation is a place a misstatement can live.",
+      "Persistent, specific external allegations deserve examination of the accounts, not primarily of the people raising them.",
+      "Growth and margins far in excess of comparable businesses require an explanation that can be verified, not merely one that can be described."
+    ],
+    "connected": ["balance-sheet", "cash-flow-statement"],
+    "sources": [
+      { "title": "Final report of the parliamentary committee of inquiry into the Wirecard case", "publisher": "German Bundestag", "year": "2021" },
+      { "title": "Statements and enforcement records concerning Wirecard AG", "publisher": "BaFin, Federal Financial Supervisory Authority", "year": "2019-2021" },
+      { "title": "Insolvency filing, Wirecard AG", "publisher": "Munich District Court", "year": "2020" }
+    ]
+  }
+]
