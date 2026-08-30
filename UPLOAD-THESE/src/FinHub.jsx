@@ -112,7 +112,7 @@ const DOMAINS = [
 
   { id: 'history', icon: 'history', name: 'Financial History',
     kicker: 'How we got here',
-    blurb: 'Each stage solved a problem the previous one created.',
+    blurb: 'From certificates and trading floors to a market that fits in a pocket.',
     route: '#/history',
     categories: [
       { id: 'money-evolution', name: 'Evolution of Money', subcategories: ['Barter to Coinage', 'Paper Money', 'The Gold Standard', 'Fiat Money'] },
@@ -302,6 +302,7 @@ const CONCEPTS = [
       { claim: '“A SIP always beats investing a lump sum.”', truth: 'In a rising market, investing everything earlier usually wins. The SIP\u2019s advantage is behavioural discipline and reduced regret, not superior arithmetic.' },
     ],
     application: ['Building long-term wealth from regular income.', 'Removing market timing from the decision entirely.'],
+    sim: 'siplump',
     related: ['compounding', 'mutual-funds', 'time-value-of-money', 'etf'],
     prereq: ['compounding'], next: ['diversification'],
     tool: 'sip',
@@ -329,6 +330,7 @@ const CONCEPTS = [
     realWorld: 'In the 2008 crisis, mortgage securities were assembled from thousands of individual loans and treated as diversified. They were not — every loan depended on the same national housing market, so a single factor moved them all at once.',
     caseRef: 'lehman-2008',
     application: ['Constructing a portfolio across asset classes and geographies.', 'Testing whether apparent diversification hides a single shared risk.'],
+    sim: 'diversification',
     related: ['risk-return', 'asset-allocation', 'equity', 'fixed-income'],
     prereq: ['risk-return'], next: ['asset-allocation'],
   },
@@ -485,6 +487,7 @@ const CONCEPTS = [
       { claim: '“If the price passes the strike, I profit.”', truth: 'You profit past the breakeven, which is the strike plus the premium paid.' },
     ],
     application: ['Limiting downside while retaining upside exposure.', 'Hedging a holding against an adverse move.'],
+    sim: 'options',
     related: ['derivative', 'futures', 'hedging', 'risk-return'],
     prereq: ['derivative'], next: ['hedging'],
   },
@@ -2215,6 +2218,95 @@ button[disabled] .sym{opacity:.4}
   .mv-travel{display:none}
 }
 
+/* ---- history eras ---- */
+.era{border-bottom:1px solid var(--line)}
+.era-head{display:flex;align-items:center;gap:16px;width:100%;text-align:left;
+  min-height:86px;padding:16px 0;transition:padding .25s}
+.era-head:hover{padding-inline:6px}
+.era-rail{width:14px;display:flex;justify-content:center;flex:none}
+.era-dot{width:11px;height:11px;border-radius:50%;background:var(--line);
+  border:2px solid var(--bg);box-shadow:0 0 0 2px var(--line);transition:.3s}
+.era.on .era-dot{background:var(--teal);box-shadow:0 0 0 4px var(--teal-soft)}
+.era-main{flex:1;display:grid;gap:5px;min-width:0}
+.era-years{font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--faint)}
+.era-title{font-family:var(--serif);font-size:clamp(19px,3vw,25px);font-weight:600;
+  letter-spacing:-.02em;color:var(--text)}
+.era-badge{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--teal);border:1px solid var(--teal);background:var(--teal-soft);
+  padding:4px 9px;border-radius:999px;flex:none}
+.era-x{font-size:24px;color:var(--faint);font-weight:300;flex:none}
+.era.on .era-x{color:var(--teal)}
+.era-body{padding:6px 0 38px 30px;animation:fadeUp .45s ease both}
+@media(max-width:620px){.era-body{padding-left:0}}
+.era-cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+@media(max-width:840px){.era-cols{grid-template-columns:minmax(0,1fr)}}
+.era-col{padding:22px 24px;border-radius:14px;min-width:0}
+.era-col.india{background:var(--amber-soft);border-left:3px solid var(--amber)}
+.era-col.world{background:var(--teal-soft);border-left:3px solid var(--teal)}
+.era-point{margin-top:24px;font-family:var(--serif);font-size:19px;font-weight:600;
+  line-height:1.45;color:var(--text);max-width:60ch}
+.era-art{margin-top:30px}
+
+/* ---- settlement artifact ---- */
+.art-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
+.settle{margin:8px 0 26px}
+.settle-row{display:flex;justify-content:space-between;margin-bottom:10px}
+.settle-tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--faint)}
+.settle-track{position:relative;height:44px;background:var(--surface-2);
+  border:1px solid var(--line);border-radius:10px}
+.settle-gap{position:absolute;top:0;bottom:0;left:0;border-radius:9px 0 0 9px;
+  background:repeating-linear-gradient(-45deg,rgba(168,50,63,.16) 0 7px,rgba(168,50,63,.05) 7px 14px);
+  display:flex;align-items:center;justify-content:center;
+  transition:width .7s cubic-bezier(.3,.8,.3,1)}
+.settle-gap span{font-size:12.5px;color:var(--rose);font-weight:600;white-space:nowrap}
+.settle-dot{position:absolute;top:50%;width:12px;height:12px;margin:-6px 0 0 -6px;
+  border-radius:50%;background:var(--teal);transition:left .7s cubic-bezier(.3,.8,.3,1)}
+.settle-dot.start{left:0}
+.settle-dot.end{background:var(--amber)}
+
+/* ---- order book artifact ---- */
+.book{list-style:none;margin:0 0 22px;padding:0;display:grid;gap:8px}
+.book-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:10px;
+  background:var(--surface-2);border:1px solid var(--line);position:relative;
+  transition:border-color .35s,background .35s}
+.book-row.win{border-color:var(--teal);background:var(--teal-soft)}
+.book-who{font-size:14px;color:var(--muted);width:78px;flex:none}
+.book-bar{height:8px;border-radius:4px;background:var(--teal);opacity:.35;
+  transition:width .5s ease;min-width:20px}
+.book-row.win .book-bar{opacity:.8}
+.book-price{font-family:var(--mono);font-size:15px;font-weight:700;color:var(--text);
+  margin-left:auto;flex:none}
+.book-tag{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--teal);flex:none}
+
+/* ---- cost artifact ---- */
+.costs{display:grid;gap:20px}
+.cost-head{display:flex;justify-content:space-between;gap:14px;align-items:baseline;margin-bottom:8px}
+.cost-head span{font-size:15px;color:var(--text)}
+.cost-head b{font-family:var(--mono);font-size:17px;font-weight:700}
+.cost-head b.hi{color:var(--teal)}
+.cost-head b.bad{color:var(--rose)}
+.cost-bar{height:8px;background:var(--surface-2);border-radius:4px;overflow:hidden}
+.cost-bar span{display:block;height:100%;background:var(--muted);border-radius:4px;
+  transition:width .6s cubic-bezier(.3,.8,.3,1)}
+.cost-bar span.hi{background:var(--teal)}
+.cost-bar span.bad{background:var(--rose)}
+
+/* ---- options payoff ---- */
+.pay-zone.up{fill:var(--teal);opacity:.05}
+.pay-zone.down{fill:var(--rose);opacity:.05}
+.pay-line{fill:none;stroke:var(--teal);stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round}
+.pay-be{stroke:var(--amber);stroke-width:1.5;stroke-dasharray:4 4}
+.pay-be-t{fill:var(--amber);font-size:11px;font-family:var(--mono)}
+
+/* ---- diversification ---- */
+.div-line{fill:none;stroke-width:2;stroke-linejoin:round}
+.div-line.a{stroke:var(--muted);opacity:.75}
+.div-line.b{stroke:var(--amber);opacity:.75}
+.div-line.p{stroke:var(--teal);stroke-width:2.8}
+
 .foot{border-top:1px solid var(--line);padding:44px 0 60px;color:var(--faint);font-size:13.5px}
 .foot a:hover{color:var(--teal)}
 `;
@@ -2294,13 +2386,24 @@ const go = (href) => { window.location.hash = href.replace(/^#/, ""); };
    missing file is simply skipped.
    =========================================================================== */
 
+/* Files are listed with their dated variants. A dated file never collides with
+   an earlier upload, so nothing has to be deleted or renamed. Add a new dated
+   name here only if you go beyond these; every listed file that is absent is
+   simply skipped. */
 const CONTENT_FILES = [
   ["domains.json", DOMAINS, "id"],
   ["concepts.json", CONCEPTS, "id"],
+  ["concepts-aug30.json", CONCEPTS, "id"],
+  ["concepts-batch2.json", CONCEPTS, "id"],
+  ["concepts-batch3.json", CONCEPTS, "id"],
   ["cases.json", CASES, "id"],
+  ["cases-aug30.json", CASES, "id"],
   ["frauds.json", FRAUDS, "id"],
+  ["frauds-aug30.json", FRAUDS, "id"],
   ["scenarios.json", SCENARIOS, "id"],
+  ["scenarios-aug30.json", SCENARIOS, "id"],
   ["glossary.json", GLOSSARY, "term"],
+  ["glossary-aug30.json", GLOSSARY, "term"],
 ];
 
 function mergeInto(target, incoming, key) {
@@ -2897,7 +3000,7 @@ function ConceptGraph({ id }) {
    =========================================================================== */
 
 const NAV = [
-  ["Universe", "#/universe"], ["Origins", "#/origins"], ["Concepts", "#/concepts"], ["Cases", "#/cases"],
+  ["Universe", "#/universe"], ["Origins", "#/origins"], ["History", "#/history"], ["Concepts", "#/concepts"], ["Cases", "#/cases"],
   ["Scenarios", "#/scenarios"], ["Glossary", "#/glossary"], ["Tools", "#/tools"], ["FinHub AI", "#/ai"],
 ];
 
@@ -4153,6 +4256,312 @@ function OriginsPage({ data }) {
   );
 }
 
+/* ===========================================================================
+   THE HISTORY OF MARKETS
+   Oldest to present, Indian and global on one timeline. Each era carries an
+   artifact you operate rather than only text, because the change from two week
+   settlement to two second settlement is felt, not read.
+   =========================================================================== */
+
+/* --- Artifact 1: settlement in the certificate era --------------------- */
+function ArtSettlement() {
+  const [era, setEra] = useState(0);
+  const ERAS = [
+    { name: "Certificate era", days: 14, label: "T+14", risk: "high",
+      note: "Physical certificates and transfer deeds moved by hand and by post. Until settlement completed, each side carried the risk that the other would not perform." },
+    { name: "Account period", days: 7, label: "T+7", risk: "high",
+      note: "Trades were grouped into an account period and settled together at the end of it. Positions could be carried forward, which allowed exposure without payment." },
+    { name: "Rolling settlement", days: 3, label: "T+3", risk: "medium",
+      note: "Each day's trades settled on their own cycle. Carry forward ended, so a position had to be paid for or closed." },
+    { name: "Electronic", days: 2, label: "T+2", risk: "low",
+      note: "Dematerialised holdings and electronic funds transfer removed the physical movement of documents entirely." },
+    { name: "Present", days: 1, label: "T+1", risk: "low",
+      note: "Settlement completes the working day after the trade. Indian exchanges moved to this cycle in phases through 2022 and 2023." },
+  ];
+  const e = ERAS[era];
+  const pct = (e.days / 14) * 100;
+
+  return (
+    <div className="sim">
+      <div className="art-tabs" role="tablist" aria-label="Settlement era">
+        {ERAS.map((x, i) => (
+          <button key={x.name} role="tab" aria-selected={i === era}
+            className={"tab" + (i === era ? " on" : "")} onClick={() => setEra(i)}>{x.label}</button>
+        ))}
+      </div>
+
+      <div className="settle">
+        <div className="settle-row">
+          <span className="settle-tag">Trade agreed</span>
+          <span className="settle-tag">Settlement completes</span>
+        </div>
+        <div className="settle-track">
+          <div className="settle-gap" style={{ width: `${pct}%` }}>
+            <span>{e.days} {e.days === 1 ? "day" : "days"} of open risk</span>
+          </div>
+          <span className="settle-dot start" />
+          <span className="settle-dot end" style={{ left: `${pct}%` }} />
+        </div>
+      </div>
+
+      <div className="sim-out">
+        <div><span>Era</span><b>{e.name}</b></div>
+        <div><span>Settlement cycle</span><b className="hi">{e.label}</b></div>
+        <div><span>Counterparty risk window</span>
+          <b className={e.risk === "high" ? "bad" : "hi"}>{e.days} {e.days === 1 ? "day" : "days"}</b></div>
+      </div>
+      <p className="sim-note">{e.note}</p>
+    </div>
+  );
+}
+
+/* --- Artifact 2: open outcry against an order book --------------------- */
+function ArtMatching() {
+  const [mode, setMode] = useState("floor");
+  const orders = [
+    { who: "Broker A", price: 101.5, qty: 200 },
+    { who: "Broker B", price: 100.8, qty: 500 },
+    { who: "Broker C", price: 100.2, qty: 300 },
+    { who: "Broker D", price: 99.6, qty: 400 },
+  ];
+  const floorFill = orders[0];
+  const bookFill = orders[3];
+
+  return (
+    <div className="sim">
+      <div className="art-tabs" role="tablist" aria-label="Matching method">
+        <button role="tab" aria-selected={mode === "floor"}
+          className={"tab" + (mode === "floor" ? " on" : "")} onClick={() => setMode("floor")}>Open outcry</button>
+        <button role="tab" aria-selected={mode === "book"}
+          className={"tab" + (mode === "book" ? " on" : "")} onClick={() => setMode("book")}>Electronic order book</button>
+      </div>
+
+      <p className="small" style={{ marginBottom: 16 }}>
+        You are buying 200 shares. Four brokers are willing to sell.
+      </p>
+
+      <ul className="book">
+        {orders.map((o, i) => {
+          const win = mode === "floor" ? i === 0 : i === 3;
+          return (
+            <li key={o.who} className={"book-row" + (win ? " win" : "")}>
+              <span className="book-who">{o.who}</span>
+              <span className="book-bar" style={{ width: `${(o.qty / 500) * 100}%` }} />
+              <span className="book-price">₹{o.price.toFixed(2)}</span>
+              {win && <span className="book-tag">Filled here</span>}
+            </li>
+          );
+        })}
+      </ul>
+
+      <div className="sim-out">
+        <div><span>Your fill price</span>
+          <b className="hi">₹{(mode === "floor" ? floorFill.price : bookFill.price).toFixed(2)}</b></div>
+        <div><span>Cost for 200 shares</span>
+          <b>₹{fmt((mode === "floor" ? floorFill.price : bookFill.price) * 200, 2)}</b></div>
+        <div><span>Against the best price</span>
+          <b className={mode === "floor" ? "bad" : "hi"}>
+            {mode === "floor" ? `₹${fmt((floorFill.price - bookFill.price) * 200, 2)} worse` : "Best available"}</b></div>
+      </div>
+      <p className="sim-note">
+        {mode === "floor"
+          ? "On a trading floor an order was filled by whoever was heard first, not necessarily by whoever offered the best price. Execution quality depended on access and proximity."
+          : "An electronic book sorts every order by price, then by time. The buyer meets the lowest offer automatically, regardless of who placed it or where they are."}
+      </p>
+    </div>
+  );
+}
+
+/* --- Artifact 3: what one trade used to cost --------------------------- */
+function ArtCost() {
+  const [value, setValue] = useState(50000);
+  const rows = [
+    { era: "Floor, full service", pct: 1.0, extra: "Stamp duty and transfer fees on physical documents", tone: "bad" },
+    { era: "Early online broking", pct: 0.5, extra: "Lower, but still a percentage of value", tone: "" },
+    { era: "Discount broking", pct: 0.03, extra: "Flat fee per order rather than a percentage", tone: "hi", flat: 20 },
+  ];
+  return (
+    <div className="sim">
+      <div className="sim-controls">
+        <Slider label="Trade value" value={value} set={setValue} min={5000} max={500000} step={5000} suffix=" ₹" />
+      </div>
+      <div className="costs">
+        {rows.map((r) => {
+          const c = r.flat ? Math.min(r.flat, value * (r.pct / 100)) : value * (r.pct / 100);
+          const w = Math.min(100, (c / (value * 0.01)) * 100);
+          return (
+            <div className="cost-row" key={r.era}>
+              <div className="cost-head">
+                <span>{r.era}</span>
+                <b className={r.tone}>₹{fmt(c, 2)}</b>
+              </div>
+              <div className="cost-bar"><span style={{ width: `${w}%` }} className={r.tone} /></div>
+              <p className="small">{r.extra}</p>
+            </div>
+          );
+        })}
+      </div>
+      <p className="sim-note">
+        Brokerage is illustrative of the model in each era rather than a quoted rate. What changed was the
+        structure: a percentage of value became a flat fee per order, which made small trades viable for
+        the first time.
+      </p>
+    </div>
+  );
+}
+
+const HIST_ART = { settlement: ArtSettlement, matching: ArtMatching, cost: ArtCost };
+
+const MARKET_HISTORY = {
+  intro: "Markets did not become fast, cheap and open in one step. Each stage solved a problem the previous stage created, and each solution introduced a new one. Read in order, the sequence explains why a share can now be bought in seconds from a phone, and why that took several centuries to arrange.",
+  eras: [
+    {
+      period: "Before exchanges",
+      years: "Antiquity to the 1500s",
+      india: "Merchant guilds pooled capital and shared the risk of long voyages. The hundi allowed value to move between cities without moving coin, functioning as a credit instrument across the trading networks of the subcontinent and the Indian Ocean.",
+      world: "Merchants met at fairs and in commodity houses to trade goods, debts and shipping ventures. Bills of exchange developed in Italian banking to settle trade across cities without transporting bullion.",
+      point: "Capital could already be pooled and moved. What did not yet exist was a continuous market in transferable ownership.",
+    },
+    {
+      period: "Joint stock and the first exchanges",
+      years: "1600s to 1800s",
+      india: "Trade with Europe was conducted largely through chartered companies. Indigenous banking families financed rulers, armies and commerce across the subcontinent, but there was no organised exchange in transferable shares.",
+      world: "The joint stock company divided ownership into transferable shares, allowing ventures too large for any single merchant. Amsterdam developed an active secondary market in such shares in the early seventeenth century. The London Stock Exchange was formally established in 1801, and the New York Stock Exchange traces its origin to an agreement among brokers in 1792.",
+      point: "Once ownership could be transferred, a price for it had to exist. The exchange was the answer to that requirement.",
+    },
+    {
+      period: "The certificate era",
+      years: "1875 to the 1980s",
+      india: "Brokers trading under a banyan tree in Bombay formalised their association in 1875, which became the Bombay Stock Exchange, among the oldest in Asia. Trading was conducted by open outcry and settled by the physical delivery of share certificates and transfer deeds.",
+      world: "Exchanges everywhere operated the same way: a trading floor, brokers shouting prices, and clerks reconciling by hand. Ownership was proved by a piece of paper, which could be lost, forged or delayed in transfer.",
+      point: "Ownership was physical, so settlement was slow and risky. The gap between agreeing a trade and completing it was where most of the risk lived.",
+      artifact: "settlement",
+      artifactTitle: "How long a trade stayed open",
+    },
+    {
+      period: "The floor and its limits",
+      years: "1950s to 1990s",
+      india: "Access to the market ran through a broker who was physically present on the floor. Prices were not visible to the public in real time, and the quality of execution depended on the relationship rather than on the order.",
+      world: "The same structure held internationally. The floor concentrated liquidity in one place, which was efficient, but it also concentrated advantage among those standing on it.",
+      point: "The floor worked, and it favoured whoever was closest to it.",
+      artifact: "matching",
+      artifactTitle: "Who your order actually met",
+    },
+    {
+      period: "Screens replace the floor",
+      years: "1990s",
+      india: "The National Stock Exchange began operations in the mid 1990s with screen based trading, extending access beyond a single city. Prices became visible to everyone at once, and orders were matched by price and time priority rather than by proximity.",
+      world: "Nasdaq had operated as an electronic quotation system since 1971. Through the 1990s, exchanges across the United States, Europe and Asia moved from floors to electronic matching.",
+      point: "Once matching became a computation rather than a conversation, location stopped conferring advantage.",
+    },
+    {
+      period: "Dematerialisation",
+      years: "Late 1990s to 2000s",
+      india: "Depositories were established and shares moved from certificates to electronic records. The Depositories Act of 1996 provided the legal basis. Settlement moved to a rolling cycle, and carry forward trading was discontinued after the market events of 2001.",
+      world: "Central securities depositories replaced physical certificates across major markets, and settlement cycles shortened steadily as reconciliation became electronic.",
+      point: "Removing the paper removed the delay. Settlement risk fell because there was nothing left to physically move.",
+    },
+    {
+      period: "The market in a pocket",
+      years: "2010s to present",
+      india: "Discount brokerage moved pricing from a percentage of trade value to a flat fee per order, and account opening moved online. Settlement moved to a one day cycle in phases through 2022 and 2023. The combination of low cost, quick onboarding and mobile access brought a large number of first time participants into the market.",
+      world: "Zero and low commission platforms spread across the United States and Europe, and mobile first broking became the standard route for retail participation. Falling cost and falling friction changed who participates, and how often.",
+      point: "The barrier stopped being cost or access, and became knowledge. That is the barrier this platform exists to address.",
+      artifact: "cost",
+      artifactTitle: "What one trade used to cost",
+    },
+  ],
+  closing: "Four centuries of change reduce to one direction: the distance between an investor and a market kept shrinking. Physical certificates became electronic records, floors became matching engines, weeks became a day, and a percentage became a flat fee. Every barrier that fell was a barrier of cost, access or delay. The one that remains is understanding.",
+  sources: [
+    { title: "Handbook of Statistics on the Indian Securities Market", publisher: "Securities and Exchange Board of India" },
+    { title: "The Depositories Act, 1996", publisher: "Government of India", year: "1996" },
+    { title: "Circulars on the transition to the T+1 settlement cycle", publisher: "Securities and Exchange Board of India", year: "2021-2023" },
+    { title: "Report of the Joint Parliamentary Committee on stock market scam and matters relating thereto", publisher: "Parliament of India", year: "2002" },
+    { title: "Exchange histories published by the London Stock Exchange, the New York Stock Exchange and Nasdaq", publisher: "Respective exchanges" },
+  ],
+};
+
+function MarketHistoryPage({ data }) {
+  const d = data && Array.isArray(data.eras) ? data : MARKET_HISTORY;
+  const [open, setOpen] = useState(0);
+  return (
+    <>
+      <Crumbs items={[["FinHub", "#/"], ["History of markets"]]} />
+      <div className="wrap">
+        <Reveal><p className="kicker">From paper to phone</p></Reveal>
+        <Reveal delay={60}><h1 className="h-page" style={{ marginTop: 12 }}>The History of Markets</h1></Reveal>
+        <Reveal delay={120}><p className="lede" style={{ marginTop: 18, maxWidth: "64ch" }}>{d.intro}</p></Reveal>
+      </div>
+
+      <div className="wrap" style={{ paddingTop: 44, paddingBottom: 90 }}>
+        {d.eras.map((era, i) => {
+          const Art = era.artifact ? HIST_ART[era.artifact] : null;
+          const isOpen = open === i;
+          return (
+            <Reveal key={era.period} delay={Math.min(i * 50, 260)}>
+              <section className={"era" + (isOpen ? " on" : "")}>
+                <button className="era-head" onClick={() => setOpen(isOpen ? -1 : i)} aria-expanded={isOpen}>
+                  <span className="era-rail">
+                    <span className="era-dot" />
+                  </span>
+                  <span className="era-main">
+                    <span className="era-years">{era.years}</span>
+                    <span className="era-title">{era.period}</span>
+                  </span>
+                  {era.artifact && <span className="era-badge">Interactive</span>}
+                  <span className="era-x">{isOpen ? "−" : "+"}</span>
+                </button>
+
+                {isOpen && (
+                  <div className="era-body">
+                    <div className="era-cols">
+                      <div className="era-col india">
+                        <p className="org-tag">India</p>
+                        <p className="body" style={{ fontSize: 16.5 }}>{era.india}</p>
+                      </div>
+                      <div className="era-col world">
+                        <p className="org-tag">Elsewhere</p>
+                        <p className="body" style={{ fontSize: 16.5 }}>{era.world}</p>
+                      </div>
+                    </div>
+                    <p className="era-point">{era.point}</p>
+                    {Art && (
+                      <div className="era-art">
+                        <p className="eyebrow" style={{ marginBottom: 14 }}>{era.artifactTitle}</p>
+                        <Art />
+                      </div>
+                    )}
+                  </div>
+                )}
+              </section>
+            </Reveal>
+          );
+        })}
+
+        <Reveal>
+          <div className="org-close">
+            <p className="body" style={{ fontSize: 18.5 }}>{d.closing}</p>
+            <div className="chips" style={{ marginTop: 22 }}>
+              <a className="chip" href="#/concept/equity-markets">Equity markets →</a>
+              <a className="chip" href="#/concept/price-discovery">Price discovery →</a>
+              <a className="chip" href="#/origins">Origins of finance →</a>
+            </div>
+          </div>
+        </Reveal>
+
+        {d.sources && (
+          <Reveal>
+            <div style={{ marginTop: 44 }}>
+              <SourceList sources={d.sources}
+                note="Dates and legislative references are drawn from the public record. Figures that change over time are deliberately not quoted." />
+            </div>
+          </Reveal>
+        )}
+      </div>
+    </>
+  );
+}
+
 function HistoryPage() {
   return (
     <>
@@ -4449,7 +4858,214 @@ function SimBond() {
   );
 }
 
+
+/* --- Options payoff: the line bends at the strike ---------------------- */
+function SimOptions() {
+  const [kind, setKind] = useState("call");
+  const [strike, setStrike] = useState(22000);
+  const [premium, setPremium] = useState(200);
+  const [side, setSide] = useState("buy");
+  const lot = 50;
+  const W = 640, H = 260, pad = 40;
+  const lo = strike * 0.94, hi = strike * 1.06;
+
+  const payoff = (spot) => {
+    const intrinsic = kind === "call"
+      ? Math.max(spot - strike, 0)
+      : Math.max(strike - spot, 0);
+    const net = intrinsic - premium;
+    return side === "buy" ? net : -net;
+  };
+
+  const pts = [];
+  for (let i = 0; i <= 60; i++) {
+    const spot = lo + ((hi - lo) * i) / 60;
+    pts.push({ spot, p: payoff(spot) });
+  }
+  const maxAbs = Math.max(...pts.map((d) => Math.abs(d.p)), premium * 1.6);
+  const X = (spot) => pad + ((spot - lo) / (hi - lo)) * (W - pad * 2);
+  const Y = (p) => H / 2 - (p / maxAbs) * (H / 2 - pad);
+  const path = pts.map((d, i) => `${i ? "L" : "M"}${X(d.spot).toFixed(1)} ${Y(d.p).toFixed(1)}`).join(" ");
+
+  const breakeven = kind === "call" ? strike + premium : strike - premium;
+  const maxLoss = side === "buy" ? premium * lot : Infinity;
+  const maxGain = side === "buy"
+    ? (kind === "call" ? Infinity : (strike - premium) * lot)
+    : premium * lot;
+
+  return (
+    <div className="sim">
+      <div className="art-tabs">
+        <button className={"tab" + (kind === "call" ? " on" : "")} onClick={() => setKind("call")}>Call</button>
+        <button className={"tab" + (kind === "put" ? " on" : "")} onClick={() => setKind("put")}>Put</button>
+        <button className={"tab" + (side === "buy" ? " on" : "")} onClick={() => setSide("buy")}>Buy</button>
+        <button className={"tab" + (side === "sell" ? " on" : "")} onClick={() => setSide("sell")}>Sell</button>
+      </div>
+
+      <div className="sim-controls">
+        <Slider label="Strike" value={strike} set={setStrike} min={20000} max={24000} step={100} />
+        <Slider label="Premium" value={premium} set={setPremium} min={20} max={600} step={10} suffix=" ₹" />
+      </div>
+
+      <svg viewBox={`0 0 ${W} ${H}`} className="sim-svg" role="img"
+        aria-label={`Payoff of a ${side} ${kind} at strike ${strike}`}>
+        <rect x={pad} y={pad} width={W - pad * 2} height={H / 2 - pad} className="pay-zone up" />
+        <rect x={pad} y={H / 2} width={W - pad * 2} height={H / 2 - pad} className="pay-zone down" />
+        <line x1={pad} y1={H / 2} x2={W - pad} y2={H / 2} className="sim-axis" />
+        <line x1={X(strike)} y1={pad} x2={X(strike)} y2={H - pad} className="sim-axis dash" />
+        <text x={X(strike)} y={H - pad + 16} textAnchor="middle" className="mv-lab">Strike</text>
+        <line x1={X(breakeven)} y1={pad} x2={X(breakeven)} y2={H - pad} className="pay-be" />
+        <text x={X(breakeven)} y={pad - 8} textAnchor="middle" className="pay-be-t">Breakeven</text>
+        <path d={path} className="pay-line" />
+      </svg>
+
+      <div className="sim-out">
+        <div><span>Breakeven</span><b className="hi">{fmt(breakeven, 0)}</b></div>
+        <div><span>Maximum loss</span>
+          <b className={maxLoss === Infinity ? "bad" : ""}>{maxLoss === Infinity ? "Unlimited" : `₹${fmt(maxLoss)}`}</b></div>
+        <div><span>Maximum gain</span>
+          <b className="hi">{maxGain === Infinity ? "Unlimited" : `₹${fmt(maxGain)}`}</b></div>
+      </div>
+      <p className="sim-note">
+        Lot size 50. A bought option loses only the premium at worst, which is what the premium buys.
+        A sold option collects the premium and carries the obligation, so the payoff is the mirror image.
+        Being right about direction is not enough: the move must clear the breakeven.
+      </p>
+    </div>
+  );
+}
+
+/* --- Diversification: correlation is the whole story ------------------- */
+function SimDiversification() {
+  const [corr, setCorr] = useState(0.6);
+  const [wA, setWA] = useState(60);
+  const volA = 18, volB = 12;
+  const w1 = wA / 100, w2 = 1 - w1;
+  const port = Math.sqrt(
+    w1 * w1 * volA * volA + w2 * w2 * volB * volB + 2 * w1 * w2 * corr * volA * volB
+  );
+  const weighted = w1 * volA + w2 * volB;
+  const benefit = weighted - port;
+
+  const W = 620, H = 190, pad = 34;
+  const series = (phase, vol) =>
+    Array.from({ length: 60 }, (_, i) => {
+      const base = Math.sin(i / 5.5) * vol;
+      const own = Math.sin(i / 3.1 + phase) * vol * 0.7;
+      return base * corr + own * (1 - Math.abs(corr));
+    });
+  const a = series(0, volA), b = series(2.4, volB);
+  const p = a.map((v, i) => w1 * v + w2 * b[i]);
+  const scale = 26;
+  const line = (arr, yOff) =>
+    arr.map((v, i) => `${i ? "L" : "M"}${(pad + (i / 59) * (W - pad * 2)).toFixed(1)} ${(yOff - v * (scale / 18)).toFixed(1)}`).join(" ");
+
+  return (
+    <div className="sim">
+      <div className="sim-controls">
+        <Slider label="Correlation between the two assets" value={corr} set={setCorr} min={-1} max={1} step={0.05} />
+        <Slider label="Weight in the riskier asset" value={wA} set={setWA} min={0} max={100} step={5} suffix="%" />
+      </div>
+
+      <svg viewBox={`0 0 ${W} ${H}`} className="sim-svg" role="img"
+        aria-label="Two assets and the portfolio that combines them">
+        <path d={line(a, 45)} className="div-line a" />
+        <text x={pad} y={22} className="mv-lab">Asset A, 18% volatility</text>
+        <path d={line(b, 105)} className="div-line b" />
+        <text x={pad} y={82} className="mv-lab">Asset B, 12% volatility</text>
+        <path d={line(p, 165)} className="div-line p" />
+        <text x={pad} y={142} className="mv-lab">Combined portfolio</text>
+      </svg>
+
+      <div className="sim-out">
+        <div><span>Weighted average volatility</span><b>{fmt(weighted, 1)}%</b></div>
+        <div><span>Actual portfolio volatility</span><b className="hi">{fmt(port, 1)}%</b></div>
+        <div><span>Reduction from diversification</span>
+          <b className={benefit > 1 ? "hi" : ""}>{fmt(benefit, 1)} points</b></div>
+      </div>
+      <p className="sim-note">
+        At a correlation of 1 the two assets move together and there is no benefit at all: portfolio
+        volatility equals the weighted average. As correlation falls, the movements begin to cancel and the
+        combined line flattens. The benefit comes from low correlation, not from the number of holdings.
+      </p>
+    </div>
+  );
+}
+
+/* --- SIP against lumpsum, across three market paths -------------------- */
+function SimSipLumpsum() {
+  const [market, setMarket] = useState("rising");
+  const [monthly, setMonthly] = useState(10000);
+  const months = 60;
+  const total = monthly * months;
+
+  const pathOf = (kind) => {
+    const out = [];
+    for (let i = 0; i <= months; i++) {
+      const t = i / months;
+      let nav;
+      if (kind === "rising") nav = 100 * (1 + 0.9 * t);
+      else if (kind === "falling") nav = 100 * (1 - 0.35 * t);
+      else nav = 100 * (1 + 0.25 * t + 0.32 * Math.sin(t * Math.PI * 2.2));
+      out.push(nav);
+    }
+    return out;
+  };
+  const nav = pathOf(market);
+
+  let units = 0;
+  for (let i = 1; i <= months; i++) units += monthly / nav[i];
+  const sipValue = units * nav[months];
+  const lumpUnits = total / nav[0];
+  const lumpValue = lumpUnits * nav[months];
+
+  const W = 620, H = 170, pad = 32;
+  const minN = Math.min(...nav), maxN = Math.max(...nav);
+  const X = (i) => pad + (i / months) * (W - pad * 2);
+  const Y = (v) => H - pad - ((v - minN) / Math.max(1, maxN - minN)) * (H - pad * 2);
+  const navPath = nav.map((v, i) => `${i ? "L" : "M"}${X(i).toFixed(1)} ${Y(v).toFixed(1)}`).join(" ");
+
+  return (
+    <div className="sim">
+      <div className="art-tabs" role="tablist" aria-label="Market path">
+        {[["rising", "Rising market"], ["falling", "Falling market"], ["choppy", "Choppy market"]].map(([k, l]) => (
+          <button key={k} role="tab" aria-selected={market === k}
+            className={"tab" + (market === k ? " on" : "")} onClick={() => setMarket(k)}>{l}</button>
+        ))}
+      </div>
+      <div className="sim-controls">
+        <Slider label="Monthly amount" value={monthly} set={setMonthly} min={1000} max={50000} step={1000} suffix=" ₹" />
+      </div>
+
+      <svg viewBox={`0 0 ${W} ${H}`} className="sim-svg" role="img" aria-label="Fund value over five years">
+        <path d={navPath} className="sim-line comp" />
+        {[12, 24, 36, 48].map((m) => (
+          <circle key={m} cx={X(m)} cy={Y(nav[m])} r="3" className="sim-dot comp" />
+        ))}
+      </svg>
+
+      <div className="sim-out">
+        <div><span>Total invested</span><b>₹{fmt(total)}</b></div>
+        <div><span>Monthly investing</span>
+          <b className={sipValue >= lumpValue ? "hi" : ""}>₹{fmt(sipValue)}</b></div>
+        <div><span>All at the start</span>
+          <b className={lumpValue > sipValue ? "hi" : ""}>₹{fmt(lumpValue)}</b></div>
+      </div>
+      <p className="sim-note">
+        {market === "rising" && "In a market that rises steadily, investing everything at the start wins, because the money is exposed for longer."}
+        {market === "falling" && "In a falling market, monthly investing buys more units at lower prices, so it loses less. Neither method produces a gain here."}
+        {market === "choppy" && "In a market that moves sideways with large swings, monthly investing accumulates units cheaply during the falls."}
+        {" "}The path is illustrative and returns are not constant in reality. What the comparison shows is that the
+        advantage of each method depends on the path, and the path is not knowable in advance.
+      </p>
+    </div>
+  );
+}
+
 const SIMS = {
+  options: { title: "Move the strike and premium, and watch the payoff bend", el: SimOptions },
+  diversification: { title: "Move the correlation, and watch the combined line flatten", el: SimDiversification },
+  siplump: { title: "Same money, two methods, three different markets", el: SimSipLumpsum },
   compounding: { title: "Watch compounding separate from simple interest", el: SimCompounding },
   leverage: { title: "Move the leverage and watch equity absorb the loss", el: SimLeverage },
   bond: { title: "Move the yield and watch the price respond", el: SimBond },
@@ -4703,7 +5319,7 @@ export default function FinHub() {
     case "fraud": view = <FraudPage id={parts[1]} />; break;
     case "scenarios": view = <ScenarioIndex />; break;
     case "scenario": view = <ScenarioPage id={parts[1]} />; break;
-    case "history": view = <HistoryPage />; break;
+    case "history": view = <MarketHistoryPage />; break;
     case "origins": view = <OriginsPage data={origins} />; break;
     case "graph": view = <GraphPage />; break;
     case "glossary": view = <Glossary />; break;
