@@ -2365,6 +2365,133 @@ button[disabled] .sym{opacity:.4}
   background:var(--surface)}
 @media(prefers-reduced-motion:reduce){.tsec-body{animation:none}}
 
+/* ---- trading floor: ambience ---- */
+.floor,.floor-gate{position:relative;overflow:hidden;padding-bottom:100px}
+.floor-gate{min-height:78vh;display:flex;align-items:center}
+.floor-amb{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.amb-graph{position:absolute;left:0;right:0;bottom:0;width:100%;height:52%;opacity:.13}
+.amb-bar{fill:var(--teal);transform-origin:bottom;animation:ambRise ease-in-out infinite alternate}
+@keyframes ambRise{from{transform:scaleY(.35)}to{transform:scaleY(1)}}
+.amb-line{fill:none;stroke:var(--amber);stroke-width:2;opacity:.5;
+  stroke-dasharray:1400;stroke-dashoffset:1400;animation:ambDraw 9s ease-in-out infinite}
+@keyframes ambDraw{0%{stroke-dashoffset:1400}55%{stroke-dashoffset:0}100%{stroke-dashoffset:0;opacity:0}}
+.amb-coins{position:absolute;inset:0}
+.amb-coin{position:absolute;bottom:-20px;border-radius:50%;background:var(--amber);
+  opacity:.22;animation:ambFloat linear infinite}
+@keyframes ambFloat{
+  0%{transform:translateY(0) scale(.8);opacity:0}
+  12%{opacity:.28}
+  100%{transform:translateY(-90vh) scale(1.1);opacity:0}}
+@media(prefers-reduced-motion:reduce){.floor-amb{display:none}}
+
+/* ---- entry gate ---- */
+.gate-in,.floor-in{position:relative;z-index:1}
+.gate-warn{margin-top:26px;padding:22px 24px;border-radius:14px;background:var(--amber-soft);
+  border-left:3px solid var(--amber)}
+.gate-form{margin-top:30px;padding:26px;border:1px solid var(--line);border-radius:18px;
+  background:var(--surface);box-shadow:var(--shadow);display:grid;gap:18px;max-width:470px}
+.gate-check{display:flex;gap:12px;align-items:flex-start;font-size:15px;color:var(--text);cursor:pointer}
+.gate-check input{width:20px;height:20px;flex:none;accent-color:var(--teal);margin-top:2px}
+.gate-form .btn.primary:disabled{opacity:.45;cursor:not-allowed;transform:none}
+
+/* ---- phone frame ---- */
+.floor-head{display:flex;flex-wrap:wrap;gap:18px;justify-content:space-between;
+  align-items:center;padding:34px 0 26px}
+.phone{max-width:520px;margin:0 auto;border:1px solid var(--line);border-radius:26px;
+  background:var(--surface);overflow:hidden;
+  box-shadow:0 3px 8px rgba(11,18,32,.06),0 40px 80px -32px rgba(11,18,32,.34)}
+.phone-bar{display:flex;align-items:center;gap:10px;padding:14px 18px;
+  border-bottom:1px solid var(--line);background:var(--surface-2)}
+.phone-dot{width:9px;height:9px;border-radius:50%;background:var(--teal);flex:none;
+  animation:pdot 2.6s ease-in-out infinite}
+@keyframes pdot{0%,100%{opacity:1}50%{opacity:.3}}
+.phone-title{font-size:14px;font-weight:600;color:var(--text)}
+.phone-tag{margin-left:auto;font-family:var(--mono);font-size:10px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--faint);border:1px solid var(--line);
+  padding:3px 8px;border-radius:999px}
+.phone-tabs{display:flex;border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
+.phone-tabs::-webkit-scrollbar{display:none}
+.ptab{flex:1 0 auto;min-height:50px;padding:0 18px;font-size:14px;color:var(--muted);
+  border-bottom:2px solid transparent;transition:.25s;white-space:nowrap}
+.ptab.on{color:var(--teal);border-color:var(--teal);font-weight:600;background:var(--teal-soft)}
+.phone-body{padding:22px 20px;animation:fadeUp .4s ease both}
+@media(max-width:520px){.phone-body{padding:18px 14px}}
+.phone-foot{padding:14px 18px;border-top:1px solid var(--line);background:var(--surface-2);
+  font-size:12px;color:var(--faint);text-align:center}
+
+/* ---- ticket ---- */
+.tk{display:grid;gap:18px}
+.tk-toggles{display:flex;flex-wrap:wrap;gap:10px}
+.seg{display:flex;background:var(--surface-2);border:1px solid var(--line);
+  border-radius:10px;padding:3px;gap:3px}
+.seg-b{padding:9px 16px;border-radius:8px;font-size:14px;color:var(--muted);
+  min-height:40px;transition:.25s}
+.seg-b.on{background:var(--text);color:var(--surface);font-weight:600}
+.seg-b.buy.on{background:var(--teal);color:#fff}
+.seg-b.sell.on{background:var(--rose);color:#fff}
+.tk-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.tk-fields.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media(max-width:480px){.tk-fields.three{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.tkf{display:grid;gap:7px}
+.tkf.wide{grid-column:1/-1}
+.tkf span{font-size:12.5px;color:var(--muted)}
+.tkf input{background:var(--bg);border:1px solid var(--line);border-radius:9px;
+  padding:12px 13px;font-family:var(--mono);font-size:16px;font-weight:600;
+  color:var(--text);width:100%;outline:none;min-height:46px}
+.tkf input:focus{border-color:var(--teal)}
+.tk-value{display:flex;justify-content:space-between;align-items:baseline;gap:14px;
+  padding:16px 18px;border-radius:12px;background:var(--surface-2)}
+.tk-value span{font-size:14px;color:var(--muted)}
+.tk-value b{font-family:var(--mono);font-size:21px;font-weight:700;color:var(--text)}
+
+/* ---- charges ---- */
+.chg{border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.chg-row{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;
+  padding:13px 16px;border-bottom:1px solid var(--line);
+  animation:chgIn .45s cubic-bezier(.2,.7,.3,1) both}
+@keyframes chgIn{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:none}}
+.chg-row span{font-size:14.5px;color:var(--text);display:grid;gap:3px;min-width:0}
+.chg-row em{font-style:normal;font-size:12px;color:var(--faint)}
+.chg-row b{font-family:var(--mono);font-size:15px;font-weight:700;white-space:nowrap}
+.chg-total,.chg-net{display:flex;justify-content:space-between;gap:14px;padding:15px 16px;
+  background:var(--surface-2);border-bottom:1px solid var(--line)}
+.chg-net{background:var(--teal-soft);border-bottom:0}
+.chg-total span,.chg-net span{font-size:14.5px;font-weight:600;color:var(--text)}
+.chg-total b,.chg-net b{font-family:var(--mono);font-size:18px;font-weight:700;color:var(--text)}
+.tk-be{padding:20px;border-radius:12px;background:var(--amber-soft);
+  border-left:3px solid var(--amber);display:grid;gap:8px}
+.tk-be b{font-family:var(--mono);font-size:26px;font-weight:700;color:var(--text)}
+
+/* ---- grids and bars ---- */
+.tk-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px;
+  border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--line)}
+.tk-grid div{background:var(--surface);padding:14px 16px;display:grid;gap:5px;min-width:0}
+.tk-grid span{font-size:12.5px;color:var(--muted)}
+.tk-grid b{font-family:var(--mono);font-size:17px;font-weight:700;color:var(--text)}
+.tk-grid b.hi{color:var(--teal)}
+.tk-grid b.bad{color:var(--rose)}
+.marginbar{display:grid;gap:12px}
+.mb-track{height:10px;border-radius:5px;background:var(--surface-2);overflow:hidden}
+.mb-fill{height:100%;border-radius:5px;transition:width .55s cubic-bezier(.3,.8,.3,1)}
+.mb-fill.up{background:var(--teal)}
+.mb-fill.down{background:var(--rose)}
+
+/* ---- risk notice ---- */
+.risk{padding:16px 18px;border-radius:12px;background:var(--surface-2);
+  border-left:3px solid var(--rose)}
+.risk-h{font-size:13px;font-weight:700;color:var(--rose);margin-bottom:8px}
+.risk-b{font-size:13.5px;line-height:1.6;color:var(--text)}
+
+/* ---- commodities ---- */
+.cmd-picker{display:flex;gap:8px;overflow-x:auto;padding-bottom:12px;scrollbar-width:none}
+.cmd-picker::-webkit-scrollbar{display:none}
+.cmd-picker .tab{flex:0 0 auto}
+.cmd-spec{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2px;
+  border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--line)}
+.cmd-spec div{background:var(--surface);padding:13px 14px;display:grid;gap:4px}
+.cmd-spec span{font-size:11.5px;color:var(--muted)}
+.cmd-spec b{font-size:15px;font-weight:700;color:var(--text)}
+
 .foot{border-top:1px solid var(--line);padding:44px 0 60px;color:var(--faint);font-size:13.5px}
 .foot a:hover{color:var(--teal)}
 `;
@@ -3058,7 +3185,7 @@ function ConceptGraph({ id }) {
    =========================================================================== */
 
 const NAV = [
-  ["Universe", "#/universe"], ["Origins", "#/origins"], ["History", "#/history"], ["Data", "#/data"], ["Tax", "#/tax"], ["Concepts", "#/concepts"], ["Cases", "#/cases"],
+  ["Universe", "#/universe"], ["Origins", "#/origins"], ["History", "#/history"], ["Data", "#/data"], ["Tax", "#/tax"], ["Trading floor", "#/floor"], ["Concepts", "#/concepts"], ["Cases", "#/cases"],
   ["Scenarios", "#/scenarios"], ["Glossary", "#/glossary"], ["Tools", "#/tools"], ["FinHub AI", "#/ai"],
 ];
 
@@ -5639,6 +5766,567 @@ function TaxPage() {
   );
 }
 
+/* ===========================================================================
+   THE TRADING FLOOR
+   A simulator, not a broker. No market connection, no real prices, no orders.
+   Its single purpose is to show what a trade actually costs, because the
+   charges are the part almost nobody sees until the contract note arrives.
+
+   Charge rates are read from fin-data/tax-india-aug30.json where present, so
+   they stay correct after a Budget without any change to this file.
+   =========================================================================== */
+
+const SEBI_RISK = "9 out of 10 individual traders in equity Futures and Options Segment incurred net losses. On an average, loss makers registered net trading loss close to ₹50,000. Over and above the net trading losses incurred, loss makers expended an additional 28% of net trading losses as transaction costs. Those making net trading profits incurred between 15% to 50% of such profits as transaction cost.";
+
+const DEFAULT_RATES = {
+  delivery: { brokerage: 0, sttBuy: 0.001, sttSell: 0.001, exch: 0.0000297, sebi: 0.000001, stampBuy: 0.000015, gst: 0.18, dp: 15.93 },
+  intraday: { brokerageRate: 0.0003, brokerageCap: 20, sttSell: 0.00025, exch: 0.0000297, sebi: 0.000001, stampBuy: 0.00003, gst: 0.18 },
+  futures: { brokerage: 20, sttSell: 0.0005, exch: 0.0000173, sebi: 0.000001, stampBuy: 0.00002, gst: 0.18 },
+  options: { brokerage: 20, sttSell: 0.0015, exch: 0.0003503, sebi: 0.000001, stampBuy: 0.00003, gst: 0.18 },
+  commodity: { brokerage: 20, cttSell: 0.0001, exch: 0.000026, sebi: 0.000001, stampBuy: 0.00002, gst: 0.18 },
+};
+
+const COMMODITIES = [
+  { id: "gold", name: "Gold", unit: "10 grams", lot: 100, price: 72000, tick: 1, note: "The standard contract. One rupee of price movement changes the position by ₹100." },
+  { id: "goldm", name: "Gold Mini", unit: "10 grams", lot: 10, price: 72000, tick: 1, note: "One tenth the size, so the margin required is far smaller." },
+  { id: "goldguinea", name: "Gold Guinea", unit: "8 grams", lot: 8, price: 57600, tick: 1, note: "The smallest gold contract, designed for smaller participants." },
+  { id: "silver", name: "Silver", unit: "1 kilogram", lot: 30, price: 88000, tick: 1, note: "Silver moves more sharply than gold in percentage terms." },
+  { id: "silverm", name: "Silver Mini", unit: "1 kilogram", lot: 5, price: 88000, tick: 1, note: "A fifth of the standard silver contract." },
+  { id: "crude", name: "Crude Oil", unit: "1 barrel", lot: 100, price: 6200, tick: 1, note: "Among the most volatile contracts traded." },
+];
+
+/* ---- ambient background: value moving through the frame ---------------- */
+function FloorAmbience() {
+  const reduced = useReducedMotion();
+  if (reduced) return null;
+  const bars = Array.from({ length: 26 }, (_, i) => ({
+    x: i * 44, h: 26 + ((i * 37) % 64), d: 7 + ((i * 13) % 9), delay: (i * 0.4) % 8,
+  }));
+  const coins = Array.from({ length: 14 }, (_, i) => ({
+    x: 4 + ((i * 71) % 92), s: 7 + ((i * 5) % 8), d: 11 + ((i * 7) % 10), delay: (i * 1.1) % 12,
+  }));
+  return (
+    <div className="floor-amb" aria-hidden="true">
+      <svg viewBox="0 0 1200 400" preserveAspectRatio="none" className="amb-graph">
+        {bars.map((b, i) => (
+          <rect key={i} x={b.x} y={400 - b.h} width="18" height={b.h} rx="3"
+            className="amb-bar" style={{ animationDuration: `${b.d}s`, animationDelay: `-${b.delay}s` }} />
+        ))}
+        <path className="amb-line"
+          d={bars.map((b, i) => `${i ? "L" : "M"}${b.x + 9} ${400 - b.h - 30}`).join(" ")} />
+      </svg>
+      <div className="amb-coins">
+        {coins.map((c, i) => (
+          <span key={i} className="amb-coin"
+            style={{ left: `${c.x}%`, width: c.s, height: c.s,
+              animationDuration: `${c.d}s`, animationDelay: `-${c.delay}s` }} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ---- a number that counts to its value --------------------------------- */
+function Counter({ value, prefix = "₹", decimals = 2, className = "" }) {
+  const [shown, setShown] = useState(value);
+  const raf = useRef(0);
+  const from = useRef(value);
+  useEffect(() => {
+    const start = performance.now();
+    const a = from.current, b = value;
+    const step = (t) => {
+      const k = Math.min(1, (t - start) / 420);
+      const e = 1 - Math.pow(1 - k, 3);
+      setShown(a + (b - a) * e);
+      if (k < 1) raf.current = requestAnimationFrame(step);
+      else from.current = b;
+    };
+    cancelAnimationFrame(raf.current);
+    raf.current = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(raf.current);
+  }, [value]);
+  return <span className={className}>{prefix}{fmt(shown, decimals)}</span>;
+}
+
+/* ---- charge list that cascades in --------------------------------------- */
+function Charges({ rows, total, netLabel, netValue }) {
+  return (
+    <div className="chg">
+      {rows.map((r, i) => (
+        <div className="chg-row" key={r.k} style={{ animationDelay: `${i * 55}ms` }}>
+          <span>{r.k}<em>{r.note}</em></span>
+          <b><Counter value={r.v} /></b>
+        </div>
+      ))}
+      <div className="chg-total">
+        <span>Total charges</span>
+        <b><Counter value={total} className="hi" /></b>
+      </div>
+      {netLabel && (
+        <div className="chg-net">
+          <span>{netLabel}</span>
+          <b><Counter value={netValue} /></b>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ---- 1. Equity order ticket -------------------------------------------- */
+function TradeEquity({ rates }) {
+  const [side, setSide] = useState("buy");
+  const [mode, setMode] = useState("delivery");
+  const [qty, setQty] = useState(100);
+  const [price, setPrice] = useState(1450);
+
+  const value = qty * price;
+  const r = mode === "delivery" ? rates.delivery : rates.intraday;
+  const brokerage = mode === "delivery" ? 0 : Math.min(r.brokerageCap, value * r.brokerageRate);
+  const stt = mode === "delivery"
+    ? value * (side === "buy" ? r.sttBuy : r.sttSell)
+    : (side === "sell" ? value * r.sttSell : 0);
+  const exch = value * r.exch;
+  const sebi = value * r.sebi;
+  const stamp = side === "buy" ? value * r.stampBuy : 0;
+  const gst = (brokerage + exch + sebi) * r.gst;
+  const dp = mode === "delivery" && side === "sell" ? r.dp : 0;
+  const total = brokerage + stt + exch + sebi + stamp + gst + dp;
+  const breakeven = side === "buy" && qty > 0 ? (value + total * 2) / qty : price;
+
+  const rows = [
+    { k: "Brokerage", v: brokerage, note: mode === "delivery" ? "Zero on delivery with many brokers" : "0.03% or ₹20, whichever is lower" },
+    { k: "Securities Transaction Tax", v: stt, note: mode === "delivery" ? "0.1% on both legs" : "0.025% on the sell leg only" },
+    { k: "Exchange transaction charges", v: exch, note: "Charged by the exchange on turnover" },
+    { k: "SEBI turnover fees", v: sebi, note: "₹10 per crore of turnover" },
+    { k: "Stamp duty", v: stamp, note: side === "buy" ? "Payable by the buyer" : "Not payable on the sell side" },
+    { k: "GST", v: gst, note: "18% on brokerage and transaction charges, not on the shares" },
+    { k: "Depository charges", v: dp, note: dp ? "Flat, per scrip, on delivery sell" : "Not applicable here" },
+  ];
+
+  return (
+    <div className="tk">
+      <div className="tk-toggles">
+        <div className="seg" role="tablist" aria-label="Side">
+          <button role="tab" aria-selected={side === "buy"} className={"seg-b buy" + (side === "buy" ? " on" : "")}
+            onClick={() => setSide("buy")}>Buy</button>
+          <button role="tab" aria-selected={side === "sell"} className={"seg-b sell" + (side === "sell" ? " on" : "")}
+            onClick={() => setSide("sell")}>Sell</button>
+        </div>
+        <div className="seg" role="tablist" aria-label="Product">
+          <button role="tab" aria-selected={mode === "delivery"} className={"seg-b" + (mode === "delivery" ? " on" : "")}
+            onClick={() => setMode("delivery")}>Delivery</button>
+          <button role="tab" aria-selected={mode === "intraday"} className={"seg-b" + (mode === "intraday" ? " on" : "")}
+            onClick={() => setMode("intraday")}>Intraday</button>
+        </div>
+      </div>
+
+      <div className="tk-fields">
+        <label className="tkf">
+          <span>Quantity</span>
+          <input type="number" min="1" value={qty} onChange={(e) => setQty(Math.max(0, Number(e.target.value)))} />
+        </label>
+        <label className="tkf">
+          <span>Price</span>
+          <input type="number" min="0" step="0.05" value={price} onChange={(e) => setPrice(Math.max(0, Number(e.target.value)))} />
+        </label>
+      </div>
+
+      <div className="tk-value">
+        <span>Order value</span>
+        <b><Counter value={value} decimals={2} /></b>
+      </div>
+
+      <Charges rows={rows} total={total}
+        netLabel={side === "buy" ? "Total payable" : "Net credit"}
+        netValue={side === "buy" ? value + total : value - total} />
+
+      {side === "buy" && qty > 0 && (
+        <div className="tk-be">
+          <p className="eyebrow">Break-even price</p>
+          <b><Counter value={breakeven} decimals={2} /></b>
+          <p className="small">
+            The price this share must reach before a round trip leaves you level, once the charges on
+            both the buy and the sell are counted. It is not the price you paid.
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ---- 2. Futures --------------------------------------------------------- */
+function TradeFutures({ rates }) {
+  const [lot, setLot] = useState(75);
+  const [entry, setEntry] = useState(22000);
+  const [now, setNow] = useState(22150);
+  const [marginPct, setMarginPct] = useState(12);
+
+  const value = lot * entry;
+  const margin = value * (marginPct / 100);
+  const pnl = (now - entry) * lot;
+  const pnlPctOnMargin = margin ? (pnl / margin) * 100 : 0;
+  const movePct = entry ? ((now - entry) / entry) * 100 : 0;
+  const wipeout = entry - margin / lot;
+
+  const r = rates.futures;
+  const sellValue = lot * now;
+  const brokerage = r.brokerage * 2;
+  const stt = sellValue * r.sttSell;
+  const exch = (value + sellValue) * r.exch;
+  const sebi = (value + sellValue) * r.sebi;
+  const stamp = value * r.stampBuy;
+  const gst = (brokerage + exch + sebi) * r.gst;
+  const total = brokerage + stt + exch + sebi + stamp + gst;
+
+  return (
+    <div className="tk">
+      <RiskNotice />
+      <div className="tk-fields three">
+        <label className="tkf"><span>Lot size</span>
+          <input type="number" min="1" value={lot} onChange={(e) => setLot(Math.max(1, Number(e.target.value)))} /></label>
+        <label className="tkf"><span>Entry price</span>
+          <input type="number" min="0" value={entry} onChange={(e) => setEntry(Math.max(0, Number(e.target.value)))} /></label>
+        <label className="tkf"><span>Current price</span>
+          <input type="number" min="0" value={now} onChange={(e) => setNow(Math.max(0, Number(e.target.value)))} /></label>
+      </div>
+
+      <Slider label="Margin required" value={marginPct} set={setMarginPct} min={5} max={30} suffix="%" />
+
+      <div className="tk-grid">
+        <div><span>Contract value</span><b><Counter value={value} decimals={0} /></b></div>
+        <div><span>Margin blocked</span><b><Counter value={margin} decimals={0} /></b></div>
+        <div><span>Price move</span>
+          <b className={movePct >= 0 ? "hi" : "bad"}>{movePct >= 0 ? "+" : ""}{fmt(movePct, 2)}%</b></div>
+        <div><span>Profit or loss</span>
+          <b className={pnl >= 0 ? "hi" : "bad"}><Counter value={pnl} decimals={0} /></b></div>
+        <div><span>Return on margin</span>
+          <b className={pnlPctOnMargin >= 0 ? "hi" : "bad"}>{pnlPctOnMargin >= 0 ? "+" : ""}{fmt(pnlPctOnMargin, 1)}%</b></div>
+        <div><span>Charges, round trip</span><b><Counter value={total} /></b></div>
+      </div>
+
+      <div className="marginbar">
+        <div className="mb-track">
+          <div className={"mb-fill " + (pnl >= 0 ? "up" : "down")}
+            style={{ width: `${Math.min(100, Math.abs(pnl) / Math.max(margin, 1) * 100)}%` }} />
+        </div>
+        <p className="small">
+          A move of {fmt(movePct, 2)}% in the underlying produced {fmt(pnlPctOnMargin, 1)}% on the margin
+          committed. That multiple is the leverage, and it applies identically in the other direction.
+          At an entry of {fmt(entry, 0)}, the margin would be fully consumed near {fmt(wipeout, 0)}.
+        </p>
+      </div>
+    </div>
+  );
+}
+
+/* ---- 3. Options --------------------------------------------------------- */
+function TradeOptions({ rates }) {
+  const [kind, setKind] = useState("call");
+  const [side, setSide] = useState("buy");
+  const [strike, setStrike] = useState(22000);
+  const [premium, setPremium] = useState(180);
+  const [lots, setLots] = useState(1);
+  const [expiry, setExpiry] = useState(22400);
+  const lotSize = 75;
+
+  const qty = lots * lotSize;
+  const premiumValue = premium * qty;
+  const intrinsic = kind === "call" ? Math.max(expiry - strike, 0) : Math.max(strike - expiry, 0);
+  const grossPerUnit = side === "buy" ? intrinsic - premium : premium - intrinsic;
+  const gross = grossPerUnit * qty;
+  const breakeven = kind === "call" ? strike + premium : strike - premium;
+
+  const r = rates.options;
+  const brokerage = r.brokerage * 2;
+  const stt = side === "sell" ? premiumValue * r.sttSell : 0;
+  const exch = premiumValue * r.exch * 2;
+  const sebi = premiumValue * r.sebi * 2;
+  const stamp = side === "buy" ? premiumValue * r.stampBuy : 0;
+  const gst = (brokerage + exch + sebi) * r.gst;
+  const total = brokerage + stt + exch + sebi + stamp + gst;
+  const net = gross - total;
+
+  const W = 560, H = 190, pad = 34;
+  const lo = strike * 0.94, hi = strike * 1.06;
+  const payoff = (spot) => {
+    const iv = kind === "call" ? Math.max(spot - strike, 0) : Math.max(strike - spot, 0);
+    const p = side === "buy" ? iv - premium : premium - iv;
+    return p * qty;
+  };
+  const pts = Array.from({ length: 61 }, (_, i) => {
+    const spot = lo + ((hi - lo) * i) / 60;
+    return { spot, p: payoff(spot) };
+  });
+  const maxAbs = Math.max(...pts.map((d) => Math.abs(d.p)), 1);
+  const X = (spot) => pad + ((spot - lo) / (hi - lo)) * (W - pad * 2);
+  const Y = (p) => H / 2 - (p / maxAbs) * (H / 2 - pad);
+  const path = pts.map((d, i) => `${i ? "L" : "M"}${X(d.spot).toFixed(1)} ${Y(d.p).toFixed(1)}`).join(" ");
+
+  return (
+    <div className="tk">
+      <RiskNotice />
+      <div className="tk-toggles">
+        <div className="seg">
+          <button className={"seg-b" + (kind === "call" ? " on" : "")} onClick={() => setKind("call")}>Call</button>
+          <button className={"seg-b" + (kind === "put" ? " on" : "")} onClick={() => setKind("put")}>Put</button>
+        </div>
+        <div className="seg">
+          <button className={"seg-b buy" + (side === "buy" ? " on" : "")} onClick={() => setSide("buy")}>Buy</button>
+          <button className={"seg-b sell" + (side === "sell" ? " on" : "")} onClick={() => setSide("sell")}>Sell</button>
+        </div>
+      </div>
+
+      <div className="tk-fields three">
+        <label className="tkf"><span>Strike</span>
+          <input type="number" value={strike} onChange={(e) => setStrike(Number(e.target.value))} /></label>
+        <label className="tkf"><span>Premium</span>
+          <input type="number" value={premium} onChange={(e) => setPremium(Math.max(0, Number(e.target.value)))} /></label>
+        <label className="tkf"><span>Lots</span>
+          <input type="number" min="1" value={lots} onChange={(e) => setLots(Math.max(1, Number(e.target.value)))} /></label>
+      </div>
+
+      <Slider label="Price at expiry" value={expiry} set={setExpiry} min={Math.round(strike * 0.9)} max={Math.round(strike * 1.1)} step={25} />
+
+      <svg viewBox={`0 0 ${W} ${H}`} className="sim-svg" role="img" aria-label="Payoff at expiry">
+        <rect x={pad} y={pad} width={W - pad * 2} height={H / 2 - pad} className="pay-zone up" />
+        <rect x={pad} y={H / 2} width={W - pad * 2} height={H / 2 - pad} className="pay-zone down" />
+        <line x1={pad} y1={H / 2} x2={W - pad} y2={H / 2} className="sim-axis" />
+        <line x1={X(breakeven)} y1={pad} x2={X(breakeven)} y2={H - pad} className="pay-be" />
+        <text x={X(breakeven)} y={pad - 8} textAnchor="middle" className="pay-be-t">Breakeven {fmt(breakeven, 0)}</text>
+        <path d={path} className="pay-line" />
+        <circle cx={X(Math.min(Math.max(expiry, lo), hi))} cy={Y(payoff(expiry))} r="5" className="sim-dot comp" />
+      </svg>
+
+      <div className="tk-grid">
+        <div><span>Premium paid or received</span><b><Counter value={premiumValue} decimals={0} /></b></div>
+        <div><span>Quantity</span><b>{fmt(qty)} units</b></div>
+        <div><span>Intrinsic value at expiry</span><b><Counter value={intrinsic * qty} decimals={0} /></b></div>
+        <div><span>Gross result</span>
+          <b className={gross >= 0 ? "hi" : "bad"}><Counter value={gross} decimals={0} /></b></div>
+        <div><span>Charges</span><b><Counter value={total} /></b></div>
+        <div><span>Net result</span>
+          <b className={net >= 0 ? "hi" : "bad"}><Counter value={net} decimals={0} /></b></div>
+      </div>
+
+      <p className="small" style={{ marginTop: 16 }}>
+        STT on options is charged on the premium at 0.15% on the sell side, not on the strike value.
+        {intrinsic === 0 && side === "buy" && " At this expiry price the option expires worthless and the entire premium is lost."}
+      </p>
+    </div>
+  );
+}
+
+/* ---- 4. Commodities ----------------------------------------------------- */
+function TradeCommodity({ rates }) {
+  const [id, setId] = useState("gold");
+  const [entry, setEntry] = useState(72000);
+  const [now, setNow] = useState(72400);
+  const [marginPct, setMarginPct] = useState(8);
+  const c = COMMODITIES.find((x) => x.id === id);
+
+  useEffect(() => {
+    const x = COMMODITIES.find((k) => k.id === id);
+    setEntry(x.price);
+    setNow(Math.round(x.price * 1.005));
+  }, [id]);
+
+  const value = c.lot * entry;
+  const margin = value * (marginPct / 100);
+  const pnl = (now - entry) * c.lot;
+  const onMargin = margin ? (pnl / margin) * 100 : 0;
+  const perRupee = c.lot;
+
+  const r = rates.commodity;
+  const sellValue = c.lot * now;
+  const brokerage = r.brokerage * 2;
+  const ctt = sellValue * r.cttSell;
+  const exch = (value + sellValue) * r.exch;
+  const sebi = (value + sellValue) * r.sebi;
+  const gst = (brokerage + exch + sebi) * r.gst;
+  const total = brokerage + ctt + exch + sebi + gst;
+
+  return (
+    <div className="tk">
+      <div className="cmd-picker" role="tablist" aria-label="Commodity">
+        {COMMODITIES.map((x) => (
+          <button key={x.id} role="tab" aria-selected={id === x.id}
+            className={"tab" + (id === x.id ? " on" : "")} onClick={() => setId(x.id)}>{x.name}</button>
+        ))}
+      </div>
+
+      <div className="cmd-spec">
+        <div><span>Contract unit</span><b>{c.unit}</b></div>
+        <div><span>Lot size</span><b>{c.lot}</b></div>
+        <div><span>One rupee of price move</span><b>₹{fmt(perRupee)}</b></div>
+      </div>
+
+      <div className="tk-fields">
+        <label className="tkf"><span>Entry price</span>
+          <input type="number" value={entry} onChange={(e) => setEntry(Math.max(0, Number(e.target.value)))} /></label>
+        <label className="tkf"><span>Current price</span>
+          <input type="number" value={now} onChange={(e) => setNow(Math.max(0, Number(e.target.value)))} /></label>
+      </div>
+
+      <Slider label="Margin required" value={marginPct} set={setMarginPct} min={4} max={20} suffix="%" />
+
+      <div className="tk-grid">
+        <div><span>Contract value</span><b><Counter value={value} decimals={0} /></b></div>
+        <div><span>Margin blocked</span><b><Counter value={margin} decimals={0} /></b></div>
+        <div><span>Profit or loss</span>
+          <b className={pnl >= 0 ? "hi" : "bad"}><Counter value={pnl} decimals={0} /></b></div>
+        <div><span>Return on margin</span>
+          <b className={onMargin >= 0 ? "hi" : "bad"}>{onMargin >= 0 ? "+" : ""}{fmt(onMargin, 1)}%</b></div>
+        <div><span>Charges, round trip</span><b><Counter value={total} /></b></div>
+        <div><span>Commodities Transaction Tax</span><b><Counter value={ctt} /></b></div>
+      </div>
+
+      <p className="small" style={{ marginTop: 14 }}>{c.note} Prices shown are placeholders you can change, not market quotes.</p>
+    </div>
+  );
+}
+
+function RiskNotice() {
+  return (
+    <div className="risk">
+      <p className="risk-h">Risk disclosure for Futures and Options</p>
+      <p className="risk-b">{SEBI_RISK}</p>
+    </div>
+  );
+}
+
+/* ---- the floor: entry gate, phone frame, four simulators ---------------- */
+const FLOOR_TABS = [
+  { id: "equity", name: "Stocks", el: TradeEquity },
+  { id: "futures", name: "Futures", el: TradeFutures },
+  { id: "options", name: "Options", el: TradeOptions },
+  { id: "commodity", name: "Commodities", el: TradeCommodity },
+];
+
+function TradingFloorPage() {
+  const [name, setName] = useState("");
+  const [entered, setEntered] = useState(false);
+  const [adult, setAdult] = useState(false);
+  const [tab, setTab] = useState("equity");
+  const [rates, setRates] = useState(DEFAULT_RATES);
+
+  useEffect(() => {
+    let alive = true;
+    fetch("fin-data/trade-rates.json", { cache: "no-cache" })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((j) => { if (alive && j) setRates({ ...DEFAULT_RATES, ...j }); })
+      .catch(() => {});
+    return () => { alive = false; };
+  }, []);
+
+  const Active = FLOOR_TABS.find((t) => t.id === tab).el;
+  const hour = new Date().getHours();
+  const greet = hour < 12 ? "Good morning" : hour < 17 ? "Good afternoon" : "Good evening";
+
+  if (!entered) {
+    return (
+      <>
+        <Crumbs items={[["FinHub", "#/"], ["Trading floor"]]} />
+        <div className="floor-gate">
+          <FloorAmbience />
+          <div className="wrap-n gate-in">
+            <Reveal><p className="kicker">Simulation</p></Reveal>
+            <Reveal delay={70}>
+              <h1 className="h-page" style={{ marginTop: 14 }}>The Trading Floor</h1>
+            </Reveal>
+            <Reveal delay={130}>
+              <p className="lede" style={{ marginTop: 18 }}>
+                A working model of an order screen. You set every number yourself, and it shows what a
+                trade actually costs once brokerage, taxes, exchange charges and duty are counted.
+              </p>
+            </Reveal>
+
+            <Reveal delay={190}>
+              <div className="gate-warn">
+                <p className="risk-h">This is a simulator</p>
+                <p className="risk-b">
+                  Nothing here connects to a market. There are no live prices, no orders are placed,
+                  no money moves and no account is opened. FinHub does not ask for a PAN, a bank
+                  account, a UPI identifier or any payment detail, and never will. This exists to show
+                  how the mechanics work, and it is not investment advice.
+                </p>
+              </div>
+            </Reveal>
+
+            <Reveal delay={250}>
+              <div className="gate-form">
+                <label className="tkf wide">
+                  <span>What should the screen call you</span>
+                  <input value={name} onChange={(e) => setName(e.target.value)} maxLength={24}
+                    placeholder="A first name is enough" />
+                </label>
+                <label className="gate-check">
+                  <input type="checkbox" checked={adult} onChange={(e) => setAdult(e.target.checked)} />
+                  <span>I confirm I am 18 years of age or older.</span>
+                </label>
+                <button className="btn primary" disabled={!adult}
+                  onClick={() => setEntered(true)}>Enter the floor</button>
+                <p className="small">
+                  Nothing you type is stored or sent anywhere. It stays in this browser tab and
+                  disappears when you close it.
+                </p>
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </>
+    );
+  }
+
+  return (
+    <>
+      <Crumbs items={[["FinHub", "#/"], ["Trading floor"]]} />
+      <div className="floor">
+        <FloorAmbience />
+        <div className="wrap floor-in">
+          <div className="floor-head">
+            <div>
+              <p className="kicker">Simulation only</p>
+              <h1 style={{ fontSize: "clamp(24px,4vw,34px)", marginTop: 10 }}>
+                {greet}{name ? `, ${name}` : ""}
+              </h1>
+            </div>
+            <button className="btn ghost" onClick={() => setEntered(false)}>Leave the floor</button>
+          </div>
+
+          <div className="phone">
+            <div className="phone-bar">
+              <span className="phone-dot" />
+              <span className="phone-title">FinHub Simulator</span>
+              <span className="phone-tag">Not a broker</span>
+            </div>
+
+            <div className="phone-tabs" role="tablist" aria-label="Segment">
+              {FLOOR_TABS.map((t) => (
+                <button key={t.id} role="tab" aria-selected={tab === t.id}
+                  className={"ptab" + (tab === t.id ? " on" : "")} onClick={() => setTab(t.id)}>{t.name}</button>
+              ))}
+            </div>
+
+            <div className="phone-body" key={tab}>
+              <Active rates={rates} />
+            </div>
+
+            <div className="phone-foot">
+              No orders are placed. No prices are live. Educational simulation only.
+            </div>
+          </div>
+
+          <div className="chips" style={{ marginTop: 30, justifyContent: "center" }}>
+            <a className="chip" href="#/tax">How this is taxed →</a>
+            <a className="chip" href="#/concept/options">Options concept →</a>
+            <a className="chip" href="#/concept/futures">Futures concept →</a>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
 function NotFound() {
   return (
     <div className="wrap-n" style={{ padding: "90px 20px 120px" }}>
@@ -5700,6 +6388,7 @@ export default function FinHub() {
     case "graph": view = <GraphPage />; break;
     case "data": view = <MarketDataPage />; break;
     case "tax": view = <TaxPage />; break;
+    case "floor": view = <TradingFloorPage />; break;
     case "glossary": view = <Glossary />; break;
     case "tools": view = <ToolsPage query={query} />; break;
     case "ai": view = <AiPage />; break;
