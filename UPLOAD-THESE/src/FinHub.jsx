@@ -2557,6 +2557,35 @@ button[disabled] .sym{opacity:.4}
   .tel-dot,.tel-head-line,.tel-note{transition:none;animation:none}
 }
 
+/* ---- telemetry: annual movement ---- */
+.tel-moves{margin-top:24px;padding-top:22px;border-top:1px solid var(--line)}
+.mv-rows{display:grid;gap:3px;max-height:300px;overflow-y:auto;padding-right:4px}
+.mv-rows::-webkit-scrollbar{width:6px}
+.mv-rows::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px}
+.mv-r{display:grid;grid-template-columns:52px minmax(0,1fr) 74px;gap:12px;align-items:center;
+  padding:5px 6px;border-radius:7px;transition:background .2s}
+.mv-r:hover,.mv-r.on{background:var(--surface-2)}
+.mv-y{font-family:var(--mono);font-size:12px;color:var(--faint)}
+.mv-r.on .mv-y{color:var(--text);font-weight:700}
+.mv-track{position:relative;height:14px;background:var(--surface-2);border-radius:4px;overflow:hidden}
+.mv-b{position:absolute;top:0;bottom:0;border-radius:3px;
+  transition:width .5s cubic-bezier(.3,.8,.3,1)}
+.mv-b.up{background:var(--teal)}
+.mv-b.down{background:var(--rose)}
+.mv-zero{position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--line)}
+.mv-v{font-family:var(--mono);font-size:12.5px;font-weight:700;text-align:right;color:var(--faint)}
+.mv-v.up{color:var(--teal)}
+.mv-v.down{color:var(--rose)}
+.mv-extremes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px;margin-top:16px;
+  border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--line)}
+.mv-extremes div{background:var(--surface);padding:12px 14px;display:grid;gap:4px}
+.mv-extremes span{font-size:11.5px;color:var(--muted)}
+.mv-extremes b{font-family:var(--mono);font-size:15px;font-weight:700}
+.mv-extremes b.hi{color:var(--teal)}
+.mv-extremes b.bad{color:var(--rose)}
+@media(max-width:520px){.mv-r{grid-template-columns:44px minmax(0,1fr) 62px;gap:8px}}
+@media(prefers-reduced-motion:reduce){.mv-b{transition:none}}
+
 .foot{border-top:1px solid var(--line);padding:44px 0 60px;color:var(--faint);font-size:13.5px}
 .foot a:hover{color:var(--teal)}
 `;
@@ -6520,6 +6549,19 @@ function TelemetryChart({ s, events }) {
   );
   const evAtOrBefore = evInWindow.filter((e) => e.year <= point.year).slice(-1)[0];
 
+  // annual movement, computed from the price series rather than supplied
+  const moves = pts.map((p, i) => ({
+    year: p.year,
+    close: p.close,
+    move: i === 0 || !pts[i - 1].close ? null : ((p.close - pts[i - 1].close) / pts[i - 1].close) * 100,
+  }));
+  const withMove = moves.filter((m) => m.move != null);
+  const best = withMove.length ? withMove.reduce((a, b) => (b.move > a.move ? b : a)) : null;
+  const worstYr = withMove.length ? withMove.reduce((a, b) => (b.move < a.move ? b : a)) : null;
+  const viewMoves = moves.filter((m) => m.year >= view[0].year && m.year <= view[view.length - 1].year);
+  const maxMove = Math.max(...viewMoves.map((m) => Math.abs(m.move || 0)), 1);
+  const curMove = moves.find((m) => m.year === point.year);
+
   const ticks = 4;
   const gridVals = Array.from({ length: ticks + 1 }, (_, i) => lo + ((hi - lo) * i) / ticks);
 
@@ -6551,6 +6593,9 @@ function TelemetryChart({ s, events }) {
         <div><span>Close</span><b className="hi">{fmt(point.close, 2)}</b></div>
         <div><span>Change from {first.year}</span>
           <b className={growth >= 0 ? "hi" : "bad"}>{growth >= 0 ? "+" : ""}{fmt(growth, 1)}%</b></div>
+        <div><span>Move that year</span>
+          <b className={curMove && curMove.move != null ? (curMove.move >= 0 ? "hi" : "bad") : ""}>
+            {curMove && curMove.move != null ? `${curMove.move >= 0 ? "+" : ""}${fmt(curMove.move, 2)}%` : "—"}</b></div>
         <div><span>Compound annual rate</span>
           <b className={cagr >= 0 ? "hi" : "bad"}>{cagr >= 0 ? "+" : ""}{fmt(cagr, 2)}%</b></div>
       </div>
@@ -6601,6 +6646,37 @@ function TelemetryChart({ s, events }) {
           <text x={X(0)} y={H - 14} className="tel-axis">{view[0].year}</text>
           <text x={W - padR} y={H - 14} textAnchor="end" className="tel-axis">{view[view.length - 1].year}</text>
         </svg>
+      </div>
+
+      <div className="tel-moves">
+        <p className="eyebrow" style={{ marginBottom: 10 }}>Annual movement</p>
+        <div className="mv-rows">
+          {viewMoves.map((m) => {
+            const up = (m.move || 0) >= 0;
+            const w = (Math.abs(m.move || 0) / maxMove) * 50;
+            const on = m.year === point.year;
+            return (
+              <div className={"mv-r" + (on ? " on" : "")} key={m.year}
+                title={`${m.year}: ${m.move == null ? "no prior year" : fmt(m.move, 2) + "%"}`}>
+                <span className="mv-y">{m.year}</span>
+                <span className="mv-track">
+                  <span className={"mv-b " + (up ? "up" : "down")}
+                    style={{ width: `${w}%`, [up ? "left" : "right"]: "50%" }} />
+                  <span className="mv-zero" />
+                </span>
+                <span className={"mv-v " + (m.move == null ? "" : up ? "up" : "down")}>
+                  {m.move == null ? "—" : `${up ? "+" : ""}${fmt(m.move, 1)}%`}
+                </span>
+              </div>
+            );
+          })}
+        </div>
+        {best && worstYr && (
+          <div className="mv-extremes">
+            <div><span>Best year</span><b className="hi">{best.year} · +{fmt(best.move, 1)}%</b></div>
+            <div><span>Worst year</span><b className="bad">{worstYr.year} · {fmt(worstYr.move, 1)}%</b></div>
+          </div>
+        )}
       </div>
 
       <div className="tel-scrub">
