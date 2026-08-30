@@ -2307,6 +2307,64 @@ button[disabled] .sym{opacity:.4}
 .div-line.b{stroke:var(--amber);opacity:.75}
 .div-line.p{stroke:var(--teal);stroke-width:2.8}
 
+/* ---- market data ---- */
+.md-head{display:flex;flex-wrap:wrap;gap:18px;justify-content:space-between;align-items:flex-start}
+.md-stamp{display:flex;flex-wrap:wrap;gap:8px}
+.bchart{display:grid;gap:4px;margin-top:8px}
+.brow{display:grid;grid-template-columns:34px 150px minmax(0,1fr) 106px 92px;gap:14px;
+  align-items:center;padding:14px 10px;border-radius:10px;transition:background .25s}
+.brow:hover,.brow.on{background:var(--surface-2)}
+.brow.others{opacity:.62}
+.brank{font-family:var(--mono);font-size:11.5px;color:var(--faint);font-weight:600}
+.bname{font-size:15.5px;font-weight:600;color:var(--text);min-width:0;display:grid;gap:3px}
+.bname em{font-style:normal;font-size:11.5px;font-weight:400;color:var(--faint)}
+.btrack{height:12px;background:var(--surface-2);border-radius:6px;overflow:hidden}
+.bfill{display:block;height:100%;background:var(--teal);border-radius:6px;
+  transition:width 1.1s cubic-bezier(.25,.8,.3,1)}
+.bfill.muted{background:var(--faint);opacity:.45}
+.bval{font-family:var(--mono);font-size:15px;font-weight:700;color:var(--text);
+  text-align:right;display:grid;gap:2px}
+.bval em{font-style:normal;font-size:11.5px;font-weight:500;color:var(--teal)}
+.bchg{font-family:var(--mono);font-size:12.5px;text-align:right;font-weight:600}
+.bchg.up{color:var(--teal)}
+.bchg.down{color:var(--rose)}
+@media(max-width:820px){
+  .brow{grid-template-columns:28px minmax(0,1fr) 96px;gap:10px;row-gap:8px}
+  .btrack{grid-column:1 / -1;order:3}
+  .bchg{grid-column:1 / -1;order:4;text-align:left;padding-left:38px}
+}
+.md-head code{font-family:var(--mono);font-size:13px;background:var(--surface-2);
+  padding:2px 6px;border-radius:5px}
+
+/* ---- taxation ---- */
+.tax-stamp{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.tax-warn{margin-top:24px;padding:22px 24px;border-radius:14px;background:var(--amber-soft);
+  border-left:3px solid var(--amber)}
+.tsec{border-bottom:1px solid var(--line)}
+.tsec-head{display:flex;align-items:center;gap:18px;width:100%;text-align:left;
+  min-height:74px;padding:14px 0;transition:padding .25s}
+.tsec-head:hover{padding-inline:6px}
+.tsec-n{font-family:var(--mono);font-size:12px;color:var(--faint);font-weight:600;flex:none}
+.tsec-t{flex:1;font-family:var(--serif);font-size:clamp(18px,2.7vw,23px);font-weight:600;
+  letter-spacing:-.02em;color:var(--text);min-width:0}
+.tsec.on .org-x{color:var(--teal)}
+.tsec-body{padding:4px 0 36px 30px;animation:fadeUp .45s ease both}
+@media(max-width:620px){.tsec-body{padding-left:0}}
+.ttable-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;
+  background:var(--surface);-webkit-overflow-scrolling:touch}
+.ttable{width:100%;border-collapse:collapse;min-width:520px}
+.ttable th{text-align:left;font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--muted);font-weight:600;padding:14px 16px;
+  border-bottom:1px solid var(--line);background:var(--surface-2);white-space:nowrap}
+.ttable td{padding:15px 16px;font-size:15px;color:var(--text);
+  border-bottom:1px solid var(--line);vertical-align:top;line-height:1.55}
+.ttable tr:last-child td{border-bottom:0}
+.ttable td.first,.ttable th.first{font-weight:600}
+.ttable tbody tr:hover td{background:var(--surface-2)}
+.tax-eg{margin-top:26px;padding:22px 24px;border:1px solid var(--line);border-radius:14px;
+  background:var(--surface)}
+@media(prefers-reduced-motion:reduce){.tsec-body{animation:none}}
+
 .foot{border-top:1px solid var(--line);padding:44px 0 60px;color:var(--faint);font-size:13.5px}
 .foot a:hover{color:var(--teal)}
 `;
@@ -3000,7 +3058,7 @@ function ConceptGraph({ id }) {
    =========================================================================== */
 
 const NAV = [
-  ["Universe", "#/universe"], ["Origins", "#/origins"], ["History", "#/history"], ["Concepts", "#/concepts"], ["Cases", "#/cases"],
+  ["Universe", "#/universe"], ["Origins", "#/origins"], ["History", "#/history"], ["Data", "#/data"], ["Tax", "#/tax"], ["Concepts", "#/concepts"], ["Cases", "#/cases"],
   ["Scenarios", "#/scenarios"], ["Glossary", "#/glossary"], ["Tools", "#/tools"], ["FinHub AI", "#/ai"],
 ];
 
@@ -5263,6 +5321,324 @@ function AiPage() {
   );
 }
 
+
+/* ===========================================================================
+   MARKET DATA
+   Figures that change are never written into the code. This page reads
+   fin-data/market-data-aug30.json, states the period it covers, names its
+   sources, and labels its own data quality. When the numbers move, the file
+   is replaced and nothing else changes.
+   =========================================================================== */
+
+function useMarketData() {
+  const [d, setD] = useState(null);
+  useEffect(() => {
+    let alive = true;
+    fetch("fin-data/market-data-aug30.json", { cache: "no-cache" })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((j) => { if (alive && j) setD(j); })
+      .catch(() => {});
+    return () => { alive = false; };
+  }, []);
+  return d;
+}
+
+function BrokerChart({ data }) {
+  const ref = useRef(null);
+  const [play, setPlay] = useState(false);
+  const [active, setActive] = useState(null);
+  useEffect(() => {
+    const el = ref.current; if (!el) return;
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setPlay(true); io.disconnect(); } },
+      { rootMargin: "-8% 0px" });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  const rows = data.rows;
+  const max = Math.max(...rows.map((r) => r.clients));
+  const named = rows.reduce((n, r) => n + r.clients, 0);
+  const others = Math.max(0, data.industryTotal - named);
+
+  return (
+    <div ref={ref}>
+      <div className="bchart">
+        {rows.map((r, i) => {
+          const w = (r.clients / max) * 100;
+          const on = active === r.name;
+          return (
+            <div className={"brow" + (on ? " on" : "")} key={r.name}
+              onMouseEnter={() => setActive(r.name)} onMouseLeave={() => setActive(null)}>
+              <span className="brank">{String(r.rank).padStart(2, "0")}</span>
+              <span className="bname">
+                {r.name}
+                <em>{r.type}</em>
+              </span>
+              <span className="btrack">
+                <span className="bfill" style={{ width: play ? `${w}%` : 0, transitionDelay: `${i * 90}ms` }} />
+              </span>
+              <span className="bval">
+                {(r.clients / 10000000).toFixed(2)} cr
+                {r.share != null && <em>{r.share}%</em>}
+              </span>
+              <span className={"bchg " + (r.change >= 0 ? "up" : "down")}>
+                {r.change >= 0 ? "+" : ""}{fmt(r.change)}
+              </span>
+            </div>
+          );
+        })}
+        <div className="brow others">
+          <span className="brank">—</span>
+          <span className="bname">All other members<em>Not individually listed</em></span>
+          <span className="btrack">
+            <span className="bfill muted" style={{ width: play ? `${(others / max) * 100}%` : 0, transitionDelay: `${rows.length * 90}ms` }} />
+          </span>
+          <span className="bval">{(others / 10000000).toFixed(2)} cr</span>
+          <span className="bchg" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function MarketDataPage() {
+  const md = useMarketData();
+  const b = md && md.brokers;
+
+  return (
+    <>
+      <Crumbs items={[["FinHub", "#/"], ["Market data"]]} />
+      <div className="wrap">
+        <Reveal><p className="kicker">Sourced and dated</p></Reveal>
+        <Reveal delay={60}><h1 className="h-page" style={{ marginTop: 12 }}>Market Data</h1></Reveal>
+        <Reveal delay={120}>
+          <p className="lede" style={{ marginTop: 18, maxWidth: "62ch" }}>
+            Everything on this page carries the month it describes and the source it came from.
+            Figures that change over time are held in a data file rather than written into the
+            platform, so nothing here silently goes stale.
+          </p>
+        </Reveal>
+      </div>
+
+      <div className="wrap" style={{ paddingTop: 44, paddingBottom: 100 }}>
+        {!b && (
+          <div className="sub">
+            <p className="body">
+              The market data file has not been uploaded yet. When
+              <code> fin-data/market-data-aug30.json </code> is present, this page fills itself.
+            </p>
+          </div>
+        )}
+
+        {b && (
+          <>
+            <Reveal>
+              <div className="md-head">
+                <div>
+                  <h2 style={{ fontSize: 26 }}>{b.title}</h2>
+                  <p className="small" style={{ marginTop: 8 }}>{b.industryNote}</p>
+                </div>
+                <div className="md-stamp">
+                  <span className="badge aqua">{b.period}</span>
+                  <span className="badge">{b.quality}</span>
+                </div>
+              </div>
+            </Reveal>
+
+            <Reveal delay={80}>
+              <div className="sub" style={{ margin: "26px 0 30px", borderLeft: "2px solid var(--teal)" }}>
+                <p className="eyebrow" style={{ marginBottom: 8 }}>What an active client means</p>
+                <p className="body" style={{ fontSize: 16 }}>{b.definition}</p>
+              </div>
+            </Reveal>
+
+            <Reveal delay={120}><BrokerChart data={b} /></Reveal>
+
+            <Reveal delay={160}>
+              <div style={{ marginTop: 36 }}>
+                <p className="eyebrow" style={{ marginBottom: 14 }}>Notes on this data</p>
+                <div className="list">
+                  {b.notes.map((n, i) => <div className="li" key={i}><s>→</s><span style={{ fontSize: 15.5 }}>{n}</span></div>)}
+                </div>
+              </div>
+            </Reveal>
+
+            <div style={{ marginTop: 40 }}>
+              <SourceList sources={b.sources}
+                note="Where a figure could not be confirmed, it is left out rather than estimated." />
+            </div>
+
+            <Reveal>
+              <div className="chips" style={{ marginTop: 30 }}>
+                <a className="chip" href="#/concept/market-participants">Market participants →</a>
+                <a className="chip" href="#/concept/equity-markets">Equity markets →</a>
+                <a className="chip" href="#/history">History of markets →</a>
+              </div>
+            </Reveal>
+          </>
+        )}
+      </div>
+    </>
+  );
+}
+
+
+/* ===========================================================================
+   TAXATION
+   Tax rates change with every Budget, so none of them live in this file. The
+   page reads fin-data/tax-india-aug30.json, states the year it covers and the
+   date it was verified, and carries its own disclaimer. Replace the file after
+   a Budget and the page is current again.
+   =========================================================================== */
+
+function useTaxData() {
+  const [d, setD] = useState(null);
+  useEffect(() => {
+    let alive = true;
+    fetch("fin-data/tax-india-aug30.json", { cache: "no-cache" })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((j) => { if (alive && j) setD(j); })
+      .catch(() => {});
+    return () => { alive = false; };
+  }, []);
+  return d;
+}
+
+function TaxTable({ t }) {
+  return (
+    <div className="ttable-wrap">
+      <table className="ttable">
+        <thead>
+          <tr>{t.head.map((h, i) => <th key={i} className={i === 0 ? "first" : ""}>{h}</th>)}</tr>
+        </thead>
+        <tbody>
+          {t.rows.map((r, i) => (
+            <tr key={i}>
+              {r.map((c, j) => <td key={j} className={j === 0 ? "first" : ""}>{c}</td>)}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+function TaxPage() {
+  const d = useTaxData();
+  const [open, setOpen] = useState(0);
+
+  if (!d) {
+    return (
+      <>
+        <Crumbs items={[["FinHub", "#/"], ["Taxation"]]} />
+        <div className="wrap" style={{ paddingBottom: 90 }}>
+          <h1 className="h-page">Taxation</h1>
+          <div className="sub" style={{ marginTop: 26 }}>
+            <p className="body">
+              The tax data file has not been uploaded yet. When
+              <code> fin-data/tax-india-aug30.json </code> is present, this page fills itself.
+            </p>
+          </div>
+        </div>
+      </>
+    );
+  }
+
+  return (
+    <>
+      <Crumbs items={[["FinHub", "#/"], ["Taxation"]]} />
+      <div className="wrap">
+        <Reveal><p className="kicker">{d.period}</p></Reveal>
+        <Reveal delay={60}><h1 className="h-page" style={{ marginTop: 12 }}>{d.title}</h1></Reveal>
+        <Reveal delay={120}>
+          <div className="tax-stamp">
+            <span className="badge aqua">{d.period}</span>
+            <span className="badge">{d.asOf}</span>
+          </div>
+        </Reveal>
+        <Reveal delay={160}>
+          <div className="tax-warn">
+            <p className="eyebrow" style={{ marginBottom: 8, color: "var(--amber)" }}>Read this first</p>
+            <p className="body" style={{ fontSize: 16 }}>{d.disclaimer}</p>
+            <p className="small" style={{ marginTop: 12 }}>{d.quality}</p>
+          </div>
+        </Reveal>
+        {d.notice && (
+          <Reveal delay={200}>
+            <div className="sub" style={{ marginTop: 18, borderLeft: "2px solid var(--teal)" }}>
+              <p className="body" style={{ fontSize: 16 }}>{d.notice}</p>
+            </div>
+          </Reveal>
+        )}
+      </div>
+
+      <div className="wrap" style={{ paddingTop: 40, paddingBottom: 100 }}>
+        {d.sections.map((sec, i) => {
+          const isOpen = open === i;
+          return (
+            <Reveal key={sec.id} delay={Math.min(i * 40, 240)}>
+              <section className={"tsec" + (isOpen ? " on" : "")}>
+                <button className="tsec-head" onClick={() => setOpen(isOpen ? -1 : i)} aria-expanded={isOpen}>
+                  <span className="tsec-n">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="tsec-t">{sec.title}</span>
+                  <span className="org-x">{isOpen ? "−" : "+"}</span>
+                </button>
+                {isOpen && (
+                  <div className="tsec-body">
+                    {sec.intro && <p className="body" style={{ marginBottom: 22 }}>{sec.intro}</p>}
+                    {sec.table && <TaxTable t={sec.table} />}
+                    {sec.points && (
+                      <div className="list" style={{ marginTop: sec.table ? 24 : 0 }}>
+                        {sec.points.map((p, j) => (
+                          <div className="li" key={j}><s>→</s><span style={{ fontSize: 16 }}>{p}</span></div>
+                        ))}
+                      </div>
+                    )}
+                    {sec.example && (
+                      <div className="tax-eg">
+                        <p className="eyebrow" style={{ marginBottom: 12 }}>Worked example</p>
+                        <p className="body" style={{ fontSize: 16, marginBottom: 12 }}>{sec.example.setup}</p>
+                        <div className="steps">
+                          {sec.example.steps.map((st, j) => (
+                            <div className="step" key={j}><i>{String(j + 1).padStart(2, "0")}</i>
+                              <span className="mono calc">{st}</span></div>
+                          ))}
+                        </div>
+                        <div className="result">
+                          <span className="eyebrow">Result</span><b>{sec.example.result}</b>
+                        </div>
+                      </div>
+                    )}
+                    {sec.note && (
+                      <div className="sub" style={{ marginTop: 22, borderLeft: "2px solid var(--amber)" }}>
+                        <p className="body" style={{ fontSize: 15.5 }}>{sec.note}</p>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </section>
+            </Reveal>
+          );
+        })}
+
+        <div style={{ marginTop: 44 }}>
+          <SourceList sources={d.sources}
+            note="Every rate on this page should be confirmed against the Income Tax Department before it is relied upon. Rates change with each Budget." />
+        </div>
+
+        <Reveal>
+          <div className="chips" style={{ marginTop: 30 }}>
+            <a className="chip" href="#/concept/sip">SIP →</a>
+            <a className="chip" href="#/concept/options">Options →</a>
+            <a className="chip" href="#/concept/mutual-funds">Mutual funds →</a>
+            <a className="chip" href="#/data">Market data →</a>
+          </div>
+        </Reveal>
+      </div>
+    </>
+  );
+}
+
 function NotFound() {
   return (
     <div className="wrap-n" style={{ padding: "90px 20px 120px" }}>
@@ -5322,6 +5698,8 @@ export default function FinHub() {
     case "history": view = <MarketHistoryPage />; break;
     case "origins": view = <OriginsPage data={origins} />; break;
     case "graph": view = <GraphPage />; break;
+    case "data": view = <MarketDataPage />; break;
+    case "tax": view = <TaxPage />; break;
     case "glossary": view = <Glossary />; break;
     case "tools": view = <ToolsPage query={query} />; break;
     case "ai": view = <AiPage />; break;
