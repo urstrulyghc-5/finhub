@@ -1,0 +1,1349 @@
+[
+ {
+  "id": "investment-objectives",
+  "title": "Investment Objectives",
+  "domain": "investments",
+  "category": "principles",
+  "subcategory": "Investment Objectives",
+  "level": "Foundational",
+  "oneLine": "What the money is actually for, which decides everything that follows.",
+  "what": "An investment objective is a statement of what a sum of money must achieve, by when, and with what tolerance for shortfall. It is the first decision in investing and the one most often skipped. Without it there is no basis for choosing between assets, because risk only means something relative to a purpose.",
+  "simple": "Money for a house deposit in two years and money for retirement in thirty years are not the same money. They should not be invested the same way.",
+  "why": "Every later decision follows from the objective. Asset allocation, acceptable volatility, liquidity needs and the definition of failure all derive from it. An investor without an objective is not investing, they are speculating with extra steps.",
+  "components": [
+   {
+    "k": "The goal",
+    "v": "What the money is for, stated specifically enough to be measured."
+   },
+   {
+    "k": "The horizon",
+    "v": "When it is needed, which determines how much volatility can be tolerated."
+   },
+   {
+    "k": "The required return",
+    "v": "What growth rate reaches the goal from the starting amount and contributions."
+   },
+   {
+    "k": "The tolerance for shortfall",
+    "v": "What happens if the goal is missed. A retirement shortfall and a holiday shortfall are not comparable."
+   }
+  ],
+  "example": {
+   "setup": "A goal of ₹50,00,000 in 15 years, starting from zero, with ₹12,000 invested monthly.",
+   "steps": [
+    "Total contributed = 12,000 × 180 = ₹21,60,000",
+    "The remaining ₹28,40,000 must come from growth",
+    "The required return is approximately 11 percent a year"
+   ],
+   "result": "About 11 percent a year needed",
+   "note": "That figure decides the asset mix. It cannot be reached by deposits alone, and it does not require an aggressive portfolio either. The objective produced the answer."
+  },
+  "misconceptions": [
+   {
+    "claim": "“My objective is to maximise returns.”",
+    "truth": "That is not an objective, because it has no horizon and no failure condition. It also implies accepting unlimited risk, which almost nobody actually means."
+   }
+  ],
+  "application": [
+   "Deciding whether an investment suits a specific purpose.",
+   "Judging portfolio performance against a goal rather than against a market."
+  ],
+  "related": [
+   "time-horizon",
+   "asset-allocation",
+   "risk-return",
+   "liquidity-needs"
+  ],
+  "prereq": [],
+  "next": [
+   "time-horizon",
+   "liquidity-needs"
+  ]
+ },
+ {
+  "id": "time-horizon",
+  "title": "Time Horizon",
+  "domain": "investments",
+  "category": "principles",
+  "subcategory": "Time Horizon",
+  "level": "Foundational",
+  "oneLine": "How long the money can stay invested, which determines how much volatility it can survive.",
+  "what": "The time horizon is the period before invested capital is needed. It matters because volatility and time interact: an asset that swings widely may be entirely unsuitable over two years and entirely suitable over twenty. Horizon does not remove risk, but it changes which risks dominate.",
+  "simple": "A short horizon means a market fall becomes a permanent loss, because you must sell. A long horizon means it can be a temporary one.",
+  "why": "Horizon is what converts volatility from a threat into a tolerable feature. It is also why the same asset can be reckless for one investor and prudent for another with an identical portfolio size.",
+  "components": [
+   {
+    "k": "Short horizon",
+    "v": "Under three years. Capital preservation dominates; market linked assets are usually unsuitable."
+   },
+   {
+    "k": "Medium horizon",
+    "v": "Three to seven years. A mix, with volatility limited by the possibility of needing the money."
+   },
+   {
+    "k": "Long horizon",
+    "v": "Beyond seven years. Volatility can be tolerated because there is time to recover from a fall."
+   },
+   {
+    "k": "Sequence risk",
+    "v": "The danger of a large fall arriving just before the money is needed."
+   }
+  ],
+  "interpretation": "The horizon shortens every year. A twenty year goal becomes a three year goal eventually, and the allocation should change with it rather than staying fixed until the day of need.",
+  "misconceptions": [
+   {
+    "claim": "“Equities are safe if held long enough.”",
+    "truth": "Long horizons historically reduce the probability of loss, they do not eliminate it. Individual companies fail permanently, and some markets have gone a decade without recovering a prior peak."
+   }
+  ],
+  "application": [
+   "Matching an asset to a goal date.",
+   "Reducing risk as a goal approaches rather than at the moment of need."
+  ],
+  "related": [
+   "investment-objectives",
+   "risk-return",
+   "asset-allocation",
+   "liquidity-needs"
+  ],
+  "prereq": [
+   "investment-objectives"
+  ],
+  "next": [
+   "liquidity-needs"
+  ]
+ },
+ {
+  "id": "liquidity-needs",
+  "title": "Liquidity Needs",
+  "domain": "investments",
+  "category": "principles",
+  "subcategory": "Liquidity Needs",
+  "level": "Foundational",
+  "oneLine": "How quickly money might be needed, which constrains what it can be invested in.",
+  "what": "Liquidity needs describe how readily an investor may have to convert holdings into cash. They are separate from the time horizon: a thirty year goal can still carry a requirement that some portion be reachable within a week. An investment that cannot be exited when needed has failed, regardless of its return.",
+  "simple": "It does not matter how well an investment performs if you cannot get the money out on the day you need it.",
+  "why": "Forced selling is the most reliable way to convert a temporary loss into a permanent one. Liquidity planning exists so that a market fall never coincides with a need to sell.",
+  "components": [
+   {
+    "k": "Emergency reserve",
+    "v": "Funds held for unplanned needs, kept in instruments that can be accessed immediately."
+   },
+   {
+    "k": "Planned outflows",
+    "v": "Known future payments, which should be matched by assets maturing near that date."
+   },
+   {
+    "k": "Exit friction",
+    "v": "Lock-in periods, exit loads, settlement time and the price impact of selling."
+   },
+   {
+    "k": "Illiquidity premium",
+    "v": "The extra return demanded for accepting that money cannot be withdrawn quickly."
+   }
+  ],
+  "misconceptions": [
+   {
+    "claim": "“I can always sell if I need to.”",
+    "truth": "You can always sell at some price. In stressed markets that price can be far below the last quoted one, and property or unlisted holdings may take months."
+   }
+  ],
+  "application": [
+   "Sizing an emergency reserve before investing anything else.",
+   "Deciding whether an illiquid holding is genuinely affordable."
+  ],
+  "related": [
+   "market-liquidity",
+   "liquidity-risk",
+   "time-horizon",
+   "cash-equivalents"
+  ],
+  "prereq": [
+   "investment-objectives"
+  ],
+  "next": [
+   "cash-equivalents"
+  ]
+ },
+ {
+  "id": "cost-of-investing",
+  "title": "The Cost of Investing",
+  "domain": "investments",
+  "category": "principles",
+  "subcategory": "Cost of Investing",
+  "level": "Core",
+  "oneLine": "The one variable an investor controls completely, and the one that compounds against them.",
+  "what": "The total cost of investing includes fund expense ratios, brokerage, transaction taxes, exit loads, advisory fees and the spread paid when buying and selling. Costs are certain while returns are not, which makes them the highest confidence lever available to any investor.",
+  "simple": "You cannot choose your returns. You can choose your costs, and over decades those costs decide a surprising share of the outcome.",
+  "why": "A cost difference that sounds trivial as an annual percentage compounds against the investor for the entire holding period. It is the clearest practical demonstration of compounding working in reverse.",
+  "formula": {
+   "main": "Value lost to cost = Gross value − Net value",
+   "others": [
+    {
+     "label": "Net compounded value",
+     "expr": "A = P × (1 + r − e)ⁿ"
+    }
+   ],
+   "variables": [
+    {
+     "sym": "r",
+     "desc": "Gross annual return"
+    },
+    {
+     "sym": "e",
+     "desc": "Annual cost as a decimal"
+    },
+    {
+     "sym": "n",
+     "desc": "Years"
+    }
+   ]
+  },
+  "example": {
+   "setup": "₹10,00,000 invested for 25 years at a gross return of 11 percent. Compare total costs of 0.4 percent and 2.0 percent a year.",
+   "steps": [
+    "At 10.6 percent net: 10,00,000 × (1.106)²⁵ = ₹1,20,63,000 approximately",
+    "At 9.0 percent net: 10,00,000 × (1.09)²⁵ = ₹86,23,000 approximately",
+    "Difference = ₹34,40,000 approximately"
+   ],
+   "result": "About ₹34,40,000 lost to 1.6 percent a year",
+   "note": "The gross return was identical in both cases. The entire gap is cost, compounding for twenty five years."
+  },
+  "interpretation": "Cost matters most where the holding period is longest, which is exactly where investors pay least attention to it.",
+  "misconceptions": [
+   {
+    "claim": "“A higher fee buys better performance.”",
+    "truth": "Cost is certain and performance is not. Across long periods, low cost has been a more consistent predictor of investor outcomes than manager selection."
+   }
+  ],
+  "application": [
+   "Comparing two funds with similar mandates.",
+   "Deciding whether frequent trading is worth its cumulative cost."
+  ],
+  "related": [
+   "mutual-funds",
+   "etf",
+   "compounding",
+   "index-funds"
+  ],
+  "prereq": [
+   "compounding"
+  ],
+  "next": [
+   "index-funds"
+  ],
+  "sim": "compounding"
+ },
+ {
+  "id": "cash-equivalents",
+  "title": "Cash and Cash Equivalents",
+  "domain": "investments",
+  "category": "asset-classes",
+  "subcategory": "Cash & Equivalents",
+  "level": "Foundational",
+  "oneLine": "Holdings that can become spendable money almost immediately, at close to their stated value.",
+  "what": "Cash equivalents are highly liquid, short maturity instruments whose value is stable and which can be converted to cash quickly. Savings deposits, short term fixed deposits, treasury bills and liquid funds are typical. They carry minimal market risk and minimal credit risk, and correspondingly low returns.",
+  "simple": "Money you can reach today without worrying what it will be worth.",
+  "why": "Cash is not an investment, it is optionality. It funds emergencies without forcing the sale of long term holdings, and it allows an investor to act when opportunities appear.",
+  "components": [
+   {
+    "k": "Liquidity",
+    "v": "Convertible to spendable money within a day or two."
+   },
+   {
+    "k": "Capital stability",
+    "v": "Value does not move materially with markets."
+   },
+   {
+    "k": "Low return",
+    "v": "Compensation is small precisely because the risks taken are small."
+   },
+   {
+    "k": "Inflation exposure",
+    "v": "The one risk cash carries in full."
+   }
+  ],
+  "interpretation": "Cash has no market price risk and complete inflation risk. Over long periods it reliably loses purchasing power, which is why it is a tool for near term needs rather than a place to build wealth.",
+  "misconceptions": [
+   {
+    "claim": "“Cash is the safest asset.”",
+    "truth": "It is the safest against market falls and the least safe against inflation. Safety depends on which risk you are asking about."
+   }
+  ],
+  "application": [
+   "Holding an emergency reserve.",
+   "Parking money for a known payment within a year."
+  ],
+  "related": [
+   "liquidity-needs",
+   "inflation",
+   "real-return",
+   "money-markets"
+  ],
+  "prereq": [],
+  "next": [
+   "real-return"
+  ]
+ },
+ {
+  "id": "real-assets",
+  "title": "Real Assets",
+  "domain": "investments",
+  "category": "asset-classes",
+  "subcategory": "Real Assets",
+  "level": "Core",
+  "oneLine": "Physical assets with intrinsic use, whose value is not a claim on anyone else's promise.",
+  "what": "Real assets are tangible holdings such as property, infrastructure and land, which derive value from their physical use rather than from a contractual claim. They typically generate income through rent or usage charges and have historically shown some resilience to inflation, because replacement cost and rents tend to rise with the general price level.",
+  "simple": "A building is worth something because people need buildings, not because someone promised to pay you.",
+  "components": [
+   {
+    "k": "Income yield",
+    "v": "Rent or usage charges, net of maintenance, taxes and vacancy."
+   },
+   {
+    "k": "Capital value",
+    "v": "What the asset would sell for, which moves slowly and is hard to observe."
+   },
+   {
+    "k": "Illiquidity",
+    "v": "Sales take months and carry high transaction costs."
+   },
+   {
+    "k": "Concentration",
+    "v": "A single property is one asset in one location, which is the opposite of diversification."
+   }
+  ],
+  "limitations": [
+   "Valuation is infrequent and imprecise, which can make volatility appear lower than it is.",
+   "Transaction costs, stamp duty and maintenance materially reduce the realised return.",
+   "A single property cannot be partially sold when money is needed."
+  ],
+  "misconceptions": [
+   {
+    "claim": "“Property never falls in value.”",
+    "truth": "It falls less visibly, because it is not priced daily. Several markets have seen extended real declines, and infrequent pricing is not the same as stability."
+   }
+  ],
+  "application": [
+   "Assessing whether a property purchase is an investment or a consumption decision.",
+   "Understanding why real assets behave differently from financial claims during inflation."
+  ],
+  "related": [
+   "inflation",
+   "diversification",
+   "market-liquidity",
+   "gold-commodities"
+  ],
+  "prereq": [
+   "risk-return"
+  ],
+  "next": [
+   "gold-commodities"
+  ]
+ },
+ {
+  "id": "gold-commodities",
+  "title": "Gold and Commodities",
+  "domain": "investments",
+  "category": "asset-classes",
+  "subcategory": "Gold & Commodities",
+  "level": "Core",
+  "oneLine": "Assets that produce no cash flow, whose value rests entirely on what the next buyer will pay.",
+  "what": "Commodities are physical goods such as metals, energy and agricultural produce. Gold occupies a particular position because it is held largely as a store of value rather than consumed industrially. The defining feature of this class is the absence of cash flow: there is no coupon, no dividend and no earnings, so return comes only from price change.",
+  "simple": "A share of a company earns money for you. A bar of gold sits there. Its worth is whatever someone else will pay.",
+  "why": "Because commodities have no cash flow, they cannot be valued by discounting. That makes them harder to assess than equities or bonds, and it means their price is driven by supply, demand and sentiment rather than by fundamentals in the usual sense.",
+  "components": [
+   {
+    "k": "No yield",
+    "v": "No income is generated, and storage may cost money."
+   },
+   {
+    "k": "Inflation behaviour",
+    "v": "Gold has often, though not always, held real value during inflationary periods."
+   },
+   {
+    "k": "Currency link",
+    "v": "For an Indian investor, rupee weakness raises the local price even when global prices are flat."
+   },
+   {
+    "k": "Industrial demand",
+    "v": "Silver, copper and crude are consumed, so their prices respond to economic activity."
+   }
+  ],
+  "example": {
+   "setup": "Gold at ₹3,200 per 10 grams in 1990, and ₹77,913 in 2024.",
+   "steps": [
+    "Total change = (77,913 − 3,200) ÷ 3,200 × 100 = 2,335 percent",
+    "Over 34 years",
+    "Compound annual rate = (77,913 ÷ 3,200)^(1/34) − 1 ≈ 9.9 percent"
+   ],
+   "result": "About 9.9 percent a year",
+   "note": "That headline hides long flat stretches. Gold fell from ₹31,050 in 2012 to ₹26,343 in 2015, three consecutive losing years."
+  },
+  "misconceptions": [
+   {
+    "claim": "“Gold always protects against inflation.”",
+    "truth": "It has over very long periods and failed over shorter ones. Between 2012 and 2015 the rupee price fell while inflation continued."
+   }
+  ],
+  "application": [
+   "Deciding what role, if any, a non yielding asset plays in a portfolio.",
+   "Understanding why commodity prices respond to currency moves."
+  ],
+  "related": [
+   "inflation",
+   "real-return",
+   "diversification",
+   "currency-risk"
+  ],
+  "prereq": [
+   "risk-return"
+  ],
+  "next": [
+   "diversification"
+  ]
+ },
+ {
+  "id": "index-funds",
+  "title": "Index Funds",
+  "domain": "investments",
+  "category": "vehicles",
+  "subcategory": "Index Funds",
+  "level": "Foundational",
+  "oneLine": "A fund that buys the whole index rather than trying to choose within it.",
+  "what": "An index fund holds the constituents of an index in their index weights, aiming to match its return rather than exceed it. Because no research or selection is required, costs are a fraction of an actively managed fund. Performance is judged by tracking error, meaning how closely the fund follows its benchmark, rather than by outperformance.",
+  "simple": "Rather than paying someone to pick winners, you buy everything in the index and keep the fee you saved.",
+  "why": "The cost saving is certain while manager outperformance is not. Over long periods, that certainty has produced better outcomes for most investors than manager selection has.",
+  "components": [
+   {
+    "k": "Full replication",
+    "v": "Holding every constituent in its index weight."
+   },
+   {
+    "k": "Tracking error",
+    "v": "The deviation between fund return and index return. Lower is better."
+   },
+   {
+    "k": "Expense ratio",
+    "v": "Typically a small fraction of an active fund's charge."
+   },
+   {
+    "k": "No manager risk",
+    "v": "There is no possibility of a manager making a poor selection, and none of them making a good one either."
+   }
+  ],
+  "misconceptions": [
+   {
+    "claim": "“Index funds guarantee average returns.”",
+    "truth": "They deliver index returns minus a very small cost. Because most active funds underperform after their higher fees, that outcome has historically beaten the majority of them."
+   },
+   {
+    "claim": "“An index fund is diversified by definition.”",
+    "truth": "It is as diversified as its index. A capitalisation weighted index can be dominated by a handful of very large companies."
+   }
+  ],
+  "application": [
+   "Building a low cost core holding.",
+   "Comparing a fund's tracking error before choosing between similar options."
+  ],
+  "related": [
+   "etf",
+   "mutual-funds",
+   "market-indices",
+   "cost-of-investing"
+  ],
+  "prereq": [
+   "mutual-funds"
+  ],
+  "next": [
+   "direct-regular"
+  ]
+ },
+ {
+  "id": "direct-regular",
+  "title": "Direct and Regular Plans",
+  "domain": "investments",
+  "category": "vehicles",
+  "subcategory": "Direct vs Regular Plans",
+  "level": "Core",
+  "oneLine": "The same fund at two prices, differing only by whether a distributor commission is embedded.",
+  "what": "Indian mutual funds offer two plan types. A regular plan includes a distributor commission within its expense ratio. A direct plan excludes it, and is bought without an intermediary. The portfolio, the manager and the strategy are identical. Only the cost differs, and therefore so does the net asset value over time.",
+  "simple": "Same fund, same manager, same holdings. One version pays a commission out of your returns and one does not.",
+  "formula": {
+   "main": "Cost difference ≈ Regular expense ratio − Direct expense ratio",
+   "variables": [
+    {
+     "sym": "Difference",
+     "desc": "Typically between 0.5 and 1.0 percentage points a year for equity funds"
+    }
+   ]
+  },
+  "example": {
+   "setup": "₹20,00,000 invested for 20 years at a gross return of 12 percent. The regular plan costs 1.8 percent, the direct plan 0.9 percent.",
+   "steps": [
+    "Regular, net 10.2 percent: 20,00,000 × (1.102)²⁰ = ₹1,39,60,000 approximately",
+    "Direct, net 11.1 percent: 20,00,000 × (1.111)²⁰ = ₹1,64,50,000 approximately",
+    "Difference = ₹24,90,000 approximately"
+   ],
+   "result": "About ₹24,90,000",
+   "note": "Nothing about the investment changed. The difference is entirely the commission, compounding for twenty years."
+  },
+  "interpretation": "The regular plan is not fraudulent. It pays for advice and service, which some investors genuinely need. The question is whether the advice received is worth what it compounds to.",
+  "misconceptions": [
+   {
+    "claim": "“Direct plans are riskier.”",
+    "truth": "The portfolio is identical. The only difference is the expense ratio and the absence of an intermediary."
+   }
+  ],
+  "application": [
+   "Checking which plan type an existing holding is in.",
+   "Weighing the cost of advice against its value."
+  ],
+  "related": [
+   "mutual-funds",
+   "cost-of-investing",
+   "index-funds",
+   "sip"
+  ],
+  "prereq": [
+   "mutual-funds"
+  ],
+  "next": [
+   "cost-of-investing"
+  ]
+ },
+ {
+  "id": "rebalancing",
+  "title": "Rebalancing",
+  "domain": "investments",
+  "category": "portfolio",
+  "subcategory": "Rebalancing",
+  "level": "Core",
+  "oneLine": "Restoring a portfolio to its intended weights, which mechanically sells what rose and buys what fell.",
+  "what": "Rebalancing means periodically returning a portfolio to its target allocation after market movements have shifted it. Because assets grow at different rates, a portfolio left alone drifts toward whatever has performed best, quietly becoming riskier than intended. Rebalancing reverses that drift.",
+  "simple": "Equity rose, so it is now a bigger share of your portfolio than you planned. Selling some and buying the laggard puts you back where you meant to be.",
+  "why": "Its main purpose is risk control rather than return enhancement. Without it, a portfolio designed as sixty percent equity can become eighty percent equity after a strong run, exposing the investor to a fall they never agreed to take.",
+  "formula": {
+   "main": "Drift = Current weight − Target weight",
+   "others": [
+    {
+     "label": "Threshold rule",
+     "expr": "Rebalance when |drift| exceeds a set band, commonly five percentage points"
+    }
+   ]
+  },
+  "example": {
+   "setup": "A ₹30,00,000 portfolio targeted at 60 percent equity and 40 percent debt. Equity rises 40 percent; debt is flat.",
+   "steps": [
+    "Equity: 18,00,000 × 1.40 = ₹25,20,000. Debt: ₹12,00,000",
+    "Total = ₹37,20,000, so equity is now 67.7 percent",
+    "Restoring 60 percent means selling ₹2,88,000 of equity into debt"
+   ],
+   "result": "Equity trimmed from 67.7 percent to 60 percent",
+   "note": "This forces selling what performed and buying what did not, which is the opposite of instinct. That is precisely why it is written as a rule in advance."
+  },
+  "misconceptions": [
+   {
+    "claim": "“Rebalancing increases returns.”",
+    "truth": "Sometimes it does and sometimes it costs return, particularly in a long trending market. Its reliable benefit is keeping risk at the intended level."
+   }
+  ],
+  "limitations": [
+   "Each rebalance can trigger transaction costs and tax on realised gains.",
+   "Rebalancing too frequently adds cost without meaningfully improving risk control."
+  ],
+  "application": [
+   "Setting a rebalancing rule before emotions are involved.",
+   "Checking how far a portfolio has drifted from its intended risk."
+  ],
+  "related": [
+   "asset-allocation",
+   "diversification",
+   "portfolio-risk",
+   "correlation"
+  ],
+  "prereq": [
+   "asset-allocation"
+  ],
+  "next": [
+   "correlation"
+  ]
+ },
+ {
+  "id": "correlation",
+  "title": "Correlation",
+  "domain": "investments",
+  "category": "portfolio",
+  "subcategory": "Correlation",
+  "level": "Core",
+  "oneLine": "The degree to which two assets move together, which decides whether diversification works at all.",
+  "what": "Correlation measures how the returns of two assets move in relation to one another, on a scale from plus one to minus one. At plus one they move identically. At zero there is no relationship. At minus one they move exactly opposite. Portfolio risk depends on correlation as much as on the risk of the individual holdings.",
+  "simple": "Two investments that always rise and fall together are one investment wearing two names.",
+  "why": "Correlation is the mechanism behind diversification. Adding holdings reduces risk only to the extent that they do not move together, which is why the number of holdings matters far less than the relationships between them.",
+  "formula": {
+   "main": "σₚ = √(w₁²σ₁² + w₂²σ₂² + 2w₁w₂ρσ₁σ₂)",
+   "variables": [
+    {
+     "sym": "σₚ",
+     "desc": "Portfolio volatility"
+    },
+    {
+     "sym": "w",
+     "desc": "Weight of each asset"
+    },
+    {
+     "sym": "σ",
+     "desc": "Volatility of each asset"
+    },
+    {
+     "sym": "ρ",
+     "desc": "Correlation between them"
+    }
+   ]
+  },
+  "example": {
+   "setup": "Two assets with volatility of 18 and 12 percent, held equally, at different correlations.",
+   "steps": [
+    "At ρ = 1.0: portfolio volatility = 15.0 percent, the simple weighted average",
+    "At ρ = 0.3: portfolio volatility = 11.9 percent",
+    "At ρ = −0.3: portfolio volatility = 9.3 percent"
+   ],
+   "result": "15.0, 11.9 or 9.3 percent from identical assets",
+   "note": "The assets never changed. Only their relationship did, and it cut risk by nearly forty percent."
+  },
+  "interpretation": "Correlation is not fixed. It typically rises toward one during severe market stress, which means diversification weakens exactly when it is most needed.",
+  "misconceptions": [
+   {
+    "claim": "“Low correlation means low risk.”",
+    "truth": "It means the combination is less risky than the parts suggest. Two highly volatile assets with low correlation still produce a volatile portfolio."
+   }
+  ],
+  "application": [
+   "Testing whether a new holding genuinely adds diversification.",
+   "Understanding why crisis losses appear across everything at once."
+  ],
+  "related": [
+   "diversification",
+   "portfolio-risk",
+   "asset-allocation",
+   "risk-return"
+  ],
+  "prereq": [
+   "diversification"
+  ],
+  "next": [
+   "portfolio-risk"
+  ],
+  "sim": "diversification"
+ },
+ {
+  "id": "portfolio-risk",
+  "title": "Portfolio Risk",
+  "domain": "investments",
+  "category": "portfolio",
+  "subcategory": "Portfolio Risk",
+  "level": "Intermediate",
+  "oneLine": "The risk of the whole, which is less than the sum of its parts whenever holdings do not move together.",
+  "what": "Portfolio risk is the volatility of the combined holdings rather than of any single one. It is not the weighted average of individual risks, because offsetting movements cancel. It is usually measured as standard deviation of returns, alongside maximum drawdown, which describes the worst peak to trough fall an investor would have had to endure.",
+  "simple": "What matters is how the whole thing behaves, not how any one holding behaves.",
+  "components": [
+   {
+    "k": "Volatility",
+    "v": "How widely returns disperse around their average."
+   },
+   {
+    "k": "Maximum drawdown",
+    "v": "The largest fall from a peak. Often the number that actually determines whether an investor stays invested."
+   },
+   {
+    "k": "Concentration",
+    "v": "How much of the outcome depends on one holding, sector or factor."
+   },
+   {
+    "k": "Systematic exposure",
+    "v": "The part of risk that diversification cannot remove."
+   }
+  ],
+  "interpretation": "Volatility measures discomfort. Drawdown measures the moment of decision. A portfolio that falls 45 percent has a mathematical property and a human one, and the human one is what causes people to sell at the bottom.",
+  "misconceptions": [
+   {
+    "claim": "“A diversified portfolio cannot fall much.”",
+    "truth": "It can. Diversification removes company specific risk, not market risk, and in 2008 nearly every risk asset fell together."
+   }
+  ],
+  "application": [
+   "Sizing risk to what an investor can actually endure, not what they say they can.",
+   "Comparing two portfolios with similar returns but different drawdowns."
+  ],
+  "related": [
+   "correlation",
+   "diversification",
+   "risk-return",
+   "asset-allocation"
+  ],
+  "prereq": [
+   "correlation"
+  ],
+  "next": [
+   "risk-adjusted-return"
+  ]
+ },
+ {
+  "id": "technical-analysis",
+  "title": "Technical Analysis",
+  "domain": "investments",
+  "category": "analysis",
+  "subcategory": "Technical Analysis",
+  "level": "Intermediate",
+  "oneLine": "Studying price and volume history to infer what participants are doing, rather than what a business is worth.",
+  "what": "Technical analysis examines past price and volume data to identify patterns believed to carry information about future movement. It does not attempt to value the underlying business. Its premises are that price reflects all available information, that prices move in identifiable tendencies, and that patterns of participant behaviour recur.",
+  "simple": "It ignores what the company is worth and studies what the price has been doing and how many people were involved.",
+  "components": [
+   {
+    "k": "Trend",
+    "v": "The prevailing direction of price over a chosen period."
+   },
+   {
+    "k": "Support and resistance",
+    "v": "Price levels where buying or selling interest has previously appeared."
+   },
+   {
+    "k": "Volume",
+    "v": "How much trading accompanied a move, taken as evidence of conviction."
+   },
+   {
+    "k": "Momentum indicators",
+    "v": "Derived measures of the speed and persistence of price change."
+   }
+  ],
+  "limitations": [
+   "The evidence on whether patterns reliably predict returns is contested, and results are sensitive to the period tested.",
+   "Patterns are identified more confidently after the fact than before it.",
+   "Frequent trading generates costs and taxes that must be overcome before any strategy adds value."
+  ],
+  "misconceptions": [
+   {
+    "claim": "“Technical analysis predicts prices.”",
+    "truth": "At best it describes conditions and probabilities. Practitioners who treat it as prediction rather than risk management tend to be the ones who fail."
+   },
+   {
+    "claim": "“It conflicts with fundamental analysis.”",
+    "truth": "They answer different questions. One asks what a business is worth, the other asks what participants are currently doing."
+   }
+  ],
+  "application": [
+   "Timing an entry into a position already justified on other grounds.",
+   "Setting exit levels before a position is opened."
+  ],
+  "related": [
+   "fundamental-analysis",
+   "price-discovery",
+   "market-participants",
+   "market-risk"
+  ],
+  "prereq": [
+   "price-discovery"
+  ],
+  "next": [
+   "valuation-multiples"
+  ]
+ },
+ {
+  "id": "valuation-multiples",
+  "title": "Valuation Multiples",
+  "domain": "investments",
+  "category": "analysis",
+  "subcategory": "Valuation Multiples",
+  "level": "Intermediate",
+  "oneLine": "A price expressed relative to something the business produces, so that companies of different sizes can be compared.",
+  "what": "A valuation multiple divides a company's price or enterprise value by a financial measure such as earnings, book value, sales or cash flow. It converts an absolute price into a relative one, allowing comparison across companies and across time. A multiple is not a valuation. It is a question about why one business is priced differently from another.",
+  "simple": "Two companies priced at ₹500 tell you nothing. Priced at ten times earnings and forty times earnings tells you a great deal.",
+  "formula": {
+   "main": "Price to earnings = Share price ÷ Earnings per share",
+   "others": [
+    {
+     "label": "Price to book",
+     "expr": "Share price ÷ Book value per share"
+    },
+    {
+     "label": "EV to EBITDA",
+     "expr": "Enterprise value ÷ EBITDA"
+    }
+   ],
+   "variables": [
+    {
+     "sym": "EV",
+     "desc": "Market capitalisation plus net debt"
+    },
+    {
+     "sym": "EBITDA",
+     "desc": "Earnings before interest, tax, depreciation and amortisation"
+    }
+   ]
+  },
+  "example": {
+   "setup": "Two companies each earning ₹50 per share. One trades at ₹500, the other at ₹2,000.",
+   "steps": [
+    "First: P/E = 500 ÷ 50 = 10 times",
+    "Second: P/E = 2,000 ÷ 50 = 40 times",
+    "The market expects the second company's earnings to grow far faster, or to be far more durable"
+   ],
+   "result": "10 times against 40 times",
+   "note": "Neither is right or wrong. The multiple states what the market believes. The analyst's job is to decide whether that belief is reasonable."
+  },
+  "interpretation": "A high multiple is an expectation, not a verdict. A low multiple often means the market expects earnings to decline, and it is frequently correct.",
+  "misconceptions": [
+   {
+    "claim": "“A low P/E means the stock is cheap.”",
+    "truth": "It means the price is low relative to current earnings. If those earnings are about to fall, the multiple was a warning rather than a bargain."
+   }
+  ],
+  "limitations": [
+   "Multiples depend on accounting figures that vary in quality between companies.",
+   "They are only comparable within similar businesses. A bank and a software firm cannot be compared on the same multiple."
+  ],
+  "application": [
+   "Comparing companies within one industry.",
+   "Testing what growth a current price implies."
+  ],
+  "related": [
+   "fundamental-analysis",
+   "financial-ratios",
+   "free-cash-flow",
+   "quality-of-earnings"
+  ],
+  "prereq": [
+   "financial-ratios"
+  ],
+  "next": [
+   "quality-of-earnings"
+  ]
+ },
+ {
+  "id": "quality-of-earnings",
+  "title": "Quality of Earnings",
+  "domain": "investments",
+  "category": "analysis",
+  "subcategory": "Quality of Earnings",
+  "level": "Advanced",
+  "oneLine": "Whether reported profit reflects real, repeatable economic performance, or accounting choices.",
+  "what": "Quality of earnings assesses how faithfully reported profit represents the underlying business. High quality earnings are backed by cash, arise from core operations, and are likely to repeat. Low quality earnings depend on favourable estimates, one time gains, or aggressive recognition timing. The concept exists because profit is an opinion while cash is closer to a fact.",
+  "simple": "Two companies can report the same profit. One collected the money and can do it again next year. The other did neither.",
+  "why": "Every major accounting fraud in the record began as an earnings quality problem before it became a criminal one. The tools that detect deterioration are the same tools that would have raised questions at Satyam, Enron and Wirecard years before collapse.",
+  "components": [
+   {
+    "k": "Cash conversion",
+    "v": "How much of reported profit appears as operating cash flow."
+   },
+   {
+    "k": "Recurrence",
+    "v": "Whether earnings come from the core business or from one off items."
+   },
+   {
+    "k": "Estimate dependence",
+    "v": "How much profit relies on management judgement, such as provisions and useful lives."
+   },
+   {
+    "k": "Receivables growth",
+    "v": "Sales growing much faster than collections suggests revenue recognised before it is earned."
+   }
+  ],
+  "formula": {
+   "main": "Cash conversion = Operating cash flow ÷ Net profit",
+   "variables": [
+    {
+     "sym": "Ratio near or above 1",
+     "desc": "Profit is being collected in cash"
+    },
+    {
+     "sym": "Ratio persistently below 1",
+     "desc": "A widening gap between reported profit and cash, which deserves explanation"
+    }
+   ]
+  },
+  "example": {
+   "setup": "A company reports ₹100 crore of net profit and ₹40 crore of operating cash flow, three years running.",
+   "steps": [
+    "Cash conversion = 40 ÷ 100 = 0.40",
+    "The gap is ₹60 crore each year",
+    "Over three years, ₹180 crore of reported profit has not appeared as cash"
+   ],
+   "result": "Conversion of 0.40, sustained",
+   "note": "A single weak year can be growth in working capital. Three consecutive years is a question that requires an answer."
+  },
+  "realWorld": "At Satyam, reported profits were not real, so they generated no cash. The gap between earnings and cash widened every year the misstatement continued, and it was visible in published statements long before the disclosure.",
+  "misconceptions": [
+   {
+    "claim": "“Profit growth means the business is improving.”",
+    "truth": "Not if it comes from estimate changes, asset sales or receivables that are never collected. The source of growth matters more than its size."
+   }
+  ],
+  "application": [
+   "Screening for companies where reported profit is not converting to cash.",
+   "Assessing whether a growth record is repeatable."
+  ],
+  "related": [
+   "cash-flow-statement",
+   "income-statement",
+   "financial-ratios",
+   "fundamental-analysis"
+  ],
+  "prereq": [
+   "cash-flow-statement"
+  ],
+  "next": [
+   "fundamental-analysis"
+  ]
+ },
+ {
+  "id": "absolute-relative-return",
+  "title": "Absolute and Relative Return",
+  "domain": "investments",
+  "category": "performance",
+  "subcategory": "Absolute vs Relative Return",
+  "level": "Core",
+  "oneLine": "What you earned, and what you earned compared with what you could have earned instead.",
+  "what": "Absolute return is the change in the value of an investment over a period. Relative return compares that figure with an appropriate benchmark. Both are necessary. Absolute return determines whether a goal is reached. Relative return determines whether the manager or the strategy added anything beyond simply being in the market.",
+  "simple": "Making eight percent sounds good until the index made fourteen. Losing four percent sounds bad until the index lost twelve.",
+  "why": "Judging a portfolio on absolute return alone rewards luck in a rising market and punishes skill in a falling one. Judging on relative return alone can congratulate a manager for losing less than the market while the investor still cannot afford their goal.",
+  "formula": {
+   "main": "Relative return = Portfolio return − Benchmark return",
+   "others": [
+    {
+     "label": "Absolute return",
+     "expr": "(Ending value − Beginning value) ÷ Beginning value × 100"
+    }
+   ]
+  },
+  "example": {
+   "setup": "A fund returned 9 percent in a year in which its benchmark index returned 15 percent.",
+   "steps": [
+    "Absolute return = +9 percent",
+    "Relative return = 9 − 15 = −6 percentage points",
+    "The investor gained money and lost ground"
+   ],
+   "result": "+9 percent absolute, −6 relative",
+   "note": "Both statements are true simultaneously. Which one matters depends on whether you are asking about the goal or about the manager."
+  },
+  "misconceptions": [
+   {
+    "claim": "“A positive return means the fund did well.”",
+    "truth": "In a year when everything rose, a positive return may represent significant underperformance."
+   }
+  ],
+  "application": [
+   "Judging a fund against a fair comparison rather than against zero.",
+   "Separating market movement from manager contribution."
+  ],
+  "related": [
+   "benchmarking",
+   "risk-adjusted-return",
+   "tracking-error",
+   "market-indices"
+  ],
+  "prereq": [],
+  "next": [
+   "benchmarking"
+  ]
+ },
+ {
+  "id": "benchmarking",
+  "title": "Benchmarking",
+  "domain": "investments",
+  "category": "performance",
+  "subcategory": "Benchmarking",
+  "level": "Core",
+  "oneLine": "Choosing a fair comparison, without which performance cannot be judged at all.",
+  "what": "A benchmark is the index or reference against which a portfolio is measured. To be fair it must reflect the same asset class, market segment and risk that the portfolio actually takes. Comparing a small company fund with a large company index, or an equity portfolio with a deposit rate, produces a number that looks meaningful and is not.",
+  "simple": "You can make almost any fund look good or bad by choosing which index to compare it with.",
+  "components": [
+   {
+    "k": "Relevance",
+    "v": "The benchmark must represent the same investable universe."
+   },
+   {
+    "k": "Investability",
+    "v": "It must be something an investor could actually have bought instead."
+   },
+   {
+    "k": "Specified in advance",
+    "v": "Chosen before the period, not selected afterwards from whichever looks flattering."
+   },
+   {
+    "k": "Total return basis",
+    "v": "Including dividends, otherwise the comparison understates what the index actually delivered."
+   }
+  ],
+  "interpretation": "A price index excludes dividends. Comparing a fund's return, which includes dividends received, against a price index overstates the fund's performance every single year.",
+  "misconceptions": [
+   {
+    "claim": "“Beating the index proves skill.”",
+    "truth": "Over one or two years, it mostly proves the portfolio took different risks. Skill requires a long record against an appropriate benchmark, after costs."
+   }
+  ],
+  "application": [
+   "Checking whether a fund's stated benchmark actually matches what it holds.",
+   "Comparing on a total return basis rather than price return."
+  ],
+  "related": [
+   "absolute-relative-return",
+   "market-indices",
+   "tracking-error",
+   "risk-adjusted-return"
+  ],
+  "prereq": [
+   "absolute-relative-return"
+  ],
+  "next": [
+   "risk-adjusted-return"
+  ]
+ },
+ {
+  "id": "risk-adjusted-return",
+  "title": "Risk-Adjusted Return",
+  "domain": "investments",
+  "category": "performance",
+  "subcategory": "Risk-Adjusted Return",
+  "level": "Intermediate",
+  "oneLine": "Return measured against the risk taken to achieve it, because return alone says nothing about how it was earned.",
+  "what": "Risk adjusted return relates the excess return of a portfolio to the risk it accepted. The most common measure is the Sharpe ratio, which divides return above the risk free rate by the volatility of returns. Higher indicates more return earned per unit of risk. It exists because any return can be increased simply by taking more risk, which is not skill.",
+  "simple": "Anyone can produce a high return by taking enormous risk. The question is how much risk was required to get it.",
+  "formula": {
+   "main": "Sharpe ratio = (Rₚ − Rₑ) ÷ σₚ",
+   "variables": [
+    {
+     "sym": "Rₚ",
+     "desc": "Portfolio return"
+    },
+    {
+     "sym": "Rₑ",
+     "desc": "Risk free rate"
+    },
+    {
+     "sym": "σₚ",
+     "desc": "Standard deviation of portfolio returns"
+    }
+   ]
+  },
+  "example": {
+   "setup": "Two portfolios, a risk free rate of 6 percent. A returned 18 percent with 20 percent volatility. B returned 14 percent with 9 percent volatility.",
+   "steps": [
+    "A: (18 − 6) ÷ 20 = 0.60",
+    "B: (14 − 6) ÷ 9 = 0.89",
+    "B earned less in absolute terms and considerably more per unit of risk"
+   ],
+   "result": "0.60 against 0.89",
+   "note": "An investor could hold B with borrowed money to match A's return at lower risk. That is why the ratio, not the raw return, is the fairer comparison."
+  },
+  "limitations": [
+   "Volatility treats upside and downside movement identically, though investors do not.",
+   "It assumes returns are reasonably distributed, which fails for strategies with rare large losses.",
+   "A short measurement period can flatter a strategy that has not yet met its bad environment."
+  ],
+  "misconceptions": [
+   {
+    "claim": "“The fund with the highest return is the best.”",
+    "truth": "Not if it required double the risk. Two funds are only comparable once risk is accounted for."
+   }
+  ],
+  "application": [
+   "Comparing funds with different volatility profiles.",
+   "Assessing whether a strong return came from skill or from leverage."
+  ],
+  "related": [
+   "portfolio-risk",
+   "benchmarking",
+   "risk-return",
+   "absolute-relative-return"
+  ],
+  "prereq": [
+   "portfolio-risk"
+  ],
+  "next": [
+   "tracking-error"
+  ]
+ },
+ {
+  "id": "tracking-error",
+  "title": "Tracking Error",
+  "domain": "investments",
+  "category": "performance",
+  "subcategory": "Tracking Error",
+  "level": "Intermediate",
+  "oneLine": "How far a fund's returns deviate from its benchmark, which means opposite things for active and passive funds.",
+  "what": "Tracking error is the standard deviation of the difference between a portfolio's returns and its benchmark's returns. For an index fund, low tracking error is the objective, because the fund is meant to replicate. For an active fund, tracking error is unavoidable and necessary, because a portfolio identical to the index cannot outperform it.",
+  "simple": "For an index fund, deviation is a failure. For an active fund, deviation is the entire point.",
+  "formula": {
+   "main": "Tracking error = standard deviation of (Rₚ − Rᵇ)",
+   "others": [
+    {
+     "label": "Information ratio",
+     "expr": "(Rₚ − Rᵇ) ÷ Tracking error"
+    }
+   ],
+   "variables": [
+    {
+     "sym": "Rₚ",
+     "desc": "Portfolio return"
+    },
+    {
+     "sym": "Rᵇ",
+     "desc": "Benchmark return"
+    }
+   ]
+  },
+  "interpretation": "An active fund with very low tracking error is charging active fees for something close to index performance. This is sometimes described as closet indexing, and it is the worst combination available to an investor: index returns with active costs.",
+  "misconceptions": [
+   {
+    "claim": "“Lower tracking error is always better.”",
+    "truth": "For an index fund, yes. For an active fund it means the manager is barely doing anything different while charging as though they were."
+   }
+  ],
+  "application": [
+   "Choosing between index funds tracking the same benchmark.",
+   "Checking whether an active fund is genuinely active."
+  ],
+  "related": [
+   "index-funds",
+   "etf",
+   "benchmarking",
+   "cost-of-investing"
+  ],
+  "prereq": [
+   "benchmarking"
+  ],
+  "next": [
+   "cost-of-investing"
+  ]
+ },
+ {
+  "id": "value-investing",
+  "title": "Value Investing",
+  "domain": "investments",
+  "category": "strategies",
+  "subcategory": "Value Investing",
+  "level": "Intermediate",
+  "oneLine": "Buying assets for less than a considered estimate of their worth, and accepting that you may wait a long time.",
+  "what": "Value investing seeks securities trading below an estimate of intrinsic value, on the reasoning that price and value diverge and eventually reconverge. Its central discipline is the margin of safety: buying sufficiently below the estimate that being somewhat wrong remains survivable. It requires a valuation method, patience, and a tolerance for being unpopular.",
+  "simple": "Work out what it is worth. Buy it for meaningfully less. Wait, possibly for years.",
+  "components": [
+   {
+    "k": "Intrinsic value",
+    "v": "An estimate of worth derived from the business, not from the price."
+   },
+   {
+    "k": "Margin of safety",
+    "v": "The gap between price paid and value estimated, which absorbs error."
+   },
+   {
+    "k": "Patience",
+    "v": "Reconvergence has no schedule and may take years."
+   },
+   {
+    "k": "The value trap",
+    "v": "A cheap asset that is cheap because the business is genuinely deteriorating."
+   }
+  ],
+  "limitations": [
+   "A correct valuation can remain unrecognised by the market for a very long time.",
+   "Cheapness and deterioration look identical at the moment of purchase.",
+   "It requires disagreeing with the consensus, which is psychologically difficult to sustain."
+  ],
+  "misconceptions": [
+   {
+    "claim": "“Value investing means buying low P/E stocks.”",
+    "truth": "A low multiple is a screening signal, not a valuation. Many low multiple companies are correctly priced for declining earnings."
+   }
+  ],
+  "application": [
+   "Building a considered case before committing capital.",
+   "Distinguishing a genuine discount from a deteriorating business."
+  ],
+  "related": [
+   "fundamental-analysis",
+   "valuation-multiples",
+   "free-cash-flow",
+   "growth-investing"
+  ],
+  "prereq": [
+   "fundamental-analysis"
+  ],
+  "next": [
+   "growth-investing"
+  ]
+ },
+ {
+  "id": "growth-investing",
+  "title": "Growth Investing",
+  "domain": "investments",
+  "category": "strategies",
+  "subcategory": "Growth Investing",
+  "level": "Intermediate",
+  "oneLine": "Buying businesses expected to expand rapidly, and paying a price that assumes they will.",
+  "what": "Growth investing targets companies whose revenue and earnings are expected to grow substantially faster than the market. Because that expectation is already reflected in the price, returns depend on growth exceeding what is already assumed. The risk is not that the company fails to grow, but that it grows more slowly than the price implied.",
+  "simple": "You are not paid for the company growing. You are paid for it growing faster than everyone already expects.",
+  "why": "Growth and value are not opposites. Both attempt to buy something for less than it is worth. They differ in where the value is assumed to sit, in current assets and earnings, or in future expansion.",
+  "components": [
+   {
+    "k": "Revenue growth",
+    "v": "The primary driver, and the assumption most often extrapolated too far."
+   },
+   {
+    "k": "Reinvestment",
+    "v": "Growth requires capital, so cash flow is often negative while expanding."
+   },
+   {
+    "k": "Durability",
+    "v": "Whether growth can persist, which matters far more to valuation than its current rate."
+   },
+   {
+    "k": "Multiple risk",
+    "v": "High multiples fall sharply when growth expectations are revised."
+   }
+  ],
+  "example": {
+   "setup": "A company priced at 40 times earnings, where the market expects 25 percent annual growth. It delivers 15 percent.",
+   "steps": [
+    "Earnings grew, so the business did not fail",
+    "But the multiple compresses toward companies growing 15 percent, perhaps to 22 times",
+    "Price change ≈ (1.15 × 22 ÷ 40) − 1 = −37 percent"
+   ],
+   "result": "A 37 percent fall despite growing 15 percent",
+   "note": "The company performed well. The price had already assumed better. That gap is where the loss came from."
+  },
+  "misconceptions": [
+   {
+    "claim": "“A growing company is a good investment.”",
+    "truth": "Only at a price that does not already assume more growth than it will deliver."
+   }
+  ],
+  "application": [
+   "Testing what growth rate a current price implies.",
+   "Understanding why strong results can be followed by falling prices."
+  ],
+  "related": [
+   "valuation-multiples",
+   "free-cash-flow",
+   "value-investing",
+   "discount-rate"
+  ],
+  "prereq": [
+   "valuation-multiples"
+  ],
+  "next": [
+   "passive-investing"
+  ]
+ },
+ {
+  "id": "passive-investing",
+  "title": "Passive Investing",
+  "domain": "investments",
+  "category": "strategies",
+  "subcategory": "Passive Investing",
+  "level": "Core",
+  "oneLine": "Declining to select, and capturing the market return at the lowest available cost.",
+  "what": "Passive investing holds a market or segment in its entirety through index funds or ETFs, making no attempt to select securities or time entry. Its logic is arithmetic rather than philosophical: the average actively managed rupee must earn the market return before costs, so after higher costs the average active investor must underperform the index.",
+  "simple": "If everyone together owns the market, everyone together earns the market return. After fees, those paying more must on average end up with less.",
+  "why": "This is not an opinion about whether skilled managers exist. It is a statement about what happens to the average, and about the certainty of cost against the uncertainty of outperformance.",
+  "components": [
+   {
+    "k": "Market return",
+    "v": "What the index delivers, which the passive investor accepts."
+   },
+   {
+    "k": "Cost advantage",
+    "v": "Typically a large fraction of a percentage point a year, certain and permanent."
+   },
+   {
+    "k": "No manager risk",
+    "v": "No possibility of poor selection, and none of good selection either."
+   },
+   {
+    "k": "Full participation",
+    "v": "Including in falls, since there is no attempt to avoid them."
+   }
+  ],
+  "limitations": [
+   "A capitalisation weighted index concentrates in whatever has already risen most.",
+   "There is no mechanism to avoid a market decline.",
+   "Index composition is decided by a committee following rules, which is a form of selection."
+  ],
+  "misconceptions": [
+   {
+    "claim": "“Passive investing means settling for mediocrity.”",
+    "truth": "It means accepting the market return minus a very small cost. Historically that has beaten the majority of active funds over long periods."
+   }
+  ],
+  "application": [
+   "Building a low cost core portfolio.",
+   "Deciding where active management is worth paying for and where it is not."
+  ],
+  "related": [
+   "index-funds",
+   "etf",
+   "cost-of-investing",
+   "tracking-error"
+  ],
+  "prereq": [
+   "index-funds"
+  ],
+  "next": [
+   "dividend-investing"
+  ]
+ },
+ {
+  "id": "dividend-investing",
+  "title": "Dividend Investing",
+  "domain": "investments",
+  "category": "strategies",
+  "subcategory": "Dividend Investing",
+  "level": "Core",
+  "oneLine": "Investing for regular distributions rather than for price appreciation, with a trap built into the arithmetic.",
+  "what": "Dividend investing selects companies that distribute a meaningful and preferably growing share of profits as cash. The appeal is income that arrives without selling anything, and the discipline that paying cash imposes on management. The central risk is that dividend yield rises when the price falls, so the highest yields frequently signal expected trouble.",
+  "simple": "A company paying you cash regularly is attractive. A company with an unusually high yield is often one the market expects to cut it.",
+  "formula": {
+   "main": "Dividend yield = Dividend per share ÷ Share price × 100",
+   "others": [
+    {
+     "label": "Payout ratio",
+     "expr": "Dividend per share ÷ Earnings per share"
+    }
+   ]
+  },
+  "example": {
+   "setup": "A share pays ₹20 in dividends. Its price falls from ₹500 to ₹250 on poor results.",
+   "steps": [
+    "Yield at ₹500 = 20 ÷ 500 = 4 percent",
+    "Yield at ₹250 = 20 ÷ 250 = 8 percent",
+    "The yield doubled because the price halved, not because anything improved"
+   ],
+   "result": "Yield rose from 4 to 8 percent",
+   "note": "Screening for the highest yields systematically selects for exactly this situation. The dividend is frequently cut soon afterwards."
+  },
+  "interpretation": "A dividend is not free money. The company's value falls by roughly the amount distributed. The genuine benefits are the discipline imposed on management and the reduced need to sell holdings for income.",
+  "misconceptions": [
+   {
+    "claim": "“High dividend yield means a good investment.”",
+    "truth": "It often means the price has fallen for a reason the market has already identified."
+   },
+   {
+    "claim": "“Dividends are additional to returns.”",
+    "truth": "They are part of total return, not an addition to it. A rupee paid out is a rupee no longer in the business."
+   }
+  ],
+  "application": [
+   "Building income without needing to sell holdings.",
+   "Checking whether a high yield is sustainable from cash flow."
+  ],
+  "related": [
+   "dividend-policy",
+   "equity",
+   "financial-ratios",
+   "free-cash-flow"
+  ],
+  "prereq": [
+   "dividend-policy"
+  ],
+  "next": []
+ }
+]
