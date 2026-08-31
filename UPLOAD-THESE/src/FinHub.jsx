@@ -135,7 +135,7 @@ const DOMAINS = [
 
   { id: 'intelligence', icon: 'intelligence', name: 'Financial Intelligence',
     kicker: 'Reading the ecosystem',
-    blurb: 'How companies, markets, institutions and policy move each other.', route: '#/graph' },
+    blurb: 'How a single change moves through banks, lenders, firms and prices.', route: '#/intelligence' },
 
   { id: 'visualisations', icon: 'visualisations', name: 'Financial Visualisations',
     kicker: 'Structure made visible',
@@ -2722,6 +2722,100 @@ button[disabled] .sym{opacity:.4}
   .toast,.execbar,.rev,.sim-insight{animation:none}
 }
 
+/* ---- financial intelligence ---- */
+.fi-picker{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-bottom:34px}
+@media(max-width:860px){.fi-picker{grid-template-columns:minmax(0,1fr)}}
+.fi-card{text-align:left;padding:20px 22px;border:1px solid var(--line);border-radius:16px;
+  background:var(--surface);display:grid;gap:8px;transition:.28s cubic-bezier(.2,.7,.3,1);
+  box-shadow:var(--shadow)}
+.fi-card:hover{border-color:var(--teal);transform:translateY(-2px)}
+.fi-card.on{border-color:var(--teal);background:var(--teal-soft)}
+.fi-card-t{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--teal)}
+.fi-card-h{font-family:var(--serif);font-size:19px;font-weight:600;line-height:1.3;color:var(--text)}
+.fi-card-n{font-family:var(--mono);font-size:11.5px;color:var(--faint)}
+
+.fi-chain{border:1px solid var(--line);border-radius:20px;background:var(--surface);
+  padding:28px;box-shadow:var(--shadow)}
+@media(max-width:600px){.fi-chain{padding:20px 16px}}
+.fi-chain-head{display:flex;flex-wrap:wrap;gap:18px;justify-content:space-between;align-items:flex-start}
+.fi-ctl{display:flex;gap:8px}
+
+.fi-map{margin:26px 0 8px;border-radius:16px;background:
+  radial-gradient(120% 90% at 50% 0%,var(--surface-2),var(--surface));
+  border:1px solid var(--line);overflow:hidden}
+.fi-svg{display:block;width:100%;height:auto;aspect-ratio:1.9/1;overflow:visible}
+@media(max-width:640px){.fi-svg{aspect-ratio:1.05/1}}
+.fi-link{fill:none;stroke:var(--line);stroke-width:.45;transition:stroke .5s ease,stroke-width .5s ease}
+.fi-link.on{stroke:var(--teal);stroke-width:.6}
+.fi-pulse{fill:var(--amber)}
+.fi-node{cursor:pointer}
+.fi-node:focus{outline:none}
+.fi-disc{fill:var(--surface);stroke:var(--line);stroke-width:.5;transition:.45s cubic-bezier(.2,.7,.3,1)}
+.fi-node.on .fi-disc{fill:var(--teal);stroke:var(--teal)}
+.fi-node.cur .fi-disc{fill:var(--amber);stroke:var(--amber)}
+.fi-halo{fill:var(--amber);opacity:.14;animation:fiHalo 2s ease-in-out infinite}
+@keyframes fiHalo{0%,100%{r:6.2;opacity:.14}50%{r:7.4;opacity:.05}}
+.fi-label{fill:var(--faint);font-size:2.5px;font-family:var(--sans);transition:fill .4s}
+.fi-node.on .fi-label{fill:var(--muted)}
+.fi-node.cur .fi-label{fill:var(--text);font-weight:700}
+.fi-node:hover .fi-label{fill:var(--text)}
+.fi-node:focus-visible .fi-disc{stroke:var(--text);stroke-width:1}
+
+.fi-track{display:flex;gap:6px;margin:18px 0 22px}
+.fi-pip{flex:1;height:5px;border-radius:3px;background:var(--line);padding:0;
+  transition:background .35s ease}
+.fi-pip.on{background:var(--teal)}
+.fi-pip.cur{background:var(--amber)}
+.fi-pip:hover{background:var(--muted)}
+
+.fi-step{display:grid;grid-template-columns:104px minmax(0,1fr);gap:22px;
+  padding:24px;border-radius:14px;background:var(--surface-2);
+  animation:fadeUp .45s cubic-bezier(.2,.7,.3,1) both}
+@media(max-width:600px){.fi-step{grid-template-columns:minmax(0,1fr);gap:14px;padding:18px}}
+.fi-step-meta{display:grid;gap:8px;align-content:start}
+.fi-n{font-family:var(--mono);font-size:26px;font-weight:700;color:var(--teal);line-height:1}
+.fi-lag{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--faint);line-height:1.4}
+.fi-where{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--amber);margin-bottom:6px}
+.fi-head{font-family:var(--serif);font-size:22px;font-weight:600;letter-spacing:-.02em;line-height:1.25}
+
+/* sensitivity grid */
+.fi-grid{margin-top:34px}
+.fi-forces{display:flex;gap:8px;overflow-x:auto;padding-bottom:16px;margin-bottom:20px;scrollbar-width:none}
+.fi-forces::-webkit-scrollbar{display:none}
+.fi-forces .tab{flex:0 0 auto}
+.fi-rows{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--surface)}
+.fi-row{border-bottom:1px solid var(--line)}
+.fi-row:last-child{border-bottom:0}
+.fi-row-b{display:grid;grid-template-columns:150px minmax(0,1fr) 140px;gap:18px;align-items:center;
+  width:100%;text-align:left;padding:15px 18px;min-height:62px;transition:background .2s}
+.fi-row-b:hover{background:var(--surface-2)}
+.fi-row.open .fi-row-b{background:var(--surface-2)}
+@media(max-width:700px){.fi-row-b{grid-template-columns:minmax(0,1fr) 118px;gap:10px}
+  .fi-bar{grid-column:1 / -1;order:3}}
+.fi-sector{font-size:15.5px;font-weight:600;color:var(--text)}
+.fi-bar{position:relative;height:16px;background:var(--surface-2);border-radius:4px;overflow:hidden}
+.fi-row-b:hover .fi-bar,.fi-row.open .fi-bar{background:var(--bg)}
+.fi-zero{position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--line)}
+.fi-fill{position:absolute;top:2px;bottom:2px;border-radius:3px;
+  transition:width .6s cubic-bezier(.3,.8,.3,1)}
+.fi-fill.pos{background:var(--teal)}
+.fi-fill.neg{background:var(--rose)}
+.fi-fill.flat{background:var(--faint);opacity:.4}
+.fi-verdict{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;
+  font-weight:700;text-align:right}
+.fi-verdict.pos{color:var(--teal)}
+.fi-verdict.neg{color:var(--rose)}
+.fi-verdict.flat{color:var(--faint)}
+.fi-why{padding:0 18px 18px;font-size:15.5px;line-height:1.65;color:var(--text);max-width:70ch;
+  animation:fadeUp .35s ease both}
+@media(prefers-reduced-motion:reduce){
+  .fi-halo{animation:none}.fi-step,.fi-why{animation:none}
+  .fi-fill,.fi-disc,.fi-link{transition:none}
+}
+
 .foot{border-top:1px solid var(--line);padding:44px 0 60px;color:var(--faint);font-size:13.5px}
 .foot a:hover{color:var(--teal)}
 `;
@@ -3415,7 +3509,7 @@ function ConceptGraph({ id }) {
    =========================================================================== */
 
 const NAV = [
-  ["Universe", "#/universe"], ["Origins", "#/origins"], ["History", "#/history"], ["Data", "#/data"], ["Tax", "#/tax"], ["Simulator", "#/floor"], ["Telemetry", "#/telemetry"], ["Concepts", "#/concepts"], ["Cases", "#/cases"],
+  ["Universe", "#/universe"], ["Origins", "#/origins"], ["History", "#/history"], ["Data", "#/data"], ["Tax", "#/tax"], ["Intelligence", "#/intelligence"], ["Simulator", "#/floor"], ["Telemetry", "#/telemetry"], ["Concepts", "#/concepts"], ["Cases", "#/cases"],
   ["Scenarios", "#/scenarios"], ["Glossary", "#/glossary"], ["Tools", "#/tools"],
 ];
 
@@ -7486,6 +7580,428 @@ function SimulatorPage() {
   );
 }
 
+/* ===========================================================================
+   FINANCIAL INTELLIGENCE
+   Concepts explain what something is. Cases show what happened. This layer
+   shows how force travels: which institution it reaches first, what changes
+   there, how long it takes, and why the same shock helps one business and
+   damages another.
+
+   Nothing here is a forecast. Every chain is a documented transmission
+   mechanism, and the direction is far more reliable than the magnitude.
+   =========================================================================== */
+
+const FI_NODES = {
+  rbi:      { name: "Central bank",        sub: "Sets the policy rate",            x: 50,  y: 14 },
+  markets:  { name: "Money markets",       sub: "Overnight funding",               x: 50,  y: 30 },
+  banks:    { name: "Commercial banks",    sub: "Deposits and lending",            x: 22,  y: 46 },
+  nbfc:     { name: "NBFCs",               sub: "Market funded lenders",           x: 50,  y: 46 },
+  bonds:    { name: "Bond market",         sub: "Yields across maturities",        x: 78,  y: 46 },
+  firms:    { name: "Companies",           sub: "Borrow to invest",                x: 22,  y: 64 },
+  house:    { name: "Households",          sub: "Loans and deposits",              x: 50,  y: 64 },
+  equity:   { name: "Equity market",       sub: "Valuations and flows",            x: 78,  y: 64 },
+  economy:  { name: "Demand and prices",   sub: "Where policy is aimed",           x: 50,  y: 84 },
+  fx:       { name: "Currency",            sub: "Rupee against the dollar",        x: 84,  y: 30 },
+  importers:{ name: "Importers",           sub: "Pay in foreign currency",         x: 22,  y: 30 },
+  exporters:{ name: "Exporters",           sub: "Earn in foreign currency",        x: 84,  y: 84 },
+  oil:      { name: "Crude oil",           sub: "Imported input",                  x: 16,  y: 14 },
+};
+
+const FI_CHAINS = [
+  {
+    id: "rate-rise",
+    title: "The central bank raises the policy rate",
+    tag: "Monetary policy",
+    intro: "The most studied transmission chain in finance. Every step is documented, but the lags are long and variable, and the size of each effect is far less predictable than its direction.",
+    steps: [
+      { node: "rbi", lag: "Day one", head: "The policy rate rises",
+        text: "The rate at which banks borrow overnight from the central bank goes up. Nothing else has changed yet.",
+        concept: "monetary-policy" },
+      { node: "markets", lag: "Same day", head: "Overnight funding costs more",
+        text: "Money market rates reprice almost immediately, because this is where the policy rate is directly enforced.",
+        concept: "money-markets" },
+      { node: "bonds", lag: "Same day", head: "Bond prices fall",
+        text: "Existing bonds carry fixed coupons. When buyers demand a higher yield, the only thing that can move is the price. Longer maturities fall furthest.",
+        concept: "bond-pricing" },
+      { node: "banks", lag: "Weeks", head: "Lending rates follow",
+        text: "Banks fund themselves at a higher cost and pass it into loan pricing. Floating rate borrowers feel it first; deposit rates usually lag lending rates.",
+        concept: "commercial-banking" },
+      { node: "nbfc", lag: "Weeks", head: "NBFCs are squeezed harder",
+        text: "They cannot take deposits, so they fund themselves from exactly the market that just repriced. Their margin compresses before a bank's does.",
+        concept: "nbfc" },
+      { node: "firms", lag: "One to two quarters", head: "Projects are deferred",
+        text: "The hurdle rate rises with the cost of capital. Projects that cleared at the old rate no longer clear, and capital spending slows.",
+        concept: "cost-of-capital" },
+      { node: "equity", lag: "Immediate, then gradual", head: "Valuations are marked down",
+        text: "A higher discount rate reduces the present value of future cash flows. Businesses whose value sits furthest in the future fall hardest.",
+        concept: "discount-rate" },
+      { node: "house", lag: "One to two quarters", head: "Households pay more, spend less",
+        text: "EMIs rise on floating rate loans. Discretionary spending falls, while savers eventually earn more on deposits.",
+        concept: "time-value-of-money" },
+      { node: "economy", lag: "Four to eight quarters", head: "Demand cools and inflation eases",
+        text: "This is the intended destination, and it takes the longest to arrive. Whether anyone is better off depends on where inflation settles relative to these higher nominal rates.",
+        concept: "real-return" },
+    ],
+    caveat: "Transmission is incomplete and uneven. Fixed rate borrowers are unaffected until refinancing. Deposit rates typically rise more slowly than lending rates. And a supply driven price shock does not respond to demand suppression at all.",
+  },
+  {
+    id: "rupee-fall",
+    title: "The rupee weakens against the dollar",
+    tag: "Currency",
+    intro: "A currency move is not good or bad in itself. It is a transfer, and who gains depends entirely on which side of the trade a business sits.",
+    steps: [
+      { node: "fx", lag: "Immediate", head: "The rupee depreciates",
+        text: "More rupees are needed for each dollar. Driven by capital flows, rate differentials, trade balances or sentiment.",
+        concept: "foreign-exchange" },
+      { node: "oil", lag: "Immediate", head: "Imported inputs cost more",
+        text: "Crude is priced in dollars. The same barrel now costs more rupees before a single price at the pump changes.",
+        concept: "currency-risk" },
+      { node: "importers", lag: "Weeks", head: "Import bills rise",
+        text: "Anyone paying in foreign currency faces higher costs. Unhedged foreign currency debt becomes larger in rupee terms without a rupee being borrowed.",
+        concept: "currency-risk" },
+      { node: "exporters", lag: "Weeks to months", head: "Exporters gain",
+        text: "The same dollar of revenue converts into more rupees. Margins widen for software services, pharmaceuticals and other export led sectors.",
+        concept: "foreign-exchange" },
+      { node: "economy", lag: "One to two quarters", head: "Imported inflation appears",
+        text: "Higher input costs pass into domestic prices with a lag, most visibly through fuel and anything with imported components.",
+        concept: "inflation" },
+      { node: "rbi", lag: "Two to three quarters", head: "Policy may respond",
+        text: "If depreciation feeds durable inflation, the central bank may tighten, which loops back into the entire rate chain.",
+        concept: "monetary-policy" },
+    ],
+    caveat: "A weaker currency helps exporters only if their costs are domestic. An exporter with imported inputs gains far less than the headline suggests.",
+  },
+  {
+    id: "credit-freeze",
+    title: "A large lender defaults",
+    tag: "Credit",
+    intro: "This chain moves faster than any other, because it runs on confidence rather than on contracts. IL&FS in 2018 followed it almost exactly.",
+    steps: [
+      { node: "nbfc", lag: "Day one", head: "One lender fails to pay",
+        text: "A default is disclosed. The immediate loss is contained, but the information is not.",
+        concept: "credit-risk" },
+      { node: "markets", lag: "Days", head: "Short term funding closes",
+        text: "Lenders stop rolling over commercial paper, not only for the defaulter but for anything that resembles it. Funding is withdrawn from a category, not a company.",
+        concept: "liquidity-risk" },
+      { node: "bonds", lag: "Days", head: "Spreads widen",
+        text: "The price of credit risk rises across the market. Funds holding the paper mark down their holdings, and investors who believed they held a low risk product discover otherwise.",
+        concept: "credit-risk" },
+      { node: "banks", lag: "Weeks", head: "Banks pull back",
+        text: "Exposure limits tighten. Even sound borrowers find credit harder to obtain, because lenders cannot quickly distinguish sound from unsound.",
+        concept: "commercial-banking" },
+      { node: "firms", lag: "One quarter", head: "Real activity slows",
+        text: "Businesses dependent on that credit defer purchases and projects. Sectors funded largely by NBFCs feel it first.",
+        concept: "working-capital" },
+      { node: "economy", lag: "Two to three quarters", head: "Growth is affected",
+        text: "A funding problem has become an output problem, without any underlying asset ever losing its productive value.",
+        concept: "liquidity-risk" },
+    ],
+    caveat: "The speed is the danger. A solvency question becomes a liquidity event within days, and liquidity events do not wait for analysis.",
+  },
+];
+
+/* Which force helps or hurts which sector, and why. */
+const FI_FORCES = [
+  { id: "rates", name: "Interest rates rise" },
+  { id: "rupee", name: "Rupee weakens" },
+  { id: "oil", name: "Crude oil rises" },
+  { id: "inflation", name: "Inflation rises" },
+];
+
+const FI_SECTORS = [
+  { name: "Banks", rates: 1, rupee: 0, oil: 0, inflation: -1,
+    why: { rates: "Lending rates reprice faster than deposit rates, so margins widen before funding costs catch up.",
+           rupee: "Limited direct exposure, though foreign currency borrowers in the loan book become riskier.",
+           oil: "No direct exposure. Indirect, through the credit quality of oil dependent borrowers.",
+           inflation: "Erodes the real value of fixed rate loans already on the book." } },
+  { name: "NBFCs", rates: -2, rupee: 0, oil: 0, inflation: -1,
+    why: { rates: "They fund from markets that reprice immediately, while their loan book reprices slowly. Margin compresses from both ends.",
+           rupee: "Only relevant where funding is raised abroad.",
+           oil: "Indirect, through borrower cash flows in transport and logistics.",
+           inflation: "Raises funding costs and stresses borrower repayment capacity." } },
+  { name: "Information technology", rates: -1, rupee: 2, oil: 0, inflation: 0,
+    why: { rates: "Valuations depend heavily on distant cash flows, so a higher discount rate marks them down sharply.",
+           rupee: "Revenue is earned in dollars while most costs are in rupees. Depreciation flows almost directly to margin.",
+           oil: "Negligible input exposure.",
+           inflation: "Wage inflation matters more than price inflation for this sector." } },
+  { name: "Oil marketing", rates: 0, rupee: -2, oil: -2, inflation: -1,
+    why: { rates: "Moderate, through working capital costs on large inventories.",
+           rupee: "Crude is bought in dollars and sold in rupees. Depreciation squeezes the spread directly.",
+           oil: "The core input cost. Where retail prices are administered, the squeeze is absorbed rather than passed on.",
+           inflation: "Raises operating costs across the distribution network." } },
+  { name: "Infrastructure", rates: -2, rupee: -1, oil: -1, inflation: -1,
+    why: { rates: "Highly leveraged with long gestation. Interest cost rises immediately while revenue does not.",
+           rupee: "Imported equipment and any foreign currency debt become more expensive.",
+           oil: "Fuel and transport are significant construction inputs.",
+           inflation: "Input costs rise on fixed price contracts, compressing margins." } },
+  { name: "Consumer staples", rates: 0, rupee: -1, oil: -1, inflation: -1,
+    why: { rates: "Low leverage and steady demand make this sector relatively insensitive.",
+           rupee: "Imported packaging and some raw materials cost more.",
+           oil: "Packaging and distribution costs are linked to crude derivatives.",
+           inflation: "Margins compress until price increases are passed through, which takes time." } },
+  { name: "Exporters, goods", rates: -1, rupee: 2, oil: -1, inflation: 0,
+    why: { rates: "Working capital costs rise for businesses with long shipping cycles.",
+           rupee: "Foreign earnings convert into more rupees, provided costs remain domestic.",
+           oil: "Freight costs rise with crude.",
+           inflation: "Depends entirely on whether input or output prices rise faster." } },
+  { name: "Real estate", rates: -2, rupee: 0, oil: 0, inflation: 1,
+    why: { rates: "Buyers finance purchases with loans, and developers carry heavy debt. Demand and cost worsen together.",
+           rupee: "Little direct exposure outside imported fittings.",
+           oil: "Indirect, through cement, steel and transport.",
+           inflation: "Physical assets have historically retained value in real terms, though not uniformly." } },
+];
+
+/* ---- the transmission map: nodes, links and a signal that travels ------ */
+function TransmissionMap({ chain, step, onPick }) {
+  const reduced = useReducedMotion();
+  const path = chain.steps.map((s) => s.node);
+  const active = path.slice(0, step + 1);
+  const cur = path[step];
+
+  const links = [];
+  for (let i = 0; i < path.length - 1; i++) links.push([path[i], path[i + 1]]);
+
+  const P = (id) => FI_NODES[id];
+  const shown = Array.from(new Set(path));
+
+  return (
+    <div className="fi-map">
+      <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet" className="fi-svg"
+        role="img" aria-label={`Transmission path for ${chain.title}`}>
+        <defs>
+          <marker id="fi-arrow" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="4" markerHeight="4" orient="auto">
+            <path d="M0 0 L10 5 L0 10 z" fill="var(--teal)" opacity=".55" />
+          </marker>
+        </defs>
+
+        {links.map(([a, b], i) => {
+          const A = P(a), B = P(b);
+          const on = i < step;
+          const live = i === step - 1;
+          const mx = (A.x + B.x) / 2 + (B.y - A.y) * 0.08;
+          const my = (A.y + B.y) / 2 - (B.x - A.x) * 0.08;
+          const d = `M${A.x} ${A.y} Q${mx} ${my} ${B.x} ${B.y}`;
+          return (
+            <g key={i}>
+              <path d={d} className={"fi-link" + (on ? " on" : "")}
+                markerEnd={on ? "url(#fi-arrow)" : undefined} />
+              {live && !reduced && (
+                <circle r="1.1" className="fi-pulse">
+                  <animateMotion dur="1.1s" repeatCount="indefinite" path={d} />
+                </circle>
+              )}
+            </g>
+          );
+        })}
+
+        {shown.map((id) => {
+          const n = P(id);
+          const isActive = active.includes(id);
+          const isCur = id === cur;
+          const i = path.indexOf(id);
+          return (
+            <g key={id} transform={`translate(${n.x} ${n.y})`}
+              className={"fi-node" + (isActive ? " on" : "") + (isCur ? " cur" : "")}
+              tabIndex={0} role="button" aria-label={n.name}
+              onClick={() => onPick(i)}
+              onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onPick(i); } }}>
+              {isCur && <circle r="6.2" className="fi-halo" />}
+              <circle r="3.1" className="fi-disc" />
+              <text y="-4.8" textAnchor="middle" className="fi-label">{n.name}</text>
+            </g>
+          );
+        })}
+      </svg>
+    </div>
+  );
+}
+
+function TransmissionChain({ chain }) {
+  const [step, setStep] = useState(0);
+  const [playing, setPlaying] = useState(false);
+  const timer = useRef(0);
+
+  useEffect(() => {
+    if (!playing) return;
+    timer.current = window.setTimeout(() => {
+      setStep((s) => {
+        if (s >= chain.steps.length - 1) { setPlaying(false); return s; }
+        return s + 1;
+      });
+    }, 2100);
+    return () => clearTimeout(timer.current);
+  }, [playing, step, chain.steps.length]);
+
+  useEffect(() => { setStep(0); setPlaying(false); }, [chain.id]);
+
+  const s = chain.steps[step];
+  const c = conceptById(s.concept);
+
+  return (
+    <div className="fi-chain">
+      <div className="fi-chain-head">
+        <div>
+          <span className="badge aqua">{chain.tag}</span>
+          <h3 style={{ fontSize: 24, marginTop: 12 }}>{chain.title}</h3>
+          <p className="lede" style={{ marginTop: 12, fontSize: 16, maxWidth: "60ch" }}>{chain.intro}</p>
+        </div>
+        <div className="fi-ctl">
+          <button className={"tbtn" + (playing ? " on" : "")}
+            onClick={() => { if (step >= chain.steps.length - 1) setStep(0); setPlaying(!playing); }}>
+            {playing ? "Pause" : "Trace it"}
+          </button>
+          <button className="tbtn" onClick={() => { setPlaying(false); setStep(0); }}>Reset</button>
+        </div>
+      </div>
+
+      <TransmissionMap chain={chain} step={step} onPick={(i) => { setPlaying(false); setStep(i); }} />
+
+      <div className="fi-track" role="tablist" aria-label="Steps">
+        {chain.steps.map((x, i) => (
+          <button key={i} role="tab" aria-selected={i === step}
+            className={"fi-pip" + (i <= step ? " on" : "") + (i === step ? " cur" : "")}
+            onClick={() => { setPlaying(false); setStep(i); }}
+            aria-label={`Step ${i + 1}, ${x.head}`} />
+        ))}
+      </div>
+
+      <div className="fi-step" key={step}>
+        <div className="fi-step-meta">
+          <span className="fi-n">{String(step + 1).padStart(2, "0")}</span>
+          <span className="fi-lag">{s.lag}</span>
+        </div>
+        <div style={{ minWidth: 0 }}>
+          <p className="fi-where">{FI_NODES[s.node].name}</p>
+          <h4 className="fi-head">{s.head}</h4>
+          <p className="body" style={{ marginTop: 10, fontSize: 16.5 }}>{s.text}</p>
+          {c && <a className="chip" href={`#/concept/${c.id}`} style={{ marginTop: 16, display: "inline-flex" }}>
+            {c.title} →</a>}
+        </div>
+      </div>
+
+      <div className="sub" style={{ marginTop: 22, borderLeft: "2px solid var(--amber)" }}>
+        <p className="eyebrow" style={{ marginBottom: 8, color: "var(--amber)" }}>Where this breaks down</p>
+        <p className="body" style={{ fontSize: 15.5 }}>{chain.caveat}</p>
+      </div>
+    </div>
+  );
+}
+
+/* ---- sector sensitivity grid ------------------------------------------ */
+function SensitivityGrid() {
+  const [force, setForce] = useState("rates");
+  const [open, setOpen] = useState(null);
+  const scale = (v) => ["Strongly negative", "Negative", "Broadly neutral", "Positive", "Strongly positive"][v + 2];
+
+  const sorted = [...FI_SECTORS].sort((a, b) => b[force] - a[force]);
+
+  return (
+    <div className="fi-grid">
+      <div className="fi-forces" role="tablist" aria-label="Force">
+        {FI_FORCES.map((f) => (
+          <button key={f.id} role="tab" aria-selected={force === f.id}
+            className={"tab" + (force === f.id ? " on" : "")}
+            onClick={() => { setForce(f.id); setOpen(null); }}>{f.name}</button>
+        ))}
+      </div>
+
+      <div className="fi-rows">
+        {sorted.map((s) => {
+          const v = s[force];
+          const tone = v > 0 ? "pos" : v < 0 ? "neg" : "flat";
+          const w = (Math.abs(v) / 2) * 50;
+          const isOpen = open === s.name;
+          return (
+            <div key={s.name} className={"fi-row " + tone + (isOpen ? " open" : "")}>
+              <button className="fi-row-b" onClick={() => setOpen(isOpen ? null : s.name)}
+                aria-expanded={isOpen}>
+                <span className="fi-sector">{s.name}</span>
+                <span className="fi-bar">
+                  <span className="fi-zero" />
+                  <span className={"fi-fill " + tone}
+                    style={{ width: `${w}%`, [v >= 0 ? "left" : "right"]: "50%" }} />
+                </span>
+                <span className={"fi-verdict " + tone}>{scale(v)}</span>
+              </button>
+              {isOpen && <p className="fi-why">{s.why[force]}</p>}
+            </div>
+          );
+        })}
+      </div>
+
+      <p className="small" style={{ marginTop: 18, maxWidth: "64ch" }}>
+        Direction reflects the dominant documented mechanism for each sector, not a prediction.
+        Individual companies within a sector differ, sometimes completely, depending on hedging,
+        leverage and where their costs are incurred. Select any row to see the mechanism.
+      </p>
+    </div>
+  );
+}
+
+function IntelligencePage() {
+  const [chainId, setChainId] = useState(FI_CHAINS[0].id);
+  const chain = FI_CHAINS.find((c) => c.id === chainId);
+
+  return (
+    <>
+      <Crumbs items={[["FinHub", "#/"], ["Financial intelligence"]]} />
+      <div className="wrap">
+        <Reveal><p className="kicker">How force travels</p></Reveal>
+        <Reveal delay={60}><h1 className="h-page" style={{ marginTop: 12 }}>Financial Intelligence</h1></Reveal>
+        <Reveal delay={120}>
+          <p className="lede" style={{ marginTop: 18, maxWidth: "64ch" }}>
+            A concept tells you what something is. A case tells you what happened. This layer shows
+            how a single change moves through the system: which institution it reaches first, what
+            changes there, how long it takes, and why the same shock lifts one business and damages
+            another.
+          </p>
+        </Reveal>
+      </div>
+
+      <div className="wrap" style={{ paddingTop: 44, paddingBottom: 40 }}>
+        <Reveal>
+          <div className="fi-picker" role="tablist" aria-label="Transmission chain">
+            {FI_CHAINS.map((c) => (
+              <button key={c.id} role="tab" aria-selected={chainId === c.id}
+                className={"fi-card" + (chainId === c.id ? " on" : "")}
+                onClick={() => setChainId(c.id)}>
+                <span className="fi-card-t">{c.tag}</span>
+                <span className="fi-card-h">{c.title}</span>
+                <span className="fi-card-n">{c.steps.length} steps</span>
+              </button>
+            ))}
+          </div>
+        </Reveal>
+
+        <Reveal delay={80}><TransmissionChain chain={chain} key={chain.id} /></Reveal>
+      </div>
+
+      <div className="wrap" style={{ paddingBottom: 100 }}>
+        <Reveal>
+          <div className="scene-head" style={{ marginTop: 40 }}>
+            <p className="eyebrow">Sector sensitivity</p>
+            <h2 className="h-scene" style={{ marginTop: 14 }}>The same force, opposite outcomes</h2>
+            <p className="lede" style={{ marginTop: 16, maxWidth: "58ch" }}>
+              A rate rise is not simply bad for business. It widens bank margins and squeezes NBFCs
+              in the same week. Choose a force and see who stands where.
+            </p>
+          </div>
+        </Reveal>
+        <Reveal delay={90}><SensitivityGrid /></Reveal>
+
+        <Reveal>
+          <div className="chips" style={{ marginTop: 36 }}>
+            <a className="chip" href="#/scenarios">Scenario analysis →</a>
+            <a className="chip" href="#/graph">Knowledge graph →</a>
+            <a className="chip" href="#/case/ilfs-2018">IL&amp;FS, the credit chain in reality →</a>
+          </div>
+        </Reveal>
+      </div>
+    </>
+  );
+}
+
 function NotFound() {
   return (
     <div className="wrap-n" style={{ padding: "90px 20px 120px" }}>
@@ -7568,6 +8084,7 @@ export default function FinHub() {
     case "history": view = <MarketHistoryPage />; break;
     case "origins": view = <OriginsPage data={origins} />; break;
     case "graph": view = <GraphPage />; break;
+    case "intelligence": view = <IntelligencePage />; break;
     case "data": view = <MarketDataPage />; break;
     case "tax": view = <TaxPage />; break;
     case "floor": view = <SimulatorPage />; break;
