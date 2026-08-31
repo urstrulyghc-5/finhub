@@ -1,0 +1,1287 @@
+[
+ {
+  "id": "underlying-asset",
+  "title": "The Underlying Asset",
+  "domain": "derivatives",
+  "category": "foundations",
+  "subcategory": "Underlying Asset",
+  "level": "Core",
+  "oneLine": "The thing a derivative refers to, which it never actually gives you.",
+  "what": "The underlying is the asset, rate or index from which a derivative takes its value. It may be a share, an index, a commodity, a currency or an interest rate. The derivative contract references it without conferring ownership of it, which is the entire point: exposure is separated from possession.",
+  "simple": "A contract on gold is not gold. It moves with gold and it is not gold.",
+  "why": "Every property of a derivative traces back to its underlying. Volatility, contract size, settlement method and the risks involved are all inherited from what the contract points at.",
+  "components": [
+   {
+    "k": "Cash settled",
+    "v": "The difference in value is exchanged. No commodity or share changes hands."
+   },
+   {
+    "k": "Physically settled",
+    "v": "The underlying is actually delivered at expiry, common in some commodity contracts."
+   },
+   {
+    "k": "Reference rate",
+    "v": "For interest rate derivatives, a published rate rather than a tangible asset."
+   },
+   {
+    "k": "Basket or index",
+    "v": "Where the underlying is a defined group rather than a single asset."
+   }
+  ],
+  "misconceptions": [
+   {
+    "claim": "“Buying a gold future means owning gold.”",
+    "truth": "It means holding a contract whose value tracks gold. Most such contracts are closed before delivery and settled in cash."
+   }
+  ],
+  "application": [
+   "Understanding what a contract actually obliges you to do at expiry.",
+   "Recognising why a derivative can move differently from its underlying."
+  ],
+  "related": [
+   "derivative",
+   "futures",
+   "options",
+   "contract-specifications"
+  ],
+  "prereq": [
+   "derivative"
+  ],
+  "next": [
+   "contract-specifications"
+  ]
+ },
+ {
+  "id": "contract-specifications",
+  "title": "Contract Specifications",
+  "domain": "derivatives",
+  "category": "foundations",
+  "subcategory": "Contract Specifications",
+  "level": "Core",
+  "oneLine": "The exact terms that make a contract standardised, and that decide how much money is at stake.",
+  "what": "Contract specifications are the exchange defined terms of a derivative: the underlying, the contract size or lot, the tick size, the expiry date, the settlement method and the trading hours. Standardisation is what allows exchange trading, because two parties who have never met can transact identical terms.",
+  "simple": "Everyone trading that contract is trading exactly the same thing. That is what makes it possible to trade it with a stranger.",
+  "why": "Specifications determine the real size of a position. A trader who thinks in points rather than in lot value routinely misjudges exposure by a factor of a hundred.",
+  "components": [
+   {
+    "k": "Lot size",
+    "v": "Units of underlying per contract. Multiplies every price move."
+   },
+   {
+    "k": "Tick size",
+    "v": "The smallest permitted price increment."
+   },
+   {
+    "k": "Tick value",
+    "v": "Lot size multiplied by tick size, meaning the rupee value of one minimum move."
+   },
+   {
+    "k": "Expiry",
+    "v": "The date the contract ceases to exist."
+   }
+  ],
+  "example": {
+   "setup": "A gold contract with a lot of 100 and a tick of ₹1. A silver contract with a lot of 30 and a tick of ₹1.",
+   "steps": [
+    "Gold: one tick = 1 × 100 = ₹100",
+    "Silver: one tick = 1 × 30 = ₹30",
+    "A hundred rupee move: gold ₹10,000, silver ₹3,000"
+   ],
+   "result": "₹100 against ₹30 per tick",
+   "note": "The same rupee movement in price means very different amounts of money, purely because of contract size."
+  },
+  "misconceptions": [
+   {
+    "claim": "“A cheaper contract is a smaller position.”",
+    "truth": "Position size is lot multiplied by price, not price alone. A low priced contract with a large lot can carry more exposure than a high priced one."
+   }
+  ],
+  "application": [
+   "Calculating true position size before trading.",
+   "Comparing risk across different contracts."
+  ],
+  "related": [
+   "lot-size",
+   "futures",
+   "margin",
+   "underlying-asset"
+  ],
+  "prereq": [
+   "derivative"
+  ],
+  "next": [
+   "lot-size",
+   "margin"
+  ]
+ },
+ {
+  "id": "lot-size",
+  "title": "Contract Size and Lot Size",
+  "domain": "derivatives",
+  "category": "futures",
+  "subcategory": "Contract Size & Lot Size",
+  "level": "Core",
+  "oneLine": "The multiplier that turns a price movement into a rupee amount.",
+  "what": "Lot size is the number of units of the underlying represented by one contract. It is fixed by the exchange and cannot be varied by the trader, which means positions can only be taken in whole multiples. It is the single most important number for understanding how much money a position actually involves.",
+  "simple": "You are never trading one unit. You are trading a lot, and the lot decides how big your position really is.",
+  "formula": {
+   "main": "Contract value = Lot size × Price",
+   "others": [
+    {
+     "label": "Profit or loss",
+     "expr": "(Exit price − Entry price) × Lot size × Number of lots"
+    }
+   ]
+  },
+  "example": {
+   "setup": "An index future at 24,000 with a lot size of 75, one lot bought, and the index rises 80 points.",
+   "steps": [
+    "Contract value = 24,000 × 75 = ₹18,00,000",
+    "Profit = 80 × 75 = ₹6,000",
+    "As a share of contract value = 0.33 percent"
+   ],
+   "result": "₹6,000 on a ₹18,00,000 position",
+   "note": "The trader may have committed only around ₹2,20,000 as margin. The same ₹6,000 is 2.7 percent of that, which is where leverage comes from."
+  },
+  "interpretation": "Lot size is why derivatives feel larger than expected. A position that sounds modest in index points is a substantial sum in rupees, and the account moves accordingly.",
+  "misconceptions": [
+   {
+    "claim": "“I only bought one contract, so my risk is small.”",
+    "truth": "One contract of a large lot size can carry exposure of many lakhs. Always compute contract value before deciding."
+   }
+  ],
+  "application": [
+   "Sizing a position against the capital available.",
+   "Comparing exposure across contracts with different lots."
+  ],
+  "related": [
+   "contract-specifications",
+   "futures",
+   "margin",
+   "position-sizing"
+  ],
+  "prereq": [
+   "contract-specifications"
+  ],
+  "next": [
+   "margin"
+  ]
+ },
+ {
+  "id": "margin",
+  "title": "Margin",
+  "domain": "derivatives",
+  "category": "foundations",
+  "subcategory": "Margin",
+  "level": "Core",
+  "oneLine": "Collateral posted against a position, not the price of it, and not a limit on what can be lost.",
+  "what": "Margin is money deposited with the broker or clearing house to cover potential loss on a derivative position. Initial margin is required to open the position. Maintenance margin is the level below which the account must be topped up. Because only margin is posted rather than full contract value, derivatives carry leverage by design.",
+  "simple": "You are not paying for the contract. You are placing a deposit against the possibility of losing on it.",
+  "why": "The distinction between margin and cost is where most derivative losses begin. Margin is not the maximum loss, and a position moving against you can require more money than was originally committed.",
+  "formula": {
+   "main": "Initial margin = Contract value × Margin percentage",
+   "others": [
+    {
+     "label": "Leverage",
+     "expr": "Contract value ÷ Margin"
+    },
+    {
+     "label": "Move that exhausts margin",
+     "expr": "Margin ÷ (Lot size × Lots)"
+    }
+   ]
+  },
+  "example": {
+   "setup": "An index future at 24,000, lot size 75, margin requirement 12 percent.",
+   "steps": [
+    "Contract value = 24,000 × 75 = ₹18,00,000",
+    "Margin = 18,00,000 × 0.12 = ₹2,16,000",
+    "Leverage = 18,00,000 ÷ 2,16,000 = 8.3 times",
+    "Margin is exhausted after a fall of 2,16,000 ÷ 75 = 2,880 points, or 12 percent"
+   ],
+   "result": "8.3 times leverage; 12 percent wipes out the margin",
+   "note": "A 12 percent adverse move removes the entire deposit. Beyond that, further money is owed rather than simply lost."
+  },
+  "misconceptions": [
+   {
+    "claim": "“Margin is the most I can lose.”",
+    "truth": "It is collateral, not a cap. If the position moves further against you, a margin call requires more funds and losses continue."
+   },
+   {
+    "claim": "“Low margin means low risk.”",
+    "truth": "Low margin means high leverage, which is the opposite. The risk is set by contract value, not by the deposit."
+   }
+  ],
+  "application": [
+   "Calculating true leverage before opening a position.",
+   "Working out the price at which a margin call arrives."
+  ],
+  "related": [
+   "futures",
+   "lot-size",
+   "leverage",
+   "mark-to-market"
+  ],
+  "prereq": [
+   "futures"
+  ],
+  "next": [
+   "mark-to-market"
+  ]
+ },
+ {
+  "id": "mark-to-market",
+  "title": "Mark to Market",
+  "domain": "derivatives",
+  "category": "futures",
+  "subcategory": "Mark to Market",
+  "level": "Core",
+  "oneLine": "Daily settlement of gains and losses in cash, so that no unpaid obligation accumulates.",
+  "what": "Mark to market is the daily process of revaluing open futures positions at the closing price and settling the difference in cash. Gains are credited and losses debited each day. This prevents losses building up unrecognised, and it is the mechanism that makes exchange traded futures safe for the clearing house.",
+  "simple": "Your losses are collected every evening rather than waiting until the end. That is why futures rarely leave anyone owing a fortune to a stranger.",
+  "why": "Mark to market converts credit risk into liquidity risk. The clearing house is protected because nothing goes unpaid overnight, but the trader must have cash available every single day.",
+  "example": {
+   "setup": "A futures position bought at 24,000, lot size 75, with margin of ₹2,16,000. The price closes at 23,700, then 23,500.",
+   "steps": [
+    "Day one: (23,700 − 24,000) × 75 = −₹22,500 debited",
+    "Day two: (23,500 − 23,700) × 75 = −₹15,000 debited",
+    "Margin remaining = 2,16,000 − 37,500 = ₹1,78,500"
+   ],
+   "result": "₹37,500 paid out over two days",
+   "note": "The position is still open. That money has already left the account, and if margin falls below the maintenance level a call arrives for more."
+  },
+  "interpretation": "This is why a trader can be right about direction and still be forced out. The market only has to move against you long enough for the daily cash demands to exceed what you have.",
+  "misconceptions": [
+   {
+    "claim": "“A loss is not real until I close the position.”",
+    "truth": "In futures, it is settled in cash daily. The money is genuinely gone whether or not the position is closed."
+   }
+  ],
+  "application": [
+   "Planning cash availability, not just margin, before taking a position.",
+   "Understanding why leveraged positions fail on timing rather than on direction."
+  ],
+  "related": [
+   "margin",
+   "futures",
+   "liquidity-risk",
+   "basis"
+  ],
+  "prereq": [
+   "margin"
+  ],
+  "next": [
+   "basis"
+  ]
+ },
+ {
+  "id": "forwards",
+  "title": "Forwards",
+  "domain": "derivatives",
+  "category": "futures",
+  "subcategory": "Forwards",
+  "level": "Core",
+  "oneLine": "A private agreement to transact later at a price fixed now, with no exchange standing between the parties.",
+  "what": "A forward contract is a bilateral agreement to buy or sell an asset at a specified price on a future date. Unlike futures, forwards are not standardised or exchange traded. Terms are negotiated directly, which allows precise customisation and leaves each party exposed to the other's ability to perform.",
+  "simple": "A private deal. You get exactly the terms you want, and no one guarantees the other side will honour it.",
+  "components": [
+   {
+    "k": "Customised terms",
+    "v": "Quantity, date and price are negotiated to fit the actual exposure."
+   },
+   {
+    "k": "Counterparty risk",
+    "v": "No clearing house stands between the parties."
+   },
+   {
+    "k": "No daily settlement",
+    "v": "Gains and losses accumulate until the settlement date."
+   },
+   {
+    "k": "Illiquidity",
+    "v": "There is no market to exit into. The contract is generally held to maturity."
+   }
+  ],
+  "interpretation": "Forwards and futures answer the same need differently. A forward fits the exposure exactly and carries credit risk. A future fits approximately and removes it.",
+  "misconceptions": [
+   {
+    "claim": "“Forwards and futures are the same thing.”",
+    "truth": "Economically similar, structurally different. The absence of standardisation, daily settlement and a clearing house changes the risk entirely."
+   }
+  ],
+  "application": [
+   "Hedging an exposure whose size and date do not match any listed contract.",
+   "Understanding why exporters often use forwards rather than futures."
+  ],
+  "related": [
+   "futures",
+   "hedging",
+   "credit-risk",
+   "currency-risk"
+  ],
+  "prereq": [
+   "derivative"
+  ],
+  "next": [
+   "futures"
+  ]
+ },
+ {
+  "id": "basis",
+  "title": "Basis",
+  "domain": "derivatives",
+  "category": "futures",
+  "subcategory": "Basis",
+  "level": "Advanced",
+  "oneLine": "The gap between the futures price and the spot price, which must close by expiry.",
+  "what": "Basis is the difference between the spot price of an underlying and the price of its futures contract. It reflects the cost of carrying the asset until expiry: financing, storage and insurance, less any income the asset produces. As expiry approaches the basis narrows toward zero, because at expiry the two prices must converge.",
+  "simple": "A future usually costs slightly more than the thing itself, because someone has to hold the thing until then.",
+  "formula": {
+   "main": "Basis = Spot price − Futures price",
+   "others": [
+    {
+     "label": "Fair futures price",
+     "expr": "F = S × (1 + r − y)ᵗ"
+    }
+   ],
+   "variables": [
+    {
+     "sym": "S",
+     "desc": "Spot price"
+    },
+    {
+     "sym": "r",
+     "desc": "Financing cost"
+    },
+    {
+     "sym": "y",
+     "desc": "Income or convenience yield"
+    },
+    {
+     "sym": "t",
+     "desc": "Time to expiry in years"
+    }
+   ]
+  },
+  "example": {
+   "setup": "Spot at 24,000, financing at 7 percent a year, dividend yield 1.4 percent, three months to expiry.",
+   "steps": [
+    "Net carry = 7 − 1.4 = 5.6 percent a year, or 1.4 percent for the quarter",
+    "Fair futures = 24,000 × 1.014 = 24,336",
+    "Basis = 24,000 − 24,336 = −336"
+   ],
+   "result": "Futures trade about 336 points above spot",
+   "note": "If the actual futures price were 24,600, the gap would exceed carrying cost and an arbitrage would exist until the prices realigned."
+  },
+  "interpretation": "Basis risk is what remains after hedging. A hedge using futures on a related but not identical asset leaves the hedger exposed to changes in the relationship between the two.",
+  "misconceptions": [
+   {
+    "claim": "“A higher futures price means the market expects a rise.”",
+    "truth": "Usually it reflects carrying cost, not a forecast. Convergence at expiry is arithmetic, not prediction."
+   }
+  ],
+  "application": [
+   "Assessing whether a futures price is fair.",
+   "Understanding residual risk in a hedge."
+  ],
+  "related": [
+   "futures",
+   "arbitrage",
+   "hedging",
+   "interest-rates"
+  ],
+  "prereq": [
+   "futures"
+  ],
+  "next": [
+   "arbitrage"
+  ]
+ },
+ {
+  "id": "put-options",
+  "title": "Put Options",
+  "domain": "derivatives",
+  "category": "options",
+  "subcategory": "Put Options",
+  "level": "Core",
+  "oneLine": "The right to sell at a fixed price, which gains value when the underlying falls.",
+  "what": "A put option gives the buyer the right, but not the obligation, to sell the underlying at the strike price on or before expiry. The buyer pays a premium for that right. Puts gain value as the underlying falls, which makes them the standard instrument for protecting a holding against decline.",
+  "simple": "You pay a fee for the right to sell at a set price. If the price collapses, you can still sell at the level you fixed.",
+  "formula": {
+   "main": "Put payoff at expiry = max(Strike − Spot, 0) − Premium",
+   "others": [
+    {
+     "label": "Breakeven",
+     "expr": "Strike − Premium"
+    },
+    {
+     "label": "Maximum loss for a buyer",
+     "expr": "The premium paid"
+    }
+   ]
+  },
+  "example": {
+   "setup": "A put with a strike of 24,000 bought for ₹260, lot size 75. Compare expiry at 23,400 and at 24,300.",
+   "steps": [
+    "At 23,400: max(24,000 − 23,400, 0) = 600. Net = 600 − 260 = ₹340 per unit, or ₹25,500",
+    "At 24,300: max(24,000 − 24,300, 0) = 0. Loss = premium = ₹260 per unit, or ₹19,500",
+    "Breakeven = 24,000 − 260 = 23,740"
+   ],
+   "result": "₹25,500 gain or ₹19,500 loss",
+   "note": "The put only begins to pay below 23,740. A fall to 23,900 is a fall, and still a total loss of premium."
+  },
+  "interpretation": "A put is insurance with a stated cost. As with insurance, most policies expire unused, and the premium spent is the price of not having needed it.",
+  "misconceptions": [
+   {
+    "claim": "“If the market falls, my put makes money.”",
+    "truth": "Only if it falls past the breakeven before expiry. Direction alone is not enough."
+   }
+  ],
+  "application": [
+   "Protecting an existing holding against a fall over a defined period.",
+   "Expressing a bearish view with loss limited to the premium."
+  ],
+  "related": [
+   "options",
+   "strike-premium",
+   "payoff-diagrams",
+   "hedging"
+  ],
+  "prereq": [
+   "options"
+  ],
+  "next": [
+   "strike-premium"
+  ],
+  "sim": "options"
+ },
+ {
+  "id": "strike-premium",
+  "title": "Strike and Premium",
+  "domain": "derivatives",
+  "category": "options",
+  "subcategory": "Strike & Premium",
+  "level": "Core",
+  "oneLine": "The price you fix, and the price you pay to fix it.",
+  "what": "The strike is the price at which an option may be exercised. The premium is what the buyer pays the seller for that right. The relationship between the strike and the current price of the underlying determines whether an option is in the money, at the money or out of the money, and that in turn shapes how much of the premium is intrinsic value and how much is time value.",
+  "simple": "The strike is the deal you are locking in. The premium is what that deal costs.",
+  "components": [
+   {
+    "k": "In the money",
+    "v": "Exercising now would produce value. A call below spot, or a put above it."
+   },
+   {
+    "k": "At the money",
+    "v": "Strike is at or very near the current price."
+   },
+   {
+    "k": "Out of the money",
+    "v": "Exercising now would produce nothing. All of the premium is time value."
+   },
+   {
+    "k": "Moneyness",
+    "v": "The relationship between strike and spot, which drives the premium."
+   }
+  ],
+  "example": {
+   "setup": "Spot at 24,000. A call with a strike of 23,800 costs ₹340. A call with a strike of 24,400 costs ₹95.",
+   "steps": [
+    "23,800 call: intrinsic = 24,000 − 23,800 = 200, time value = 340 − 200 = 140",
+    "24,400 call: intrinsic = 0, time value = 95, the entire premium",
+    "The cheaper option is cheaper because it needs a larger move to be worth anything"
+   ],
+   "result": "₹340 against ₹95",
+   "note": "Cheap options are not better value. They are cheap because the probability of them finishing in the money is lower."
+  },
+  "misconceptions": [
+   {
+    "claim": "“The cheapest option gives the best return.”",
+    "truth": "It requires the largest move to become profitable. Most far out of the money options expire worthless."
+   }
+  ],
+  "application": [
+   "Choosing a strike appropriate to the move you actually expect.",
+   "Understanding why two options on the same underlying cost very differently."
+  ],
+  "related": [
+   "options",
+   "put-options",
+   "intrinsic-time-value",
+   "payoff-diagrams"
+  ],
+  "prereq": [
+   "options"
+  ],
+  "next": [
+   "intrinsic-time-value"
+  ]
+ },
+ {
+  "id": "payoff-diagrams",
+  "title": "Payoff Diagrams",
+  "domain": "derivatives",
+  "category": "options",
+  "subcategory": "Payoff Diagrams",
+  "level": "Core",
+  "oneLine": "A picture of what a position is worth at every possible price, which reveals what words cannot.",
+  "what": "A payoff diagram plots the profit or loss of a position at expiry against the price of the underlying. It shows the breakeven point, the maximum gain and the maximum loss in a single view. For options, whose outcomes bend at the strike rather than moving linearly, the diagram is the clearest way to understand a position.",
+  "simple": "Draw what you make or lose at every price. The shape tells you everything about the position.",
+  "components": [
+   {
+    "k": "The bend",
+    "v": "At the strike, where the payoff changes direction. Linear instruments have no bend."
+   },
+   {
+    "k": "Breakeven",
+    "v": "Where the line crosses zero, which is the strike adjusted for the premium."
+   },
+   {
+    "k": "Floor or ceiling",
+    "v": "Where the payoff stops changing, which is the maximum loss or gain."
+   },
+   {
+    "k": "Asymmetry",
+    "v": "Limited loss with open ended gain for a buyer, and the mirror image for a seller."
+   }
+  ],
+  "interpretation": "The bought call and the sold call are exact mirror images across the horizontal axis. Everything one side gains, the other loses. That symmetry is why sellers collect a premium and carry the larger risk.",
+  "misconceptions": [
+   {
+    "claim": "“Selling options is safer because you receive money upfront.”",
+    "truth": "The diagram shows why not. The seller's maximum gain is the premium, while the potential loss extends far beyond it."
+   }
+  ],
+  "application": [
+   "Understanding a position before entering it.",
+   "Checking whether a strategy's risk is genuinely limited."
+  ],
+  "related": [
+   "options",
+   "put-options",
+   "strike-premium",
+   "derivative-strategies"
+  ],
+  "prereq": [
+   "options"
+  ],
+  "next": [
+   "intrinsic-time-value"
+  ],
+  "sim": "options"
+ },
+ {
+  "id": "intrinsic-time-value",
+  "title": "Intrinsic and Time Value",
+  "domain": "derivatives",
+  "category": "options",
+  "subcategory": "Intrinsic & Time Value",
+  "level": "Intermediate",
+  "oneLine": "What an option is worth now, and what is being paid for the chance that it improves.",
+  "what": "An option premium has two components. Intrinsic value is what the option would be worth if exercised immediately, and it can never be negative. Time value is everything else: the amount paid for the possibility of a favourable move before expiry. Time value decays toward zero as expiry approaches, and the decay accelerates near the end.",
+  "simple": "Part of the price is what it is worth today. The rest is what you are paying for time, and time runs out.",
+  "formula": {
+   "main": "Premium = Intrinsic value + Time value",
+   "others": [
+    {
+     "label": "Call intrinsic",
+     "expr": "max(Spot − Strike, 0)"
+    },
+    {
+     "label": "Put intrinsic",
+     "expr": "max(Strike − Spot, 0)"
+    }
+   ]
+  },
+  "example": {
+   "setup": "Spot at 24,000. A 23,800 call trades at ₹340 with 20 days to expiry, and at ₹215 with 5 days left, spot unchanged.",
+   "steps": [
+    "Intrinsic = 24,000 − 23,800 = 200 in both cases",
+    "Time value at 20 days = 340 − 200 = 140",
+    "Time value at 5 days = 215 − 200 = 15"
+   ],
+   "result": "₹125 of time value lost with no price movement",
+   "note": "The underlying did not move at all. The option holder lost money purely because time passed."
+  },
+  "interpretation": "This is why option buyers can be right about direction and still lose. The move must be large enough and soon enough to outrun the decay.",
+  "misconceptions": [
+   {
+    "claim": "“If the price does not move, nothing happens.”",
+    "truth": "For an option buyer, a stationary price is a slow loss. For a seller it is the source of profit."
+   }
+  ],
+  "application": [
+   "Choosing an expiry that gives a view enough time to work.",
+   "Understanding why options lose value in quiet markets."
+  ],
+  "related": [
+   "options",
+   "strike-premium",
+   "option-greeks",
+   "put-options"
+  ],
+  "prereq": [
+   "strike-premium"
+  ],
+  "next": [
+   "option-greeks"
+  ]
+ },
+ {
+  "id": "option-greeks",
+  "title": "Option Greeks",
+  "domain": "derivatives",
+  "category": "options",
+  "subcategory": "Option Greeks",
+  "level": "Advanced",
+  "oneLine": "Measures of how an option's price responds to each variable that moves it.",
+  "what": "The Greeks quantify the sensitivity of an option's price to individual factors. Delta measures the response to a change in the underlying. Gamma measures how delta itself changes. Theta measures the loss from the passage of time. Vega measures the response to a change in expected volatility. Rho measures sensitivity to interest rates.",
+  "simple": "An option's price is pushed by several forces at once. The Greeks tell you how hard each one is pushing.",
+  "components": [
+   {
+    "k": "Delta",
+    "v": "Change in option price for a one unit move in the underlying. Roughly 0 to 1 for calls, 0 to −1 for puts."
+   },
+   {
+    "k": "Gamma",
+    "v": "How quickly delta changes. Largest near the strike and near expiry, which is where positions become unstable."
+   },
+   {
+    "k": "Theta",
+    "v": "Value lost per day from time passing. Negative for buyers and positive for sellers."
+   },
+   {
+    "k": "Vega",
+    "v": "Change in price for a one point change in implied volatility. Both calls and puts gain when expected volatility rises."
+   }
+  ],
+  "example": {
+   "setup": "A call priced at ₹210 with delta 0.45, theta −₹8 per day, and the underlying rising 60 points overnight.",
+   "steps": [
+    "Move from delta = 0.45 × 60 = +₹27",
+    "Loss from theta = −₹8",
+    "Estimated new price ≈ 210 + 27 − 8 = ₹229"
+   ],
+   "result": "About ₹229",
+   "note": "The estimate is approximate because delta itself changed as the price moved. That change is gamma."
+  },
+  "interpretation": "Delta is often read as a rough probability of finishing in the money. A delta of 0.20 suggests the market prices roughly a one in five chance, which is a more useful way to read an option chain than the premium alone.",
+  "misconceptions": [
+   {
+    "claim": "“If I am right about direction, I profit.”",
+    "truth": "Theta erodes value daily and a fall in implied volatility can reduce the premium even as the underlying moves your way."
+   }
+  ],
+  "application": [
+   "Estimating how a position will respond before the move happens.",
+   "Understanding why a correct view can still lose money."
+  ],
+  "related": [
+   "intrinsic-time-value",
+   "options",
+   "payoff-diagrams",
+   "market-risk"
+  ],
+  "prereq": [
+   "intrinsic-time-value"
+  ],
+  "next": [
+   "derivative-strategies"
+  ]
+ },
+ {
+  "id": "interest-rate-swaps",
+  "title": "Interest Rate Swaps",
+  "domain": "derivatives",
+  "category": "swaps",
+  "subcategory": "Interest Rate Swaps",
+  "level": "Advanced",
+  "oneLine": "Two parties exchanging interest obligations, so each ends up with the kind of rate it prefers.",
+  "what": "An interest rate swap is an agreement to exchange streams of interest payments on an agreed notional amount. Typically one party pays a fixed rate and receives a floating rate while the other does the reverse. The notional is never exchanged. Only the difference between the two payment streams changes hands on each date.",
+  "simple": "You have a floating rate loan and want certainty. Someone else has fixed and wants flexibility. You swap the payments, not the loans.",
+  "why": "A swap lets a borrower change the character of its interest obligation without renegotiating or refinancing the underlying debt. It separates the decision about how to borrow from the decision about what rate exposure to carry.",
+  "example": {
+   "setup": "A company with ₹100 crore of floating rate debt enters a swap to pay 7.4 percent fixed and receive the floating rate.",
+   "steps": [
+    "It pays floating on its loan and receives floating from the swap, and the two offset",
+    "It pays 7.4 percent fixed on the swap",
+    "Its net cost is fixed at 7.4 percent regardless of where rates go"
+   ],
+   "result": "Floating exposure converted to fixed",
+   "note": "The loan was never touched. Only the interest character changed, and the ₹100 crore notional never moved."
+  },
+  "components": [
+   {
+    "k": "Notional",
+    "v": "The reference amount used to calculate payments. Never exchanged."
+   },
+   {
+    "k": "Fixed leg",
+    "v": "A rate agreed at the outset for the life of the swap."
+   },
+   {
+    "k": "Floating leg",
+    "v": "Reset periodically against a reference rate."
+   },
+   {
+    "k": "Net settlement",
+    "v": "Only the difference between the legs is paid on each date."
+   }
+  ],
+  "misconceptions": [
+   {
+    "claim": "“A swap means borrowing money from the counterparty.”",
+    "truth": "No principal changes hands. The notional exists only to size the interest calculation."
+   }
+  ],
+  "application": [
+   "Converting floating rate debt into fixed rate exposure.",
+   "Understanding how firms manage interest rate risk without refinancing."
+  ],
+  "related": [
+   "interest-rates",
+   "currency-swaps",
+   "hedging",
+   "credit-risk"
+  ],
+  "prereq": [
+   "interest-rates"
+  ],
+  "next": [
+   "currency-swaps"
+  ]
+ },
+ {
+  "id": "currency-swaps",
+  "title": "Currency Swaps",
+  "domain": "derivatives",
+  "category": "swaps",
+  "subcategory": "Currency Swaps",
+  "level": "Advanced",
+  "oneLine": "Exchanging payment obligations in two different currencies, usually including the principal.",
+  "what": "A currency swap exchanges interest payments, and normally the principal, denominated in two different currencies. Unlike an interest rate swap, the principal is typically exchanged at the start and returned at the end at an agreed rate. It allows an entity to borrow where it has the best access and end up with an obligation in the currency it actually earns.",
+  "simple": "You can borrow cheaply in dollars but you earn in rupees. A swap turns the dollar obligation into a rupee one.",
+  "example": {
+   "setup": "An Indian company borrows US$10 million at 5 percent and swaps into rupees at ₹84, paying 8.2 percent.",
+   "steps": [
+    "It receives ₹84 crore at the outset and pays back dollars through the swap",
+    "Its obligation is now 8.2 percent in rupees rather than 5 percent in dollars",
+    "If the rupee falls to ₹92, the unhedged cost would have risen sharply. The swap removed that"
+   ],
+   "result": "Currency risk transferred to the counterparty",
+   "note": "The apparent 3.2 percentage point saving from borrowing in dollars was compensation for currency risk. The swap converts that saving into certainty."
+  },
+  "misconceptions": [
+   {
+    "claim": "“Borrowing abroad is cheaper.”",
+    "truth": "The lower rate largely reflects expected currency movement. Once swapped into the home currency, most of the apparent advantage disappears."
+   }
+  ],
+  "application": [
+   "Managing foreign currency debt for a company earning domestically.",
+   "Understanding why the rate differential is not free money."
+  ],
+  "related": [
+   "currency-risk",
+   "interest-rate-swaps",
+   "foreign-exchange",
+   "hedging"
+  ],
+  "prereq": [
+   "currency-risk"
+  ],
+  "next": [
+   "hedging"
+  ]
+ },
+ {
+  "id": "speculation",
+  "title": "Speculation",
+  "domain": "derivatives",
+  "category": "uses",
+  "subcategory": "Speculation",
+  "level": "Core",
+  "oneLine": "Taking risk deliberately in pursuit of return, which is a function markets require and individuals frequently lose at.",
+  "what": "Speculation is taking a position to profit from an expected price movement, without an underlying exposure to offset. It is the counterpart of hedging: a hedger transfers risk and a speculator accepts it. Markets need speculators, because a hedger cannot transfer risk unless someone is willing to take the other side.",
+  "simple": "A hedger is protecting something they already have. A speculator is taking a position purely on a view.",
+  "why": "Speculation provides the liquidity that makes hedging possible. It is a legitimate market function. It is also, at an individual level, an activity where the documented outcomes are poor and the costs are certain.",
+  "realWorld": "Regulatory analysis of individual traders in the equity derivatives segment has found that the large majority incur net losses, and that transaction costs consume a substantial further share of both losses and profits. The disclosure appears on the FinHub simulator for that reason.",
+  "components": [
+   {
+    "k": "Directional view",
+    "v": "A position taken on where a price will go."
+   },
+   {
+    "k": "No offsetting exposure",
+    "v": "Unlike a hedge, there is nothing on the other side to protect."
+   },
+   {
+    "k": "Leverage",
+    "v": "Derivatives allow large exposure from small capital, which magnifies both outcomes."
+   },
+   {
+    "k": "Transaction cost",
+    "v": "Certain, recurring, and independent of whether the view is correct."
+   }
+  ],
+  "misconceptions": [
+   {
+    "claim": "“Speculation is gambling.”",
+    "truth": "It differs in that the risk being taken already exists in the economy and is being transferred rather than created. That distinction does not make individual outcomes any better."
+   }
+  ],
+  "application": [
+   "Understanding why markets need participants willing to take risk.",
+   "Assessing honestly whether an activity is hedging or speculation."
+  ],
+  "related": [
+   "hedging",
+   "arbitrage",
+   "derivative",
+   "market-risk"
+  ],
+  "prereq": [
+   "derivative"
+  ],
+  "next": [
+   "arbitrage"
+  ]
+ },
+ {
+  "id": "arbitrage",
+  "title": "Arbitrage",
+  "domain": "derivatives",
+  "category": "uses",
+  "subcategory": "Arbitrage",
+  "level": "Advanced",
+  "oneLine": "Profiting from the same thing being priced differently in two places, which is what keeps prices consistent.",
+  "what": "Arbitrage is the simultaneous purchase and sale of related assets to profit from a price discrepancy, in principle without net risk. True arbitrage is rare and short lived, because the act of exploiting it removes it. Its economic function is enforcement: arbitrage is the mechanism that keeps related prices in a consistent relationship.",
+  "simple": "If the same thing costs less here than there, buying here and selling there is profit until the prices meet.",
+  "why": "Arbitrage explains why the futures price cannot drift far from spot, why the same share cannot trade at very different prices on two exchanges, and why option prices maintain defined relationships to one another.",
+  "example": {
+   "setup": "Spot at 24,000. Financing costs 1.4 percent for the quarter, so the fair futures price is 24,336. The future actually trades at 24,600.",
+   "steps": [
+    "Sell the future at 24,600 and buy the underlying at 24,000, financed at 1.4 percent",
+    "At expiry the prices converge and the position is closed",
+    "Locked in gain = 24,600 − 24,336 = 264 points before costs"
+   ],
+   "result": "264 points, less transaction costs",
+   "note": "In practice the gap is usually smaller than the cost of exploiting it, which is precisely why it stays small."
+  },
+  "limitations": [
+   "Transaction costs frequently exceed the discrepancy.",
+   "Execution risk, where one leg fills and the other does not.",
+   "Positions described as arbitrage often carry hidden risk, and that assumption has caused major failures."
+  ],
+  "misconceptions": [
+   {
+    "claim": "“Arbitrage is risk free profit.”",
+    "truth": "Textbook arbitrage is. What is practised under that name usually involves financing risk, execution risk or a relationship that can widen before it converges."
+   }
+  ],
+  "application": [
+   "Understanding why futures and spot prices stay linked.",
+   "Recognising when a strategy described as arbitrage is not one."
+  ],
+  "related": [
+   "basis",
+   "futures",
+   "price-discovery",
+   "market-liquidity"
+  ],
+  "prereq": [
+   "basis"
+  ],
+  "next": [
+   "derivative-strategies"
+  ]
+ },
+ {
+  "id": "derivative-strategies",
+  "title": "Derivative Strategies",
+  "domain": "derivatives",
+  "category": "uses",
+  "subcategory": "Derivative Strategies",
+  "level": "Advanced",
+  "oneLine": "Combining positions so that the resulting payoff matches a specific view more precisely than any single contract.",
+  "what": "A derivative strategy combines two or more positions to shape a payoff. Buying one option and selling another with a different strike caps both the cost and the maximum gain. Holding the underlying while selling a call generates income and forfeits upside. Each combination expresses a more specific view than a single position can.",
+  "simple": "One option is a blunt instrument. Combining two lets you say exactly what you think and cap what it costs.",
+  "components": [
+   {
+    "k": "Covered call",
+    "v": "Holding the underlying and selling a call. Income now, upside surrendered above the strike."
+   },
+   {
+    "k": "Protective put",
+    "v": "Holding the underlying and buying a put. A floor beneath the position, paid for with premium."
+   },
+   {
+    "k": "Spread",
+    "v": "Buying one option and selling another. Reduces cost and caps the gain."
+   },
+   {
+    "k": "Straddle",
+    "v": "Buying a call and a put at the same strike. A position on the size of a move rather than its direction."
+   }
+  ],
+  "example": {
+   "setup": "A call spread: buy the 24,000 call at ₹260, sell the 24,400 call at ₹105. Lot size 75.",
+   "steps": [
+    "Net cost = 260 − 105 = ₹155 per unit, or ₹11,625",
+    "Maximum gain = (24,400 − 24,000) − 155 = 245 per unit, or ₹18,375",
+    "Maximum loss = the net premium, ₹11,625. Breakeven = 24,155"
+   ],
+   "result": "Risk ₹11,625 to make at most ₹18,375",
+   "note": "The sold call cut the cost by forty percent and capped the gain. That trade off is the entire purpose of a spread."
+  },
+  "misconceptions": [
+   {
+    "claim": "“More complex strategies are safer.”",
+    "truth": "Complexity narrows the range of outcomes, it does not remove risk. Strategies involving sold options can carry substantial or unlimited loss."
+   }
+  ],
+  "application": [
+   "Expressing a view with a defined maximum cost.",
+   "Generating income from a holding you are content to sell at a known level."
+  ],
+  "related": [
+   "options",
+   "payoff-diagrams",
+   "option-greeks",
+   "hedging"
+  ],
+  "prereq": [
+   "option-greeks"
+  ],
+  "next": [
+   "position-sizing"
+  ],
+  "sim": "options"
+ },
+ {
+  "id": "operational-risk",
+  "title": "Operational Risk",
+  "domain": "derivatives",
+  "category": "risk-types",
+  "subcategory": "Operational Risk",
+  "level": "Core",
+  "oneLine": "Loss from failed processes, systems, people or external events, rather than from any market movement.",
+  "what": "Operational risk is the risk of loss arising from inadequate or failed internal processes, people and systems, or from external events. It includes error, fraud, system failure, legal risk and disruption. Unlike market or credit risk, it is not taken deliberately in exchange for return. It is a cost of operating that must be controlled rather than priced.",
+  "simple": "Nothing moved in the market. Someone entered the wrong number, or a system stopped working.",
+  "why": "Some of the largest single losses in financial history were operational rather than market driven. A trader exceeding limits undetected, a settlement failure, or an order entered with an extra zero can cost more than a market crash.",
+  "components": [
+   {
+    "k": "Process failure",
+    "v": "Reconciliation gaps, settlement errors, inadequate controls."
+   },
+   {
+    "k": "People",
+    "v": "Error, unauthorised activity, concentration of authority without oversight."
+   },
+   {
+    "k": "Systems",
+    "v": "Outages, data loss, failures in trading or risk infrastructure."
+   },
+   {
+    "k": "External events",
+    "v": "Disruption, legal action, third party failure."
+   }
+  ],
+  "interpretation": "Operational risk is uncompensated. Nobody earns a premium for it, which is why it is managed through controls, segregation of duties and audit rather than through pricing.",
+  "misconceptions": [
+   {
+    "claim": "“Operational risk is a small technical matter.”",
+    "truth": "It has produced some of the largest losses ever recorded at individual institutions, several of which caused outright failure."
+   }
+  ],
+  "application": [
+   "Assessing whether an institution's controls match the risks it takes.",
+   "Understanding why segregation of duties exists."
+  ],
+  "related": [
+   "market-risk",
+   "credit-risk",
+   "systemic-risk",
+   "risk-identification"
+  ],
+  "prereq": [
+   "risk-return"
+  ],
+  "next": [
+   "systemic-risk"
+  ]
+ },
+ {
+  "id": "systemic-risk",
+  "title": "Systemic Risk",
+  "domain": "derivatives",
+  "category": "risk-types",
+  "subcategory": "Systemic Risk",
+  "level": "Advanced",
+  "oneLine": "The risk that a failure in one part of the financial system brings down parts that were otherwise sound.",
+  "what": "Systemic risk is the risk of collapse of an entire system rather than of an individual participant. It arises from interconnection, common exposures and confidence. An institution is systemically important when its failure would propagate through the system rather than being absorbed by it.",
+  "simple": "One institution failing is a loss. One institution failing and taking others with it is a different kind of problem.",
+  "components": [
+   {
+    "k": "Interconnection",
+    "v": "Obligations between institutions transmit failure from one to the next."
+   },
+   {
+    "k": "Common exposure",
+    "v": "Many institutions holding the same risk, so they weaken simultaneously."
+   },
+   {
+    "k": "Confidence",
+    "v": "Funding withdraws from a category rather than a company, so sound institutions are affected too."
+   },
+   {
+    "k": "Procyclicality",
+    "v": "Responses that are individually sensible and collectively destabilising, such as everyone selling at once."
+   }
+  ],
+  "realWorld": "In 2018, a single infrastructure lender defaulting in India caused funding to withdraw from non banking lenders as a whole. Firms with entirely different balance sheets faced immediate stress, because lenders could not quickly distinguish between them.",
+  "caseRef": "ilfs-2018",
+  "interpretation": "Systemic risk explains why regulators intervene in cases where a private loss would otherwise be allowed to fall where it lands. The intervention is not about the firm, it is about what happens next.",
+  "misconceptions": [
+   {
+    "claim": "“A well run institution is safe from systemic events.”",
+    "truth": "It is not, because funding withdraws from categories under stress. Being sound does not help if nobody can tell that you are."
+   }
+  ],
+  "application": [
+   "Understanding why regulation focuses on interconnection and capital.",
+   "Recognising why sector wide stress affects individually sound firms."
+  ],
+  "related": [
+   "liquidity-risk",
+   "credit-risk",
+   "operational-risk",
+   "nbfc"
+  ],
+  "prereq": [
+   "liquidity-risk"
+  ],
+  "next": [
+   "stress-testing"
+  ]
+ },
+ {
+  "id": "risk-identification",
+  "title": "Risk Identification",
+  "domain": "derivatives",
+  "category": "risk-mgmt",
+  "subcategory": "Risk Identification",
+  "level": "Core",
+  "oneLine": "Naming what can actually go wrong, which must happen before anything can be measured or managed.",
+  "what": "Risk identification is the systematic process of determining what exposures exist before attempting to quantify or control them. It precedes measurement, because a risk that has not been named cannot be measured, hedged or limited. Most large failures involve a risk that was present, unnamed and therefore unmonitored.",
+  "simple": "You cannot manage what you have not noticed. The first job is to write down what could actually hurt you.",
+  "components": [
+   {
+    "k": "Exposure mapping",
+    "v": "Which positions and obligations exist, and to what they are sensitive."
+   },
+   {
+    "k": "Correlation of risks",
+    "v": "Whether several exposures can fail for the same underlying reason."
+   },
+   {
+    "k": "Second order effects",
+    "v": "What follows from the first loss, such as a funding withdrawal after a mark down."
+   },
+   {
+    "k": "Unknown exposure",
+    "v": "Where the institution does not know what it holds, which is itself the finding."
+   }
+  ],
+  "interpretation": "The pattern in most major failures is not that a risk was mismeasured. It is that a risk was never on the list. Mortgage securities in 2008 were measured carefully for credit risk and never assessed for the possibility that every loan depended on one national factor.",
+  "misconceptions": [
+   {
+    "claim": "“We have a risk model, so risk is managed.”",
+    "truth": "A model quantifies the risks entered into it. It is silent about anything nobody thought to include."
+   }
+  ],
+  "application": [
+   "Listing exposures before sizing positions.",
+   "Testing whether apparently separate risks share a common cause."
+  ],
+  "related": [
+   "value-at-risk",
+   "stress-testing",
+   "position-sizing",
+   "diversification"
+  ],
+  "prereq": [
+   "risk-return"
+  ],
+  "next": [
+   "value-at-risk"
+  ]
+ },
+ {
+  "id": "value-at-risk",
+  "title": "Value at Risk",
+  "domain": "derivatives",
+  "category": "risk-mgmt",
+  "subcategory": "Value at Risk",
+  "level": "Advanced",
+  "oneLine": "An estimate of the loss that will not be exceeded on most days, and a measure that says nothing about the rest.",
+  "what": "Value at Risk estimates the maximum loss expected over a defined period at a stated confidence level. A one day 99 percent VaR of one crore means that on 99 days out of 100 the loss is expected to be smaller than one crore. It is widely used because it reduces complex exposure to a single figure, and widely criticised for exactly the same reason.",
+  "simple": "It tells you what a bad day looks like. It tells you nothing about what a catastrophic day looks like.",
+  "formula": {
+   "main": "VaR = Portfolio value × z × σ × √t",
+   "variables": [
+    {
+     "sym": "z",
+     "desc": "Number of standard deviations for the confidence level, about 2.33 at 99 percent"
+    },
+    {
+     "sym": "σ",
+     "desc": "Daily volatility of returns"
+    },
+    {
+     "sym": "t",
+     "desc": "Holding period in days"
+    }
+   ]
+  },
+  "example": {
+   "setup": "A ₹50 crore portfolio with daily volatility of 1.1 percent, one day horizon, 99 percent confidence.",
+   "steps": [
+    "VaR = 50,00,00,000 × 2.33 × 0.011 × √1",
+    "VaR = ₹1,28,15,000 approximately"
+   ],
+   "result": "About ₹1.28 crore",
+   "note": "This says nothing about the other one percent of days. The loss on those days could be far larger, and VaR does not estimate it."
+  },
+  "limitations": [
+   "It is silent about the size of losses beyond the confidence level, which is where failures occur.",
+   "It usually assumes a distribution that understates the frequency of extreme moves.",
+   "It is calculated from historical data, so it does not anticipate conditions that have not yet occurred."
+  ],
+  "misconceptions": [
+   {
+    "claim": "“VaR is the maximum we can lose.”",
+    "truth": "It is the threshold that is not expected to be exceeded on most days. The days it is exceeded are precisely the ones that matter."
+   }
+  ],
+  "application": [
+   "Setting position limits against a common measure.",
+   "Understanding why VaR must be paired with stress testing."
+  ],
+  "related": [
+   "stress-testing",
+   "portfolio-risk",
+   "market-risk",
+   "risk-identification"
+  ],
+  "prereq": [
+   "portfolio-risk"
+  ],
+  "next": [
+   "stress-testing"
+  ]
+ },
+ {
+  "id": "stress-testing",
+  "title": "Stress Testing",
+  "domain": "derivatives",
+  "category": "risk-mgmt",
+  "subcategory": "Stress Testing",
+  "level": "Advanced",
+  "oneLine": "Asking what happens in a specific severe scenario, rather than what happens on a statistically normal day.",
+  "what": "Stress testing evaluates the effect of severe but plausible scenarios on a portfolio or institution. Unlike Value at Risk, it does not rely on a probability distribution. It asks a direct question: if this specific thing happened, what would we lose, and could we survive it. Scenarios may be historical or hypothetical.",
+  "simple": "Instead of asking what a normal bad day looks like, you ask what happens if a particular disaster occurs.",
+  "why": "Stress testing exists to cover what VaR cannot. Extreme events are rare, so historical distributions understate them. A scenario approach sidesteps probability entirely and examines survival directly.",
+  "components": [
+   {
+    "k": "Historical scenario",
+    "v": "Applying the movements of a past crisis to the current portfolio."
+   },
+   {
+    "k": "Hypothetical scenario",
+    "v": "A constructed shock, such as a specified rate rise combined with currency depreciation."
+   },
+   {
+    "k": "Reverse stress test",
+    "v": "Starting from failure and working backwards to what would cause it."
+   },
+   {
+    "k": "Liquidity stress",
+    "v": "Testing whether obligations could be met, not merely whether the balance sheet survives."
+   }
+  ],
+  "interpretation": "The reverse stress test is often the most valuable. Asking what would have to happen for this institution to fail frequently produces an answer that nobody had written down before.",
+  "misconceptions": [
+   {
+    "claim": "“We passed the stress test, so we are safe.”",
+    "truth": "You survived the scenarios chosen. The scenario nobody imagined is the one that has historically caused failure."
+   }
+  ],
+  "application": [
+   "Testing survival rather than expected loss.",
+   "Identifying the specific combination of events that would be fatal."
+  ],
+  "related": [
+   "value-at-risk",
+   "systemic-risk",
+   "liquidity-risk",
+   "risk-identification"
+  ],
+  "prereq": [
+   "value-at-risk"
+  ],
+  "next": [
+   "position-sizing"
+  ]
+ },
+ {
+  "id": "position-sizing",
+  "title": "Position Sizing",
+  "domain": "derivatives",
+  "category": "risk-mgmt",
+  "subcategory": "Position Sizing",
+  "level": "Core",
+  "oneLine": "Deciding how much to commit, which matters more to survival than deciding what to buy.",
+  "what": "Position sizing determines how much capital is exposed to a single position. It converts a view into an amount. Because losses compound against a shrinking base, sizing has a mathematical property that selection does not: a large enough loss makes recovery arithmetically difficult regardless of what follows.",
+  "simple": "Being right about what to buy matters. Being wrong about how much to buy is what ends accounts.",
+  "formula": {
+   "main": "Position size = Capital at risk ÷ Loss per unit at the exit level",
+   "others": [
+    {
+     "label": "Recovery required after a loss",
+     "expr": "Gain needed = 1 ÷ (1 − loss) − 1"
+    }
+   ]
+  },
+  "example": {
+   "setup": "What gain is needed to recover from losses of different sizes.",
+   "steps": [
+    "A 20 percent loss requires a 25 percent gain to recover",
+    "A 50 percent loss requires a 100 percent gain",
+    "An 80 percent loss requires a 400 percent gain"
+   ],
+   "result": "Recovery becomes disproportionately harder",
+   "note": "This asymmetry is why sizing dominates selection. Avoiding the large loss matters more than capturing the large gain."
+  },
+  "interpretation": "With leveraged instruments, sizing must be calculated from contract value rather than from margin. A position that consumes a modest share of capital as margin can represent many times that in actual exposure.",
+  "misconceptions": [
+   {
+    "claim": "“If I am confident, I should commit more.”",
+    "truth": "Confidence is not accuracy. Sizing should reflect what a wrong outcome would cost, not how certain the view feels."
+   }
+  ],
+  "application": [
+   "Setting a maximum loss per position before entering it.",
+   "Sizing derivative positions from contract value rather than margin."
+  ],
+  "related": [
+   "margin",
+   "lot-size",
+   "portfolio-risk",
+   "risk-identification"
+  ],
+  "prereq": [
+   "margin"
+  ],
+  "next": []
+ }
+]
