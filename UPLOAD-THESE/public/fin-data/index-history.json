@@ -1,13 +1,13 @@
 {
  "asOf": "Compiled 30 August 2026",
- "note": "Three kinds of series are shown here and they are not comparable with one another. The Sensex series is the growth of 100 units invested at the 1979 base, chained from published calendar year returns, so it is an index path rather than a table of year end closes. Gold is an annual reference price per 10 grams of 24 carat metal. Silver is an annual reference price per kilogram. Index points and metal prices measure different things and should be read separately. Missing years are left blank rather than estimated, and 2026 is excluded throughout because the calendar year is incomplete.",
+ "note": "Three different kinds of series appear here and none of them is comparable with another. The Sensex line is the growth of 100 units invested at the 1979 base, chained from published calendar-year returns, so it shows the shape of the journey rather than index points. The actual index closed at 85,220.60 on 31 December 2025. Gold is a price per 10 grams of 24 carat metal and silver a price per kilogram. Missing years are left blank rather than estimated, and 2026 is excluded throughout because the calendar year is incomplete.",
  "series": [
   {
    "id": "sensex",
-   "name": "BSE Sensex, growth of 100 from 1979",
-   "unit": "Index, 1979 base = 100",
+   "name": "BSE Sensex, growth of 100 from the 1979 base",
+   "unit": "Index, 1979 base = 100. This is not a table of year-end closes.",
    "base": "1978-79 = 100",
-   "source": "Calendar-year Sensex returns as published in the BSE returns series; growth path computed from those returns",
+   "source": "Growth path computed from published calendar-year Sensex returns. For reference, the actual Sensex closed at 85,220.60 points on 31 December 2025.",
    "points": [
     {
      "year": 1979,
@@ -204,7 +204,7 @@
    "name": "Gold, annual reference price",
    "unit": "Rupees per 10 grams, 24 carat",
    "base": "Annual reference price, not a year-end close",
-   "source": "Widely published Indian annual gold reference series, 1964 to 2024, as compiled by MMTC-PAMP and reproduced by several Indian financial publishers. 2006 is absent from the published series and is left blank rather than estimated. 2025 is omitted because published sources disagree materially.",
+   "source": "Indian annual gold reference series to 2024; 2025 closing value of ₹1,35,880 per 10 grams as at 31 December 2025, supplied from market reporting.",
    "points": [
     {
      "year": 1964,
@@ -445,6 +445,10 @@
     {
      "year": 2024,
      "close": 77913
+    },
+    {
+     "year": 2025,
+     "close": 135880
     }
    ]
   },
@@ -453,7 +457,7 @@
    "name": "Silver, annual reference price",
    "unit": "Rupees per 1 kilogram",
    "base": "Annual reference price, not a year-end close",
-   "source": "Widely published Indian annual silver reference series, 1981 to 2025. 2026 is excluded because the calendar year is incomplete.",
+   "source": "Indian annual silver reference series; 2025 closing value of ₹2,40,000 per kilogram as at 31 December 2025, supplied from market reporting.",
    "points": [
     {
      "year": 1981,
@@ -633,7 +637,7 @@
     },
     {
      "year": 2025,
-     "close": 239000
+     "close": 240000
     }
    ]
   }
@@ -743,6 +747,11 @@
    "year": 2025,
    "label": "The silver repricing",
    "note": "Silver rose about 120 percent in the year as industrial demand from solar and electronics met constrained supply."
+  },
+  {
+   "year": 2025,
+   "label": "The metals repricing",
+   "note": "Gold closed at ₹1,35,880 per 10 grams and silver at ₹2,40,000 per kilogram, both after exceptional years."
   }
  ]
 }
