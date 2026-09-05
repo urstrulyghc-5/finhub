@@ -161,6 +161,2328 @@ const DOMAINS = [
 
 const CONCEPTS = [
   {
+    id: "present-future-value",
+    title: "Present and Future Value",
+    domain: "fundamentals",
+    category: "money-time",
+    subcategory: "Present & Future Value",
+    level: "Foundational",
+    oneLine: "Moving a sum of money forward or backward in time so that amounts at different dates can be compared.",
+    what: "Present value is what a future amount is worth today. Future value is what a present amount becomes later. The two are the same calculation run in opposite directions, and together they allow any set of cash flows to be brought to a single point in time where they can be added or compared.",
+    simple: "Money at different dates cannot be added until they are moved to the same date. These two calculations do the moving.",
+    formula: {
+      main: "FV = PV × (1 + r)ⁿ",
+      others: [
+        {
+          label: "Present value",
+          expr: "PV = FV ÷ (1 + r)ⁿ"
+        }
+      ],
+      variables: [
+        {
+          sym: "r",
+          desc: "Rate per period"
+        },
+        {
+          sym: "n",
+          desc: "Number of periods"
+        }
+      ]
+    },
+    example: {
+      setup: "₹2,00,000 to be received in 6 years, discounted at 9 percent.",
+      steps: ["(1.09)⁶ = 1.677100", "PV = 2,00,000 ÷ 1.677100", "PV = ₹1,19,254"],
+      result: "₹1,19,254",
+      note: "Someone offering ₹1,25,000 today for that promise would be offering more than it is worth at a 9 percent required return."
+    },
+    misconceptions: [
+      {
+        claim: "“Discounting reduces the value of my money.”",
+        truth: "It states what a future amount is worth now. The reduction reflects the return you could earn in the meantime, not a loss."
+      }
+    ],
+    related: ["time-value-of-money", "discount-rate", "annuities", "compounding"],
+    prereq: ["time-value-of-money"],
+    next: ["annuities"],
+  },
+  {
+    id: "annuities",
+    title: "Annuities",
+    domain: "fundamentals",
+    category: "money-time",
+    subcategory: "Annuities",
+    level: "Core",
+    oneLine: "A series of equal payments at regular intervals, which is the structure behind EMIs, SIPs and pensions.",
+    what: "An annuity is a stream of identical payments made at equal intervals. An ordinary annuity pays at the end of each period; an annuity due pays at the beginning. Because the payments are regular and equal, the whole stream can be valued with a single formula rather than discounting each payment separately.",
+    simple: "The same amount, on a schedule. Your loan EMI and your monthly SIP are both annuities.",
+    formula: {
+      main: "FV = P × [ ((1 + r)ⁿ − 1) ÷ r ]",
+      others: [
+        {
+          label: "Present value of an annuity",
+          expr: "PV = P × [ (1 − (1 + r)⁻ⁿ) ÷ r ]"
+        },
+        {
+          label: "Annuity due",
+          expr: "Multiply the ordinary annuity result by (1 + r)"
+        }
+      ],
+      variables: [
+        {
+          sym: "P",
+          desc: "Payment per period"
+        },
+        {
+          sym: "r",
+          desc: "Rate per period"
+        },
+        {
+          sym: "n",
+          desc: "Number of payments"
+        }
+      ]
+    },
+    example: {
+      setup: "₹15,000 invested monthly for 10 years at 10 percent a year.",
+      steps: ["r = 0.10 ÷ 12 = 0.008333, n = 120", "FV = 15,000 × [((1.008333)¹²⁰ − 1) ÷ 0.008333]", "FV ≈ ₹30,72,700"],
+      result: "About ₹30,72,700 against ₹18,00,000 invested",
+      note: "The same formula run in reverse is how a lender sets your EMI: the payment whose present value equals the loan amount."
+    },
+    application: ["Calculating what a regular investment becomes.", "Understanding how a loan EMI is derived."],
+    related: ["time-value-of-money", "sip", "present-future-value", "compounding"],
+    prereq: ["present-future-value"],
+    next: ["sip"],
+    tool: "sip",
+  },
+  {
+    id: "return",
+    title: "Return",
+    domain: "fundamentals",
+    category: "risk-return",
+    subcategory: "Return",
+    level: "Foundational",
+    oneLine: "What an investment earned, which can be measured in several ways that give different answers.",
+    what: "Return is the gain or loss on an investment over a period, expressed as a percentage of the amount invested. It includes both income received and change in value. How it is measured matters: total return includes income, annualised return converts any period to a yearly rate, and compound annual growth rate smooths a multi-year path into one figure.",
+    simple: "How much you made, stated as a percentage. The complication is which percentage you are being shown.",
+    formula: {
+      main: "Total return = (Ending value − Beginning value + Income) ÷ Beginning value × 100",
+      others: [
+        {
+          label: "CAGR",
+          expr: "(Ending ÷ Beginning)^(1/years) − 1"
+        }
+      ]
+    },
+    example: {
+      setup: "Bought at ₹400, sold at ₹460 after two years, with ₹12 of dividends received each year.",
+      steps: ["Total gain = (460 − 400) + 24 = ₹84", "Total return = 84 ÷ 400 = 21 percent over two years", "CAGR = (484 ÷ 400)^(1/2) − 1 = 10.0 percent a year"],
+      result: "21 percent total, 10.0 percent a year",
+      note: "Both figures are correct. Quoting the 21 percent without the period would be misleading."
+    },
+    misconceptions: [
+      {
+        claim: "“A 50 percent gain then a 50 percent loss leaves me even.”",
+        truth: "₹100 rising to ₹150 then falling 50 percent leaves ₹75. Percentage gains and losses do not cancel."
+      }
+    ],
+    related: ["risk-return", "real-return", "cagr", "absolute-relative-return"],
+    next: ["risk-return", "cagr"],
+  },
+  {
+    id: "risk-tolerance",
+    title: "Risk Tolerance",
+    domain: "fundamentals",
+    category: "risk-return",
+    subcategory: "Risk Tolerance",
+    level: "Foundational",
+    oneLine: "How much loss an investor can bear, financially and psychologically, which are two different limits.",
+    what: "Risk tolerance combines two separate constraints. Risk capacity is financial: how much loss can be absorbed without altering plans. Risk appetite is psychological: how much volatility can be endured without abandoning the strategy. The lower of the two binds, because a plan that is financially survivable but emotionally unbearable will be abandoned at the worst moment.",
+    simple: "One question is whether you could afford the loss. The other is whether you would sell in a panic. Both have to be answered.",
+    components: [
+      {
+        k: "Risk capacity",
+        v: "Determined by horizon, income stability, other assets and obligations."
+      },
+      {
+        k: "Risk appetite",
+        v: "Determined by temperament and experience. Frequently overestimated in calm markets."
+      },
+      {
+        k: "Behavioural risk",
+        v: "The danger of selling at the bottom, which converts a paper loss into a permanent one."
+      }
+    ],
+    interpretation: "Most stated risk tolerance is measured during rising markets, which is when it is least reliable. The genuine test is what an investor did in the last severe fall, not what they said before it.",
+    misconceptions: [
+      {
+        claim: "“I can handle a 40 percent fall.”",
+        truth: "Almost everyone believes this until it happens over several months while commentary suggests worse is coming. Behaviour under stress is what counts."
+      }
+    ],
+    related: ["risk-return", "portfolio-risk", "time-horizon", "asset-allocation"],
+    prereq: ["risk-return"],
+    next: ["asset-allocation"],
+  },
+  {
+    id: "diversification-basics",
+    title: "Diversification Basics",
+    domain: "fundamentals",
+    category: "risk-return",
+    subcategory: "Diversification Basics",
+    level: "Foundational",
+    oneLine: "Not putting everything into one thing, and understanding what that does and does not protect against.",
+    what: "Diversification means spreading capital across holdings so that no single failure determines the outcome. It reduces the risk specific to any one investment. It does not reduce the risk that affects everything at once, which is why a diversified portfolio still falls in a general market decline.",
+    simple: "If everything you own can fail for the same reason, you own one thing with several names.",
+    components: [
+      {
+        k: "Across securities",
+        v: "Multiple companies rather than one."
+      },
+      {
+        k: "Across sectors",
+        v: "Because companies in one industry share the same conditions."
+      },
+      {
+        k: "Across asset classes",
+        v: "Equity, debt and cash respond differently to the same events."
+      },
+      {
+        k: "Across geography",
+        v: "Different economies, though global markets have become more correlated."
+      }
+    ],
+    example: {
+      setup: "A portfolio of twenty shares, all in banking.",
+      steps: ["Twenty holdings appear diversified", "All twenty depend on interest rates, credit quality and the same regulator", "One factor moves all twenty together"],
+      result: "Twenty names, one bet",
+      note: "Count the reasons a portfolio could fail, not the number of holdings."
+    },
+    misconceptions: [
+      {
+        claim: "“More holdings means more diversification.”",
+        truth: "What matters is whether they can fail for the same reason. Correlation matters far more than count."
+      }
+    ],
+    related: ["diversification", "correlation", "risk-return", "asset-allocation"],
+    prereq: ["risk-return"],
+    next: ["diversification"],
+  },
+  {
+    id: "accounting-principles",
+    title: "Accounting Principles",
+    domain: "fundamentals",
+    category: "statements",
+    subcategory: "Accounting Principles",
+    level: "Core",
+    oneLine: "The agreed rules that make one company's statements comparable with another's.",
+    what: "Accounting principles are the conventions governing how transactions are recorded and reported. Key ones include accrual, which records revenue when earned rather than when received; consistency, which requires the same methods period to period; prudence, which favours caution in uncertainty; and going concern, which assumes the business will continue operating.",
+    simple: "Rules everyone follows, so that a profit reported in Chennai means the same thing as a profit reported in Mumbai.",
+    components: [
+      {
+        k: "Accrual basis",
+        v: "Revenue when earned, costs when incurred, regardless of cash timing."
+      },
+      {
+        k: "Consistency",
+        v: "The same methods applied period to period, so trends mean something."
+      },
+      {
+        k: "Prudence",
+        v: "Recognise probable losses, do not anticipate gains."
+      },
+      {
+        k: "Going concern",
+        v: "Statements assume continued operation. If that assumption fails, values change entirely."
+      }
+    ],
+    interpretation: "Principles constrain judgement without removing it. Depreciation schedules, provisions and revenue timing all involve estimates, and the same transactions can produce materially different reported profits under different but permissible choices.",
+    misconceptions: [
+      {
+        claim: "“Accounting is objective arithmetic.”",
+        truth: "The framework is defined; many inputs are estimates. That is why earnings quality analysis exists."
+      }
+    ],
+    related: ["income-statement", "balance-sheet", "notes-disclosures", "quality-of-earnings"],
+    prereq: ["balance-sheet"],
+    next: ["notes-disclosures"],
+  },
+  {
+    id: "notes-disclosures",
+    title: "Notes and Disclosures",
+    domain: "fundamentals",
+    category: "statements",
+    subcategory: "Notes & Disclosures",
+    level: "Core",
+    oneLine: "The explanatory material behind the statements, where the most important information usually sits.",
+    what: "Notes to the accounts explain the policies used, break down summarised figures, and disclose matters not visible on the face of the statements: contingent liabilities, related party transactions, pledged assets, litigation and commitments. Experienced analysts frequently find more in the notes than in the statements themselves.",
+    simple: "The statements give the numbers. The notes explain what is inside them and what is missing.",
+    components: [
+      {
+        k: "Accounting policies",
+        v: "Which methods were chosen where alternatives existed."
+      },
+      {
+        k: "Contingent liabilities",
+        v: "Obligations that may arise, disclosed rather than recorded."
+      },
+      {
+        k: "Related party transactions",
+        v: "Dealings with entities connected to management or owners."
+      },
+      {
+        k: "Segment information",
+        v: "Performance broken down by business line or geography."
+      }
+    ],
+    interpretation: "Related party disclosures deserve particular attention. Several major accounting failures involved transactions with connected entities that were technically disclosed and rarely read.",
+    misconceptions: [
+      {
+        claim: "“The notes are boilerplate.”",
+        truth: "They are where policy changes, pledged shares and contingent obligations appear. A change buried in the notes can matter more than any headline figure."
+      }
+    ],
+    related: ["accounting-principles", "balance-sheet", "quality-of-earnings", "due-diligence"],
+    prereq: ["balance-sheet"],
+    next: ["quality-of-earnings"],
+  },
+  {
+    id: "percentages-growth",
+    title: "Percentages and Growth",
+    domain: "fundamentals",
+    category: "fin-math",
+    subcategory: "Percentages & Growth",
+    level: "Foundational",
+    oneLine: "The arithmetic of change, where a few asymmetries catch people out repeatedly.",
+    what: "A percentage expresses change relative to a base. In finance the base matters enormously, because gains and losses are calculated on different amounts. A percentage fall and an equal percentage rise do not cancel, and percentage changes cannot simply be added across periods.",
+    simple: "Percentages do not behave the way intuition expects. Down thirty then up thirty does not bring you back.",
+    formula: {
+      main: "Percentage change = (New − Old) ÷ Old × 100",
+      others: [
+        {
+          label: "Recovery required",
+          expr: "1 ÷ (1 − loss) − 1"
+        }
+      ]
+    },
+    example: {
+      setup: "An investment falls 30 percent, then rises 30 percent.",
+      steps: ["₹1,00,000 falls 30 percent to ₹70,000", "₹70,000 rises 30 percent to ₹91,000", "Still ₹9,000 below the start. Recovery needed = 1 ÷ 0.70 − 1 = 42.9 percent"],
+      result: "₹91,000, not ₹1,00,000",
+      note: "The rise was calculated on a smaller base than the fall. This asymmetry is why avoiding large losses matters more than capturing large gains."
+    },
+    misconceptions: [
+      {
+        claim: "“A 50 percent loss needs a 50 percent gain to recover.”",
+        truth: "It needs 100 percent. The loss is measured on the original amount and the recovery on the reduced one."
+      }
+    ],
+    related: ["cagr", "return", "position-sizing", "compounding"],
+    next: ["cagr"],
+  },
+  {
+    id: "cagr",
+    title: "Compound Annual Growth Rate",
+    domain: "fundamentals",
+    category: "fin-math",
+    subcategory: "CAGR",
+    level: "Core",
+    oneLine: "One smooth annual rate that describes a multi-year journey, however uneven that journey actually was.",
+    what: "CAGR is the constant annual rate that would take a starting value to an ending value over a given number of years. It is used because multi-year returns cannot be meaningfully averaged. Its strength is comparability; its limitation is that it conceals everything that happened in between.",
+    simple: "The steady rate that would have produced the same result. Real returns were never this steady.",
+    formula: {
+      main: "CAGR = (Ending ÷ Beginning)^(1 ÷ years) − 1"
+    },
+    example: {
+      setup: "₹5,00,000 grows to ₹17,50,000 over 12 years.",
+      steps: ["Ratio = 17,50,000 ÷ 5,00,000 = 3.5", "CAGR = 3.5^(1/12) − 1", "CAGR = 10.98 percent a year"],
+      result: "About 11 percent a year",
+      note: "The path may have included a 40 percent fall in one year. CAGR reports the destination and says nothing about the road."
+    },
+    misconceptions: [
+      {
+        claim: "“CAGR is the average return.”",
+        truth: "A simple average of annual returns is higher than CAGR whenever returns vary. CAGR accounts for compounding; a simple average does not."
+      }
+    ],
+    related: ["compounding", "return", "percentages-growth", "absolute-relative-return"],
+    prereq: ["compounding"],
+    next: ["return"],
+    tool: "cagr",
+  },
+  {
+    id: "averages-weighting",
+    title: "Averages and Weighting",
+    domain: "fundamentals",
+    category: "fin-math",
+    subcategory: "Averages & Weighting",
+    level: "Core",
+    oneLine: "Different averages answer different questions, and choosing the wrong one produces confident nonsense.",
+    what: "An arithmetic mean adds values and divides by the count. A weighted average accounts for the size of each component. A geometric mean is the correct measure for compounding returns over time. In finance the three routinely give different answers, and only one is right for any given question.",
+    simple: "Averaging returns the simple way overstates what you actually earned.",
+    formula: {
+      main: "Weighted average = Σ (weight × value)",
+      others: [
+        {
+          label: "Geometric mean of returns",
+          expr: "[(1+r₁)(1+r₂)...(1+rₙ)]^(1/n) − 1"
+        }
+      ]
+    },
+    example: {
+      setup: "Two years of returns: +50 percent, then −30 percent.",
+      steps: ["Arithmetic mean = (50 − 30) ÷ 2 = +10 percent a year", "Actual: ₹1,00,000 → ₹1,50,000 → ₹1,05,000", "Geometric mean = (1.05)^(1/2) − 1 = 2.47 percent a year"],
+      result: "10 percent claimed, 2.47 percent earned",
+      note: "The arithmetic mean is not wrong as arithmetic. It is the wrong tool for compounding returns, and it always flatters."
+    },
+    misconceptions: [
+      {
+        claim: "“The fund averaged 15 percent a year.”",
+        truth: "Ask which average. A simple mean of volatile annual returns can overstate the compounded outcome substantially."
+      }
+    ],
+    related: ["cagr", "return", "market-indices", "portfolio-risk"],
+    prereq: ["cagr"],
+    next: ["probability-basics"],
+  },
+  {
+    id: "probability-basics",
+    title: "Probability Basics",
+    domain: "fundamentals",
+    category: "fin-math",
+    subcategory: "Probability Basics",
+    level: "Core",
+    oneLine: "The language for talking about uncertainty precisely rather than vaguely.",
+    what: "Probability expresses how likely an outcome is, from zero to one. In finance it underpins expected value, risk measurement and option pricing. Two ideas matter most: expected value, which weights each outcome by its probability, and independence, which determines whether risks can be combined by simple multiplication.",
+    simple: "Instead of saying something might happen, you say how likely and how much it would cost.",
+    formula: {
+      main: "Expected value = Σ (probability × outcome)"
+    },
+    example: {
+      setup: "An investment with a 60 percent chance of gaining ₹50,000 and a 40 percent chance of losing ₹80,000.",
+      steps: ["Expected value = (0.60 × 50,000) + (0.40 × −80,000)", "= 30,000 − 32,000", "= −₹2,000"],
+      result: "Negative ₹2,000",
+      note: "The favourable outcome is more likely and the bet still loses money on average, because the unfavourable outcome is larger."
+    },
+    interpretation: "Expected value describes the average across many repetitions. For a single decision with a large downside, expected value alone is insufficient, because a ruinous outcome cannot be averaged away.",
+    misconceptions: [
+      {
+        claim: "“The more likely outcome is the better bet.”",
+        truth: "Probability and magnitude both matter. A frequently winning strategy with rare large losses can lose money overall."
+      }
+    ],
+    related: ["risk-return", "value-at-risk", "option-greeks", "position-sizing"],
+    next: ["risk-return"],
+  },
+  {
+    id: "budgeting",
+    title: "Budgeting",
+    domain: "fundamentals",
+    category: "decisions",
+    subcategory: "Budgeting",
+    level: "Foundational",
+    oneLine: "Deciding where money goes before it goes there, which is the only reliable way to save.",
+    what: "A budget allocates income across spending, saving and debt repayment. Its purpose is not restriction but sequence: deciding in advance rather than discovering afterwards. The most effective structure treats saving as a fixed obligation deducted first, rather than as whatever remains at month end.",
+    simple: "Whatever is left at the end of the month is usually nothing. Deciding first is what changes the outcome.",
+    components: [
+      {
+        k: "Fixed costs",
+        v: "Rent, EMIs, insurance. Committed and difficult to change quickly."
+      },
+      {
+        k: "Variable costs",
+        v: "Food, transport, discretionary spending. Where adjustment is possible."
+      },
+      {
+        k: "Saving first",
+        v: "Treating saving as a bill rather than a residual."
+      },
+      {
+        k: "Review",
+        v: "Comparing planned against actual, which is where the learning happens."
+      }
+    ],
+    example: {
+      setup: "Monthly income of ₹80,000 with the saving decision made first at 20 percent.",
+      steps: ["Saved immediately: ₹16,000", "Available to spend: ₹64,000", "The saving happens regardless of what the month brings"],
+      result: "₹1,92,000 saved in a year",
+      note: "The alternative, saving what remains, typically produces a fraction of this from the same income."
+    },
+    related: ["saving", "emergency-reserves", "financial-goals", "borrowing"],
+    next: ["saving", "emergency-reserves"],
+  },
+  {
+    id: "saving",
+    title: "Saving",
+    domain: "fundamentals",
+    category: "decisions",
+    subcategory: "Saving",
+    level: "Foundational",
+    oneLine: "Setting money aside, which precedes investing and is not the same activity.",
+    what: "Saving is the act of not spending income, holding it in secure and accessible form. Investing is deploying saved money into assets expected to grow. Saving comes first: without a surplus there is nothing to invest, and without a reserve any investment must be sold at whatever price prevails when money is needed.",
+    simple: "You cannot invest what you have not saved. And investing before you have a reserve means selling at the worst time.",
+    why: "Savings rate matters more than investment return in the early years. Doubling the amount saved has an immediate and certain effect; improving returns is uncertain and takes years to matter.",
+    example: {
+      setup: "Two people invest for 10 years at 11 percent. One saves ₹10,000 monthly, the other ₹20,000.",
+      steps: ["At ₹10,000: approximately ₹21,70,000", "At ₹20,000: approximately ₹43,40,000", "To match the second from ₹10,000 monthly would require a return near 22 percent"],
+      result: "₹21.7 lakh against ₹43.4 lakh",
+      note: "The amount saved is controllable. The return is not. Early on, the first matters far more."
+    },
+    misconceptions: [
+      {
+        claim: "“I will start saving when I earn more.”",
+        truth: "Spending tends to rise with income. The habit is established by the proportion saved, not the amount available."
+      }
+    ],
+    related: ["budgeting", "emergency-reserves", "compounding", "sip"],
+    prereq: ["budgeting"],
+    next: ["emergency-reserves"],
+  },
+  {
+    id: "emergency-reserves",
+    title: "Emergency Reserves",
+    domain: "fundamentals",
+    category: "decisions",
+    subcategory: "Emergency Reserves",
+    level: "Foundational",
+    oneLine: "Money held for the unplanned, which protects every other financial decision you have made.",
+    what: "An emergency reserve is a sum kept in immediately accessible form to cover unexpected expenses or a loss of income. Conventional guidance suggests three to six months of essential expenses, more where income is irregular. Its purpose is not return but the prevention of forced selling and high cost borrowing.",
+    simple: "The point is not what it earns. The point is that you never have to sell an investment or borrow at 36 percent because a hospital bill arrived.",
+    why: "Without a reserve, any unexpected expense becomes either a forced sale at whatever price the market offers, or borrowing at rates that can exceed thirty percent. The reserve exists to make sure neither happens.",
+    example: {
+      setup: "Essential monthly expenses of ₹45,000.",
+      steps: ["Three months = ₹1,35,000", "Six months = ₹2,70,000", "Held in a savings account or liquid fund, accessible within a day"],
+      result: "₹1.35 to ₹2.7 lakh",
+      note: "This money will earn less than an equity investment. That is the intended trade: certainty of access in exchange for return."
+    },
+    misconceptions: [
+      {
+        claim: "“Keeping money idle is a waste.”",
+        truth: "It is insurance against being forced to liquidate long term holdings at a bad price. That protection is worth more than the return forgone."
+      }
+    ],
+    related: ["liquidity-needs", "cash-equivalents", "saving", "borrowing"],
+    prereq: ["saving"],
+    next: ["borrowing"],
+  },
+  {
+    id: "borrowing",
+    title: "Borrowing",
+    domain: "fundamentals",
+    category: "decisions",
+    subcategory: "Borrowing",
+    level: "Foundational",
+    oneLine: "Using someone else's money, which is sensible for some purposes and corrosive for others.",
+    what: "Borrowing brings forward future income to fund present spending, at the cost of interest. The useful distinction is between borrowing for an asset that appreciates or generates income, and borrowing for consumption. The first can build wealth; the second reliably reduces it.",
+    simple: "Borrowing to buy something that grows can make sense. Borrowing to buy something that is consumed rarely does.",
+    components: [
+      {
+        k: "Secured borrowing",
+        v: "Backed by an asset, so rates are lower. Home and vehicle loans."
+      },
+      {
+        k: "Unsecured borrowing",
+        v: "No collateral, so rates are much higher. Personal loans and credit cards."
+      },
+      {
+        k: "Effective cost",
+        v: "Interest plus processing fees plus any compounding within the year."
+      },
+      {
+        k: "Debt service ratio",
+        v: "Total EMIs as a share of income, which determines whether the borrowing is sustainable."
+      }
+    ],
+    example: {
+      setup: "₹1,00,000 outstanding on a credit card at 3 percent a month, with only the minimum paid.",
+      steps: ["Effective annual rate = (1.03)¹² − 1 = 42.6 percent", "Annual interest if the balance is maintained ≈ ₹42,600", "An investment would have to return 42.6 percent to match simply clearing this"],
+      result: "42.6 percent effective",
+      note: "Repaying high cost debt is a guaranteed return equal to its interest rate. Almost no investment offers that with certainty."
+    },
+    misconceptions: [
+      {
+        claim: "“The interest rate is 3 percent.”",
+        truth: "That is monthly. Compounded, it is 42.6 percent a year, which is among the highest costs an ordinary household ever pays."
+      }
+    ],
+    related: ["interest", "compounding", "emergency-reserves", "budgeting"],
+    prereq: ["interest"],
+    next: ["financial-goals"],
+  },
+  {
+    id: "financial-goals",
+    title: "Financial Goals",
+    domain: "fundamentals",
+    category: "decisions",
+    subcategory: "Financial Goals",
+    level: "Foundational",
+    oneLine: "Turning intentions into numbers with dates, which is what makes them achievable or honestly impossible.",
+    what: "A financial goal specifies an amount, a date and a purpose. Vague intentions cannot be planned for because they cannot be measured. Once a goal is quantified, the required monthly contribution and return follow arithmetically, and the plan either works or is revealed as needing adjustment.",
+    simple: "Saving for retirement is a wish. Saving ₹3 crore by 2050 is a plan that can be checked.",
+    components: [
+      {
+        k: "Amount",
+        v: "Adjusted for inflation, since a goal fifteen years away costs more then than now."
+      },
+      {
+        k: "Date",
+        v: "Which determines the horizon and therefore the asset mix."
+      },
+      {
+        k: "Priority",
+        v: "Which goal is sacrificed if resources fall short."
+      },
+      {
+        k: "Review",
+        v: "Because income, costs and circumstances change."
+      }
+    ],
+    example: {
+      setup: "A goal costing ₹20,00,000 today, needed in 15 years, with inflation at 6 percent.",
+      steps: ["Future cost = 20,00,000 × (1.06)¹⁵ = ₹47,93,000", "At an assumed 11 percent return, the monthly amount required is approximately ₹11,600", "Planning for ₹20,00,000 would leave a shortfall of nearly ₹28 lakh"],
+      result: "₹47.9 lakh needed, not ₹20 lakh",
+      note: "Ignoring inflation in goal setting is the most common and most expensive planning error."
+    },
+    related: ["investment-objectives", "inflation", "time-horizon", "budgeting"],
+    prereq: ["inflation"],
+    next: ["investment-objectives"],
+  },
+  {
+    id: "capital-markets",
+    title: "Capital Markets",
+    domain: "markets",
+    category: "market-types",
+    subcategory: "Capital Markets",
+    level: "Core",
+    oneLine: "Markets for long-term funding, where savings become the capital that builds things.",
+    what: "Capital markets are where instruments with maturities beyond one year are issued and traded, principally equity and long-dated debt. They perform the function of channelling savings from those who have surplus into the hands of governments and companies that need long-term funding, and they price that funding continuously.",
+    simple: "Where long-term money is raised. Money markets handle days and weeks; capital markets handle years and decades.",
+    components: [
+      {
+        k: "Primary segment",
+        v: "New issues, where capital reaches the issuer."
+      },
+      {
+        k: "Secondary segment",
+        v: "Trading among investors, which provides the liquidity that makes primary issuance possible."
+      },
+      {
+        k: "Equity capital",
+        v: "Ownership, permanent, with no repayment obligation."
+      },
+      {
+        k: "Debt capital",
+        v: "Borrowing, with defined maturity and contractual servicing."
+      }
+    ],
+    interpretation: "The two segments are inseparable. Investors buy new issues largely because they can sell later, so a market without secondary liquidity struggles to raise primary capital at all.",
+    related: ["equity-markets", "debt-markets", "money-markets", "primary-secondary"],
+    prereq: ["equity-markets"],
+    next: ["primary-secondary"],
+  },
+  {
+    id: "commodity-markets",
+    title: "Commodity Markets",
+    domain: "markets",
+    category: "market-types",
+    subcategory: "Commodity Markets",
+    level: "Core",
+    oneLine: "Markets for physical goods, where producers and consumers transfer price risk to those willing to take it.",
+    what: "Commodity markets trade physical goods such as metals, energy and agricultural produce, mostly through derivative contracts rather than physical delivery. Their primary economic function is price risk transfer: a producer can fix a selling price months ahead and a consumer can fix a purchase price, each removing uncertainty from their business.",
+    simple: "A farmer can lock in a price before harvest. A refiner can lock in a cost before delivery. That certainty is what the market provides.",
+    components: [
+      {
+        k: "Hard commodities",
+        v: "Mined or extracted: metals, crude oil, natural gas."
+      },
+      {
+        k: "Soft commodities",
+        v: "Grown: agricultural produce, subject to season and weather."
+      },
+      {
+        k: "Contract specification",
+        v: "Grade, quantity, delivery location and month, all standardised."
+      },
+      {
+        k: "Physical or cash settlement",
+        v: "Whether the underlying is actually delivered at expiry."
+      }
+    ],
+    interpretation: "Most participants never take delivery. Positions are closed before expiry, and the contract serves as a price hedge rather than a purchase.",
+    misconceptions: [
+      {
+        claim: "“Commodity trading means buying gold or oil.”",
+        truth: "It usually means holding a contract whose value tracks the commodity. Physical delivery is the exception."
+      }
+    ],
+    related: ["gold-commodities", "futures", "hedging", "contract-specifications"],
+    prereq: ["futures"],
+    next: ["hedging"],
+  },
+  {
+    id: "primary-secondary",
+    title: "Primary and Secondary Markets",
+    domain: "markets",
+    category: "structure",
+    subcategory: "Primary vs Secondary Market",
+    level: "Foundational",
+    oneLine: "One raises capital for the issuer, the other transfers ownership between investors.",
+    what: "The primary market is where securities are issued for the first time and money reaches the issuer. The secondary market is where those securities are subsequently traded among investors, with no funds reaching the issuer. Both are essential and only one actually finances anything.",
+    simple: "An IPO puts money in the company's account. Everything after that is investors trading with each other.",
+    example: {
+      setup: "A company issues 1 crore shares at ₹200 in an IPO. Three months later the price is ₹340.",
+      steps: ["Primary: the company received 1 crore × ₹200 = ₹200 crore", "Secondary: shares now trade at ₹340", "The company receives nothing from that rise"],
+      result: "₹200 crore raised, once",
+      note: "A rising share price benefits the company indirectly, by making future issuance cheaper, not directly through cash."
+    },
+    misconceptions: [
+      {
+        claim: "“When the share price rises, the company gains money.”",
+        truth: "Only existing shareholders gain. The company's cash is unaffected by secondary trading."
+      }
+    ],
+    related: ["equity-markets", "ipo-process", "capital-markets", "investment-banking"],
+    prereq: ["equity-markets"],
+    next: ["exchanges"],
+  },
+  {
+    id: "exchanges",
+    title: "Exchanges",
+    domain: "markets",
+    category: "structure",
+    subcategory: "Exchanges",
+    level: "Core",
+    oneLine: "Regulated venues where orders meet, and the rules that make trading with a stranger safe.",
+    what: "An exchange is an organised marketplace providing the infrastructure for trading: order matching, price dissemination, membership rules and surveillance. Its central contribution is trust. Because the exchange and its clearing house stand between participants, buyers and sellers who have never met can transact without assessing each other's credit.",
+    simple: "You never check whether the person selling you shares is good for it. The exchange has already solved that.",
+    components: [
+      {
+        k: "Order matching",
+        v: "An engine pairing buy and sell orders by price and then time priority."
+      },
+      {
+        k: "Listing rules",
+        v: "Requirements a company must meet to be traded, including disclosure obligations."
+      },
+      {
+        k: "Surveillance",
+        v: "Monitoring for manipulation and unusual activity."
+      },
+      {
+        k: "Clearing house",
+        v: "Standing between parties so that neither depends on the other's solvency."
+      }
+    ],
+    related: ["clearing-settlement", "price-discovery", "market-participants", "order-types"],
+    prereq: ["equity-markets"],
+    next: ["clearing-settlement"],
+  },
+  {
+    id: "clearing-settlement",
+    title: "Clearing and Settlement",
+    domain: "markets",
+    category: "structure",
+    subcategory: "Clearing & Settlement",
+    level: "Core",
+    oneLine: "What happens after a trade is agreed, which is where the risk actually sits.",
+    what: "Clearing determines what each party owes after a trade. Settlement is the actual exchange of securities and money. Between the two lies the interval during which one side has committed and the other has not yet performed. A central counterparty absorbs that risk by becoming the buyer to every seller and the seller to every buyer.",
+    simple: "Agreeing a trade takes a second. Completing it takes a day, and that day is where the danger lives.",
+    components: [
+      {
+        k: "Trade date",
+        v: "When the transaction is agreed, denoted T."
+      },
+      {
+        k: "Settlement cycle",
+        v: "How long until completion. Indian markets moved to T+1 in phases through 2022 and 2023."
+      },
+      {
+        k: "Central counterparty",
+        v: "Guarantees settlement, removing counterparty risk from participants."
+      },
+      {
+        k: "Depository",
+        v: "Holds securities electronically, so nothing physical moves."
+      }
+    ],
+    realWorld: "In the certificate era, settlement took weeks and depended on documents moving by hand. The 1992 securities scam exploited exactly that gap, using receipts for securities that were never delivered.",
+    related: ["exchanges", "market-liquidity", "credit-risk", "primary-secondary"],
+    prereq: ["exchanges"],
+    next: ["order-types"],
+  },
+  {
+    id: "order-types",
+    title: "Order Types",
+    domain: "markets",
+    category: "structure",
+    subcategory: "Order Types",
+    level: "Core",
+    oneLine: "Different instructions to the market, each trading certainty of execution against certainty of price.",
+    what: "An order type specifies how a trade should be executed. A market order prioritises execution and accepts whatever price is available. A limit order prioritises price and accepts that it may not execute. Stop orders trigger only when a specified price is reached. The choice is always a trade between the two certainties.",
+    simple: "You can be sure it happens, or sure of the price. Not both.",
+    components: [
+      {
+        k: "Market order",
+        v: "Executes immediately at the best available price. In an illiquid market, that price can be far from expected."
+      },
+      {
+        k: "Limit order",
+        v: "Executes only at your price or better. May not execute at all."
+      },
+      {
+        k: "Stop loss",
+        v: "Becomes active when a trigger price is reached, used to limit loss."
+      },
+      {
+        k: "Stop loss market versus limit",
+        v: "The first guarantees execution once triggered, the second guarantees price and may miss entirely."
+      }
+    ],
+    example: {
+      setup: "A share quoted with a bid of ₹498 and an ask of ₹502, and a market order to buy 5,000 shares in a thin market.",
+      steps: ["The first 500 fill at ₹502", "Further quantity fills at ₹505, ₹509 and higher as depth is consumed", "Average fill may be ₹507 against an expected ₹502"],
+      result: "About ₹25,000 of unexpected cost",
+      note: "A market order in a thin market is an instruction to accept any price. A limit order would have prevented this and might not have filled."
+    },
+    related: ["market-liquidity", "bid-ask-spread", "exchanges", "price-discovery"],
+    prereq: ["price-discovery"],
+    next: ["bid-ask-spread"],
+  },
+  {
+    id: "market-lot-size",
+    title: "Lot Size in Markets",
+    domain: "markets",
+    category: "structure",
+    subcategory: "Lot Size",
+    level: "Core",
+    oneLine: "The minimum tradable quantity, which differs between cash and derivative segments.",
+    what: "Lot size is the smallest quantity in which an instrument may be traded. In the Indian cash equity segment shares can generally be bought singly, while derivative contracts trade only in exchange defined lots. The lot determines the minimum capital required to take a position, and therefore who can participate.",
+    simple: "In shares you can buy one. In derivatives you buy the lot the exchange has defined, and nothing smaller.",
+    interpretation: "Exchanges periodically revise lot sizes so that contract value stays within an intended range. When an index rises substantially, the lot may be reduced to keep the minimum position affordable.",
+    example: {
+      setup: "An index at 24,000 with a lot size of 75.",
+      steps: ["Minimum contract value = 24,000 × 75 = ₹18,00,000", "At 12 percent margin, minimum capital = ₹2,16,000", "There is no smaller position available"],
+      result: "₹2,16,000 minimum",
+      note: "This is why derivatives exclude small participants by design, and why contract size is a policy tool rather than a technicality."
+    },
+    related: ["lot-size", "contract-specifications", "futures", "margin"],
+    prereq: ["contract-specifications"],
+    next: ["margin"],
+  },
+  {
+    id: "bid-ask-spread",
+    title: "Bid-Ask Spread",
+    domain: "markets",
+    category: "mechanics",
+    subcategory: "Bid-Ask Spread",
+    level: "Core",
+    oneLine: "The gap between what buyers offer and sellers ask, which is the immediate cost of transacting.",
+    what: "The bid is the highest price a buyer is currently willing to pay. The ask is the lowest price a seller will accept. The difference is the spread, and it is paid by whoever transacts immediately. It compensates market makers for providing continuous two-way prices and for the risk of holding inventory.",
+    simple: "Buy at the ask, sell at the bid. The gap between them is gone the moment you trade.",
+    formula: {
+      main: "Spread = Ask − Bid",
+      others: [
+        {
+          label: "As a percentage",
+          expr: "Spread ÷ Midpoint × 100"
+        }
+      ]
+    },
+    example: {
+      setup: "A liquid share quoted 499.90 / 500.00, and an illiquid one quoted 486 / 494.",
+      steps: ["Liquid: spread = ₹0.10, or 0.02 percent", "Illiquid: spread = ₹8, or 1.63 percent", "Buying and immediately selling loses the spread in each case"],
+      result: "0.02 percent against 1.63 percent",
+      note: "On the illiquid share, a round trip costs 1.63 percent before any brokerage. The price must rise that much just to break even."
+    },
+    interpretation: "The spread is a direct measure of liquidity. It widens in stressed markets, precisely when investors most want to transact.",
+    related: ["market-liquidity", "price-discovery", "market-makers", "order-types"],
+    prereq: ["market-liquidity"],
+    next: ["volatility"],
+  },
+  {
+    id: "volatility",
+    title: "Volatility",
+    domain: "markets",
+    category: "mechanics",
+    subcategory: "Volatility",
+    level: "Core",
+    oneLine: "How much a price moves, which is the standard measure of risk and not the same as direction.",
+    what: "Volatility measures the dispersion of returns around their average, usually expressed as an annualised standard deviation. Higher volatility means a wider range of likely outcomes in both directions. It is the standard proxy for risk in finance, and it says nothing about whether a price is likely to rise or fall.",
+    simple: "How wildly it swings. Not which way it is going.",
+    formula: {
+      main: "Annualised volatility = Daily standard deviation × √252",
+      others: [
+        {
+          label: "Rough one year range",
+          expr: "Price ± (Price × volatility), covering about two thirds of outcomes"
+        }
+      ]
+    },
+    example: {
+      setup: "A share at ₹1,000 with annualised volatility of 28 percent.",
+      steps: ["One standard deviation = ₹1,000 × 0.28 = ₹280", "Roughly two thirds of one year outcomes fall between ₹720 and ₹1,280", "Roughly 95 percent fall between ₹440 and ₹1,560"],
+      result: "A wide range, symmetrically",
+      note: "Volatility treats a rise and a fall of equal size identically, though investors clearly do not."
+    },
+    components: [
+      {
+        k: "Historical volatility",
+        v: "Calculated from past price movement."
+      },
+      {
+        k: "Implied volatility",
+        v: "Derived from option prices, representing expected future movement."
+      },
+      {
+        k: "Volatility clustering",
+        v: "Turbulent periods tend to follow turbulent periods."
+      }
+    ],
+    misconceptions: [
+      {
+        claim: "“High volatility means the price will fall.”",
+        truth: "It means larger moves in either direction. Some of the strongest rises in market history occurred during highly volatile periods."
+      }
+    ],
+    related: ["portfolio-risk", "market-risk", "option-greeks", "risk-return"],
+    prereq: ["risk-return"],
+    next: ["market-efficiency"],
+  },
+  {
+    id: "market-efficiency",
+    title: "Market Efficiency",
+    domain: "markets",
+    category: "mechanics",
+    subcategory: "Market Efficiency",
+    level: "Advanced",
+    oneLine: "How completely prices reflect available information, and what that implies about beating the market.",
+    what: "The efficient market hypothesis holds that prices reflect available information. In its weak form, past prices carry no predictive value. In the semi-strong form, all public information is already priced. In the strong form, even private information is reflected. The stronger the form that holds, the harder outperformance becomes.",
+    simple: "If everything known is already in the price, then only new information moves it, and new information is by definition unpredictable.",
+    components: [
+      {
+        k: "Weak form",
+        v: "Past prices are already reflected, which challenges purely technical approaches."
+      },
+      {
+        k: "Semi-strong form",
+        v: "All public information is reflected, which challenges analysis of published data."
+      },
+      {
+        k: "Strong form",
+        v: "Even private information is reflected. Generally not supported, and insider trading laws assume it does not hold."
+      }
+    ],
+    interpretation: "Efficiency is not binary. Large, heavily followed companies are priced more efficiently than small, neglected ones. The practical question is not whether markets are efficient, but where they are least so.",
+    misconceptions: [
+      {
+        claim: "“Efficient markets means prices are correct.”",
+        truth: "It means prices reflect available information, which can be wrong. Bubbles occur without contradicting the idea that information was priced as understood at the time."
+      }
+    ],
+    related: ["price-discovery", "passive-investing", "fundamental-analysis", "technical-analysis"],
+    prereq: ["price-discovery"],
+    next: ["passive-investing"],
+  },
+  {
+    id: "index-construction",
+    title: "Index Construction",
+    domain: "markets",
+    category: "indices",
+    subcategory: "Index Construction",
+    level: "Intermediate",
+    oneLine: "The rules deciding what goes into an index and how much it counts, which shape what the number means.",
+    what: "Index construction covers the eligibility criteria for inclusion, the weighting method, the review schedule and the treatment of corporate actions. These rules are set by the index provider and applied mechanically. Because enormous sums track indices, the rules have real consequences for the securities involved.",
+    simple: "Someone decides the rules. The rules decide the index. The index decides where a great deal of money goes.",
+    components: [
+      {
+        k: "Eligibility",
+        v: "Listing history, liquidity thresholds, free float minimums."
+      },
+      {
+        k: "Weighting",
+        v: "Most commonly free float market capitalisation."
+      },
+      {
+        k: "Review",
+        v: "Periodic reconstitution, when constituents are added and removed."
+      },
+      {
+        k: "Capping",
+        v: "Limits on any single constituent's weight, to prevent excessive concentration."
+      }
+    ],
+    interpretation: "Inclusion in a major index forces index funds to buy, which can move the price independently of anything about the business. The reverse happens on exclusion.",
+    related: ["market-indices", "free-float-weighting", "etf", "index-funds"],
+    prereq: ["market-indices"],
+    next: ["free-float-weighting"],
+  },
+  {
+    id: "free-float-weighting",
+    title: "Free Float Weighting",
+    domain: "markets",
+    category: "indices",
+    subcategory: "Free Float Weighting",
+    level: "Intermediate",
+    oneLine: "Weighting by shares actually available to trade rather than by all shares issued.",
+    what: "Free float market capitalisation counts only shares available for public trading, excluding promoter holdings, government stakes and other locked-in blocks. Most major indices use it, because weighting by total capitalisation would assign influence to shares that index funds cannot actually buy.",
+    simple: "If most of a company is held by its founders and never traded, the index should not pretend that portion is available.",
+    formula: {
+      main: "Free float capitalisation = Price × Shares outstanding × Free float factor"
+    },
+    example: {
+      setup: "A company with 10 crore shares at ₹800, of which promoters hold 70 percent.",
+      steps: ["Total capitalisation = ₹8,000 crore", "Free float = 30 percent", "Free float capitalisation = ₹2,400 crore"],
+      result: "₹2,400 crore for index purposes",
+      note: "A company with a small free float has far less index weight than its headline size suggests, which is deliberate and correct."
+    },
+    related: ["market-indices", "index-construction", "etf", "equity"],
+    prereq: ["market-indices"],
+    next: ["sector-indices"],
+  },
+  {
+    id: "sector-indices",
+    title: "Sector Indices",
+    domain: "markets",
+    category: "indices",
+    subcategory: "Sector Indices",
+    level: "Core",
+    oneLine: "Indices covering a single industry, which reveal what a broad index conceals.",
+    what: "A sector index tracks companies within one industry. Because sectors respond differently to the same economic force, sector indices show dispersion that a broad index averages away. They are used for analysis, for benchmarking specialist funds and as the underlying for sector derivatives.",
+    simple: "The broad index rose two percent. Underneath, banks rose four and technology fell three. The sector indices show that.",
+    interpretation: "Sector performance is often the clearest evidence of a transmission chain at work. When rates rise, banking and rate-sensitive sectors move in opposite directions within the same session.",
+    components: [
+      {
+        k: "Concentration",
+        v: "Sector indices hold fewer companies, so single names matter more."
+      },
+      {
+        k: "Cyclicality",
+        v: "Some sectors move with the economic cycle, others resist it."
+      },
+      {
+        k: "Correlation within",
+        v: "Constituents share drivers, so diversification within a sector is limited."
+      }
+    ],
+    related: ["market-indices", "diversification", "index-construction", "correlation"],
+    prereq: ["market-indices"],
+    next: ["correlation"],
+  },
+  {
+    id: "retail-investors",
+    title: "Retail Investors",
+    domain: "markets",
+    category: "participants",
+    subcategory: "Retail Investors",
+    level: "Foundational",
+    oneLine: "Individuals investing their own money, with structural advantages they rarely use.",
+    what: "Retail investors are individuals investing personal funds rather than managing money for others. They are usually described in terms of their disadvantages: less information, fewer resources, higher relative costs. Less often noted are their genuine structural advantages, which are real and largely unexploited.",
+    simple: "You have advantages a fund manager would envy. Almost nobody uses them.",
+    components: [
+      {
+        k: "No reporting period",
+        v: "No quarterly performance review, so a position can be held through a bad year."
+      },
+      {
+        k: "No size constraint",
+        v: "Small holdings can be bought and sold without moving the price."
+      },
+      {
+        k: "No mandate",
+        v: "Freedom to hold cash entirely, which most funds cannot do."
+      },
+      {
+        k: "No career risk",
+        v: "Nobody is dismissed for an unconventional decision that takes time to work."
+      }
+    ],
+    interpretation: "The main disadvantage is behavioural rather than informational. Documented patterns show individuals buying after rises and selling after falls, which converts structural advantages into realised losses.",
+    misconceptions: [
+      {
+        claim: "“Institutions have better information, so individuals cannot compete.”",
+        truth: "Information is widely distributed and heavily analysed. The individual's edge is patience and the absence of constraints, not information."
+      }
+    ],
+    related: ["market-participants", "risk-tolerance", "passive-investing", "market-makers"],
+    next: ["market-makers"],
+  },
+  {
+    id: "market-makers",
+    title: "Market Makers",
+    domain: "markets",
+    category: "participants",
+    subcategory: "Market Makers",
+    level: "Core",
+    oneLine: "Participants who quote both a buy and a sell price continuously, making immediate trading possible.",
+    what: "A market maker stands ready to buy and sell an instrument at quoted prices throughout the session, earning the spread between them. Their function is to provide immediacy: without them, a seller would have to wait for a buyer to arrive independently. They carry inventory risk in exchange for the spread.",
+    simple: "Someone has to be willing to trade with you right now. That willingness is what a market maker sells.",
+    components: [
+      {
+        k: "Two way quote",
+        v: "A bid and an ask offered simultaneously."
+      },
+      {
+        k: "Spread as compensation",
+        v: "Payment for immediacy and for carrying inventory."
+      },
+      {
+        k: "Inventory risk",
+        v: "Holding a position taken to accommodate someone else's trade."
+      },
+      {
+        k: "Withdrawal in stress",
+        v: "Quotes widen or disappear when risk rises, which is why liquidity vanishes in crises."
+      }
+    ],
+    interpretation: "Market makers are not obliged to lose money. In sharply falling markets they widen spreads or step back entirely, which is precisely when investors most want to sell.",
+    related: ["bid-ask-spread", "market-liquidity", "price-discovery", "market-participants"],
+    prereq: ["bid-ask-spread"],
+    next: ["regulators"],
+  },
+  {
+    id: "regulators",
+    title: "Regulators",
+    domain: "markets",
+    category: "participants",
+    subcategory: "Regulators",
+    level: "Core",
+    oneLine: "The bodies that set and enforce market rules, whose purpose is confidence rather than price.",
+    what: "Market regulators establish and enforce rules on disclosure, conduct, market integrity and investor protection. In India, SEBI regulates securities markets, the RBI regulates banking and payment systems, and IRDAI regulates insurance. Their function is not to determine prices but to ensure the process producing them is fair.",
+    simple: "Nobody regulates whether a price is right. They regulate whether the process that produced it was honest.",
+    components: [
+      {
+        k: "Disclosure",
+        v: "Requiring companies to publish material information promptly and equally."
+      },
+      {
+        k: "Conduct",
+        v: "Prohibiting manipulation, insider trading and misrepresentation."
+      },
+      {
+        k: "Market integrity",
+        v: "Surveillance, settlement rules and system stability."
+      },
+      {
+        k: "Investor protection",
+        v: "Grievance mechanisms, intermediary standards and mandated risk disclosure."
+      }
+    ],
+    realWorld: "Indian market regulation developed largely in response to failure. SEBI received statutory powers in 1992 after the securities scam, and carry forward trading ended after the 2001 crisis.",
+    related: ["market-participants", "exchanges", "clearing-settlement", "systemic-risk"],
+    next: ["exchanges"],
+  },
+  {
+    id: "net-interest-margin",
+    title: "Net Interest Margin",
+    domain: "banking",
+    category: "commercial",
+    subcategory: "Net Interest Margin",
+    level: "Core",
+    oneLine: "The spread between what a bank earns on assets and pays on funding, which is its core profitability.",
+    what: "Net interest margin is net interest income divided by average earning assets. It measures how much a bank earns from its fundamental activity of borrowing at one rate and lending at another. It is the single most watched profitability measure for a bank, and it moves with interest rates, competition and the mix of the loan book.",
+    simple: "What the bank earns on loans, minus what it pays depositors, as a percentage of what it has lent.",
+    formula: {
+      main: "NIM = (Interest earned − Interest paid) ÷ Average earning assets × 100"
+    },
+    example: {
+      setup: "A bank with ₹12,000 crore of loans at 9.4 percent, funded by ₹10,500 crore of deposits at 5.1 percent.",
+      steps: ["Interest earned = ₹1,128 crore", "Interest paid = ₹535.5 crore", "NIM = (1,128 − 535.5) ÷ 12,000 = 4.94 percent"],
+      result: "4.94 percent",
+      note: "A fall of half a percentage point in NIM would cost ₹60 crore of income on the same balance sheet, without a single loan going bad."
+    },
+    interpretation: "NIM usually widens when rates rise, because loans reprice faster than deposits. That advantage is temporary: deposit costs catch up, and the margin normalises.",
+    related: ["commercial-banking", "interest-rates", "npa", "credit-appraisal"],
+    prereq: ["commercial-banking"],
+    next: ["credit-appraisal"],
+  },
+  {
+    id: "credit-appraisal",
+    title: "Credit Appraisal",
+    domain: "banking",
+    category: "commercial",
+    subcategory: "Credit Appraisal",
+    level: "Core",
+    oneLine: "Assessing whether a borrower can and will repay, before the money leaves.",
+    what: "Credit appraisal is the process of evaluating a loan application. It examines the borrower's capacity to generate cash for repayment, their record of meeting obligations, the purpose of the loan, the collateral offered and the conditions the business operates in. The assessment determines whether to lend, how much, at what rate and against what security.",
+    simple: "Two questions: can they repay, and will they. Both need answering before the money moves.",
+    components: [
+      {
+        k: "Capacity",
+        v: "Cash flow available to service the debt, which is the primary source of repayment."
+      },
+      {
+        k: "Character",
+        v: "Repayment history and conduct of existing accounts."
+      },
+      {
+        k: "Collateral",
+        v: "Security available if repayment fails. A secondary source, never the reason to lend."
+      },
+      {
+        k: "Conditions",
+        v: "Industry and economic circumstances affecting the borrower."
+      }
+    ],
+    interpretation: "Lending against collateral rather than cash flow is the recurring error in credit. Collateral is worth least precisely when many borrowers default at once, because everyone is selling the same security into the same falling market.",
+    misconceptions: [
+      {
+        claim: "“A secured loan is safe.”",
+        truth: "Security reduces loss given default. It does not reduce the probability of default, and its value falls in exactly the conditions that cause defaults."
+      }
+    ],
+    related: ["credit-risk", "commercial-banking", "npa", "net-interest-margin"],
+    prereq: ["credit-risk"],
+    next: ["npa"],
+  },
+  {
+    id: "npa",
+    title: "Non-Performing Assets",
+    domain: "banking",
+    category: "commercial",
+    subcategory: "Non-Performing Assets",
+    level: "Core",
+    oneLine: "Loans that have stopped performing, which damage a bank twice over.",
+    what: "A non-performing asset is a loan where interest or principal has remained overdue beyond a prescribed period, commonly ninety days. Once classified, the bank must stop recognising income on it and must set aside provisions against expected loss. The effect is therefore double: income disappears and a charge is taken against profit.",
+    simple: "The loan stops paying, and the bank must also set money aside against it. Two hits from one loan.",
+    formula: {
+      main: "Gross NPA ratio = Gross NPAs ÷ Gross advances × 100",
+      others: [
+        {
+          label: "Net NPA",
+          expr: "Gross NPA − Provisions held"
+        },
+        {
+          label: "Provision coverage ratio",
+          expr: "Provisions ÷ Gross NPA × 100"
+        }
+      ]
+    },
+    example: {
+      setup: "A bank with ₹20,000 crore of advances, ₹1,400 crore of gross NPAs and ₹980 crore of provisions.",
+      steps: ["Gross NPA ratio = 1,400 ÷ 20,000 = 7.0 percent", "Net NPA = 1,400 − 980 = ₹420 crore", "Provision coverage = 980 ÷ 1,400 = 70 percent"],
+      result: "7.0 percent gross, 70 percent covered",
+      note: "Provision coverage matters as much as the NPA ratio. A high NPA ratio with high coverage is a recognised problem; a low ratio with low coverage may be an unrecognised one."
+    },
+    misconceptions: [
+      {
+        claim: "“A rising NPA ratio means lending has worsened.”",
+        truth: "It can also mean recognition has improved. Stricter classification reveals problems that existed unacknowledged."
+      }
+    ],
+    related: ["credit-risk", "credit-appraisal", "commercial-banking", "capital-adequacy"],
+    prereq: ["credit-appraisal"],
+    next: ["capital-adequacy"],
+  },
+  {
+    id: "policy-rate",
+    title: "The Policy Rate",
+    domain: "banking",
+    category: "central",
+    subcategory: "Policy Rate",
+    level: "Core",
+    oneLine: "The rate a central bank actually controls, from which every other rate in the economy is built.",
+    what: "The policy rate is the interest rate at which the central bank lends to or borrows from commercial banks for very short periods. It is the one rate a central bank sets directly. Every other rate, from overnight interbank lending to thirty year bonds, is built on top of it with additions for time, credit and liquidity.",
+    simple: "The only rate the central bank sets. Everything else is the market building on that foundation.",
+    components: [
+      {
+        k: "Repo rate",
+        v: "The rate at which banks borrow from the central bank against collateral."
+      },
+      {
+        k: "Reverse repo",
+        v: "The rate at which banks park surplus funds with the central bank."
+      },
+      {
+        k: "Corridor",
+        v: "The band within which overnight rates are kept."
+      },
+      {
+        k: "Transmission",
+        v: "How completely and quickly changes reach lending and deposit rates."
+      }
+    ],
+    interpretation: "Transmission is never complete. A one percentage point policy change may move bank lending rates by considerably less, and with a lag of months, which is why policy takes several quarters to affect the economy.",
+    related: ["monetary-policy", "central-banking", "interest-rates", "money-markets"],
+    prereq: ["monetary-policy"],
+    next: ["reserve-requirements"],
+  },
+  {
+    id: "reserve-requirements",
+    title: "Reserve Requirements",
+    domain: "banking",
+    category: "central",
+    subcategory: "Reserve Requirements",
+    level: "Core",
+    oneLine: "The portion of deposits banks must hold rather than lend, which constrains credit creation directly.",
+    what: "Reserve requirements oblige banks to hold a specified proportion of their deposits in cash with the central bank, or in prescribed liquid assets. In India these are the cash reserve ratio and the statutory liquidity ratio. They serve prudential and monetary purposes: ensuring liquidity is available, and limiting how much credit the banking system can create.",
+    simple: "Not every rupee deposited can be lent. A set portion must stay put.",
+    example: {
+      setup: "A bank with ₹1,00,000 crore of deposits, a cash reserve ratio of 4 percent and a statutory liquidity ratio of 18 percent.",
+      steps: ["Held as cash with the central bank = ₹4,000 crore", "Held in prescribed securities = ₹18,000 crore", "Available for lending = ₹78,000 crore"],
+      result: "₹22,000 crore held back",
+      note: "Raising the cash reserve ratio by one percentage point would withdraw ₹1,000 crore of lending capacity from this bank alone."
+    },
+    interpretation: "Reserve requirements are a blunt instrument. They act immediately on the quantity of credit rather than on its price, which makes them powerful and imprecise.",
+    related: ["central-banking", "money-creation", "monetary-policy", "commercial-banking"],
+    prereq: ["central-banking"],
+    next: ["money-creation"],
+  },
+  {
+    id: "money-creation",
+    title: "Money Creation",
+    domain: "banking",
+    category: "central",
+    subcategory: "Money Creation",
+    level: "Advanced",
+    oneLine: "Most money in a modern economy is created by banks lending, not by anyone printing it.",
+    what: "When a bank makes a loan, it credits the borrower's account, creating a deposit that did not previously exist. That deposit is money. The central bank issues currency and reserves, but the large majority of money in circulation is created through commercial bank lending and destroyed when loans are repaid.",
+    simple: "The bank does not lend out someone else's deposit. It creates a new one by writing the loan.",
+    formula: {
+      main: "Broad money = Currency with the public + Deposits with banks"
+    },
+    interpretation: "This explains why credit conditions and the money supply are inseparable. When lending contracts, money is destroyed faster than it is created, and the economy tightens without anyone deciding that it should.",
+    components: [
+      {
+        k: "Base money",
+        v: "Currency and reserves, issued by the central bank."
+      },
+      {
+        k: "Broad money",
+        v: "Base money plus bank deposits, the large majority of which arise from lending."
+      },
+      {
+        k: "Constraints",
+        v: "Capital requirements, reserve requirements, and the availability of creditworthy borrowers."
+      },
+      {
+        k: "Destruction",
+        v: "Repaying a loan extinguishes the deposit it created."
+      }
+    ],
+    misconceptions: [
+      {
+        claim: "“Banks lend out the deposits they hold.”",
+        truth: "Lending creates the deposit. Banks are constrained by capital, regulation and demand for credit, not by a pool of deposits waiting to be lent."
+      }
+    ],
+    related: ["money", "central-banking", "commercial-banking", "reserve-requirements"],
+    prereq: ["money"],
+    next: ["lender-of-last-resort"],
+  },
+  {
+    id: "lender-of-last-resort",
+    title: "Lender of Last Resort",
+    domain: "banking",
+    category: "central",
+    subcategory: "Lender of Last Resort",
+    level: "Advanced",
+    oneLine: "The central bank lending to solvent institutions when nobody else will, to stop a liquidity problem becoming a collapse.",
+    what: "A central bank acts as lender of last resort by providing funds against good collateral to institutions that are solvent but temporarily unable to obtain funding. The purpose is to prevent a liquidity shortage at one institution from becoming a system-wide failure through contagion.",
+    simple: "The bank is sound but cannot get cash today. Somebody has to lend, or a solvable problem becomes a disaster.",
+    components: [
+      {
+        k: "Solvent but illiquid",
+        v: "The distinction that determines whether support is appropriate."
+      },
+      {
+        k: "Good collateral",
+        v: "Lending is secured, not a gift."
+      },
+      {
+        k: "Penalty rate",
+        v: "Priced above market, so it is used only when necessary."
+      },
+      {
+        k: "Moral hazard",
+        v: "The knowledge that support exists can encourage the risk taking that makes it necessary."
+      }
+    ],
+    interpretation: "The distinction between illiquid and insolvent is clean in principle and extremely difficult in practice, particularly during a crisis when asset values cannot be established with confidence.",
+    related: ["central-banking", "liquidity-risk", "systemic-risk", "bank-runs"],
+    prereq: ["central-banking"],
+    next: ["bank-runs"],
+  },
+  {
+    id: "ipo-process",
+    title: "The IPO Process",
+    domain: "banking",
+    category: "investment-banking",
+    subcategory: "IPO Process",
+    level: "Core",
+    oneLine: "How a private company becomes publicly traded, and how the offer price is arrived at.",
+    what: "An initial public offering is the first sale of a company's shares to the public. It involves appointing merchant bankers, preparing a prospectus, regulatory review, marketing to investors, price discovery through book building, allotment and finally listing. The process typically takes several months.",
+    simple: "Turning a private company into a listed one, and discovering what the market will pay for it.",
+    components: [
+      {
+        k: "Draft prospectus",
+        v: "The disclosure document filed with the regulator, containing risks, finances and use of proceeds."
+      },
+      {
+        k: "Book building",
+        v: "Collecting investor demand across a price band to establish the issue price."
+      },
+      {
+        k: "Anchor investors",
+        v: "Institutions allotted before the issue opens, signalling confidence."
+      },
+      {
+        k: "Allotment and listing",
+        v: "Distribution of shares, then commencement of trading."
+      }
+    ],
+    interpretation: "The issue price is negotiated to place the offer successfully, not to represent independent valuation. It reflects demand conditions in that window, which is why listing performance varies so widely.",
+    misconceptions: [
+      {
+        claim: "“An IPO price is set by the regulator.”",
+        truth: "The regulator reviews disclosure, not price. Pricing is decided by the company and its bankers through book building."
+      }
+    ],
+    related: ["investment-banking", "primary-secondary", "equity-markets", "capital-raising"],
+    prereq: ["investment-banking"],
+    next: ["capital-raising"],
+  },
+  {
+    id: "capital-raising",
+    title: "Capital Raising",
+    domain: "banking",
+    category: "investment-banking",
+    subcategory: "Capital Raising",
+    level: "Core",
+    oneLine: "The routes available to a company that needs funding, beyond the first public offer.",
+    what: "Capital raising covers the methods by which companies obtain funding: further public offers, rights issues to existing shareholders, private placements to selected institutions, preferential allotments, and debt issuance. Each differs in speed, cost, dilution and the approvals required.",
+    simple: "After the IPO, there are still several ways to raise money, and each has a different price.",
+    components: [
+      {
+        k: "Rights issue",
+        v: "Offered to existing shareholders in proportion, avoiding dilution for those who participate."
+      },
+      {
+        k: "Qualified institutional placement",
+        v: "Quick issuance to institutions, with fewer procedural requirements."
+      },
+      {
+        k: "Preferential allotment",
+        v: "Shares to identified parties, often promoters or strategic investors."
+      },
+      {
+        k: "Debt issuance",
+        v: "Bonds or debentures, raising capital without dilution."
+      }
+    ],
+    interpretation: "The route chosen signals something. A rights issue treats existing shareholders fairly; a preferential allotment at a discount to selected parties transfers value away from them.",
+    related: ["investment-banking", "ipo-process", "debt-vs-equity", "equity-markets"],
+    prereq: ["investment-banking"],
+    next: ["advisory"],
+  },
+  {
+    id: "advisory",
+    title: "Advisory Services",
+    domain: "banking",
+    category: "investment-banking",
+    subcategory: "Advisory",
+    level: "Core",
+    oneLine: "Guidance on transactions, paid by fee, where the adviser's incentives deserve attention.",
+    what: "Advisory work covers guidance on mergers, acquisitions, divestments, restructuring and fundraising. The bank does not commit its own capital; it earns a fee for expertise, relationships and execution. Fees are frequently contingent on completion, which creates an incentive worth understanding.",
+    simple: "They are paid for advice. Often paid more if the deal happens, which is worth remembering when the advice is that it should.",
+    components: [
+      {
+        k: "Sell side",
+        v: "Advising a seller, running the process to maximise price."
+      },
+      {
+        k: "Buy side",
+        v: "Advising an acquirer on target selection, valuation and negotiation."
+      },
+      {
+        k: "Fairness opinion",
+        v: "A formal view on whether terms are financially fair to shareholders."
+      },
+      {
+        k: "Success fee",
+        v: "Payment contingent on completion, which aligns effort and biases recommendation."
+      }
+    ],
+    misconceptions: [
+      {
+        claim: "“The adviser is neutral.”",
+        truth: "A largely contingent fee creates a strong incentive toward completion. That does not make the advice wrong, and it is a factor to weigh."
+      }
+    ],
+    related: ["investment-banking", "types-of-ma", "due-diligence", "synergies"],
+    prereq: ["investment-banking"],
+    next: ["types-of-ma"],
+  },
+  {
+    id: "underwriting-risk",
+    title: "Underwriting Risk",
+    domain: "banking",
+    category: "nbfc",
+    subcategory: "Underwriting Risk",
+    level: "Intermediate",
+    oneLine: "The risk that what has been insured or guaranteed turns out to cost more than the premium collected.",
+    what: "Underwriting risk is the risk that claims or losses exceed what was assumed when a risk was priced. In insurance it is the risk that claims exceed premiums; in securities underwriting it is the risk that an issue cannot be placed and must be held. In both cases the party accepting the risk has committed before knowing the outcome.",
+    simple: "You agreed the price before you knew the cost. If your estimate was wrong, you carry the difference.",
+    components: [
+      {
+        k: "Pricing risk",
+        v: "Premium set too low relative to actual claim experience."
+      },
+      {
+        k: "Selection risk",
+        v: "Attracting a worse pool than assumed, because those most likely to claim are most likely to buy."
+      },
+      {
+        k: "Concentration",
+        v: "Many policies exposed to a single event, which breaks the pooling assumption."
+      },
+      {
+        k: "Reserving risk",
+        v: "Setting aside too little for claims incurred but not yet reported."
+      }
+    ],
+    interpretation: "Adverse selection is the persistent difficulty. Those who expect to claim are most motivated to buy cover, which means the pool that arrives is worse than the population it was priced from.",
+    related: ["insurance", "credit-risk", "risk-return", "diversification"],
+    prereq: ["insurance"],
+    next: ["alm"],
+  },
+  {
+    id: "alm",
+    title: "Asset-Liability Management",
+    domain: "banking",
+    category: "nbfc",
+    subcategory: "Asset-Liability Management",
+    level: "Advanced",
+    oneLine: "Ensuring what an institution owns matches what it owes, in timing as well as in amount.",
+    what: "Asset-liability management is the practice of matching the maturity, currency and rate characteristics of assets against liabilities. A mismatch in any of these creates risk. The most dangerous is maturity mismatch, where long-dated assets are funded by short-dated liabilities that must be repeatedly renewed.",
+    simple: "It is not enough to own more than you owe. What you own must turn into cash when what you owe falls due.",
+    components: [
+      {
+        k: "Maturity matching",
+        v: "Aligning when assets produce cash with when liabilities require it."
+      },
+      {
+        k: "Rate matching",
+        v: "Aligning fixed and floating exposure on both sides."
+      },
+      {
+        k: "Currency matching",
+        v: "Funding foreign currency assets with foreign currency liabilities."
+      },
+      {
+        k: "Gap analysis",
+        v: "Measuring the mismatch in each time bucket."
+      }
+    ],
+    realWorld: "IL&FS funded long-gestation infrastructure assets substantially with short-term borrowing. Nothing about the projects had to fail; lenders simply had to decline to renew.",
+    caseRef: "ilfs-2018",
+    misconceptions: [
+      {
+        claim: "“If assets exceed liabilities, the institution is safe.”",
+        truth: "That is solvency. Failure comes from timing: being unable to produce cash on the day it is demanded, while remaining solvent on paper."
+      }
+    ],
+    related: ["liquidity-risk", "nbfc", "commercial-banking", "bank-runs"],
+    prereq: ["liquidity-risk"],
+    next: ["bank-runs"],
+  },
+  {
+    id: "payment-rails",
+    title: "Payment Rails",
+    domain: "banking",
+    category: "payments",
+    subcategory: "Payment Rails",
+    level: "Core",
+    oneLine: "The underlying networks money actually travels on, invisible to the person paying.",
+    what: "Payment rails are the infrastructure through which funds move between accounts. Different rails serve different needs: large-value systems settle individually in real time, retail systems settle in batches, and card networks route authorisation separately from settlement. A single tap may traverse several rails.",
+    simple: "You press pay once. Underneath, several separate systems handle authorisation, clearing and settlement.",
+    components: [
+      {
+        k: "Real time gross settlement",
+        v: "Large value transfers settled individually and immediately."
+      },
+      {
+        k: "Retail batch systems",
+        v: "Smaller payments netted and settled in cycles."
+      },
+      {
+        k: "Card networks",
+        v: "Authorisation in seconds, settlement typically over following days."
+      },
+      {
+        k: "Unified interfaces",
+        v: "Layers that let applications initiate payments across underlying rails."
+      }
+    ],
+    interpretation: "The gap between authorisation and settlement is where risk sits. A merchant sees approval instantly while funds arrive later, and someone carries the exposure in that interval.",
+    related: ["digital-payments", "settlement-systems", "central-banking", "money"],
+    prereq: ["digital-payments"],
+    next: ["settlement-systems"],
+  },
+  {
+    id: "settlement-systems",
+    title: "Settlement Systems",
+    domain: "banking",
+    category: "payments",
+    subcategory: "Settlement Systems",
+    level: "Advanced",
+    oneLine: "The final transfer of funds between institutions, which is where a payment truly ends.",
+    what: "Settlement is the point at which the transfer of value becomes final and irrevocable. Gross settlement processes each transaction individually. Net settlement accumulates obligations and settles the difference at intervals, requiring far less liquidity while creating exposure between settlement points.",
+    simple: "A payment is not complete when the app says done. It is complete when the banks have actually settled between themselves.",
+    components: [
+      {
+        k: "Gross settlement",
+        v: "Each payment settled individually, immediately final, liquidity intensive."
+      },
+      {
+        k: "Net settlement",
+        v: "Obligations netted and settled periodically, efficient but with exposure between cycles."
+      },
+      {
+        k: "Finality",
+        v: "The moment a transfer cannot be reversed."
+      },
+      {
+        k: "Settlement risk",
+        v: "That one party performs and the other does not before finality."
+      }
+    ],
+    interpretation: "Net settlement is efficient precisely because it requires less cash to move. That efficiency is purchased with exposure: between settlement cycles, obligations exist unpaid.",
+    related: ["payment-rails", "clearing-settlement", "systemic-risk", "central-banking"],
+    prereq: ["payment-rails"],
+    next: ["systemic-risk"],
+  },
+  {
+    id: "bank-runs",
+    title: "Bank Runs",
+    domain: "banking",
+    category: "bank-risk",
+    subcategory: "Bank Runs",
+    level: "Advanced",
+    oneLine: "Depositors withdrawing simultaneously, which can destroy a sound bank purely through timing.",
+    what: "A bank run occurs when a large proportion of depositors seek to withdraw at once. Because banks hold long-term loans funded by deposits repayable on demand, no bank holds enough cash to satisfy all depositors simultaneously. The run is self-fulfilling: the belief that a bank may fail creates the withdrawals that cause it.",
+    simple: "Every depositor is individually rational to withdraw first. Collectively that behaviour causes the failure they feared.",
+    why: "This fragility is inherent to the structure of banking rather than a flaw in any particular bank. It is why deposit insurance, capital requirements and the lender of last resort function all exist.",
+    components: [
+      {
+        k: "Maturity transformation",
+        v: "The structural cause. Long assets, demandable liabilities."
+      },
+      {
+        k: "Self-fulfilling belief",
+        v: "Fear of failure produces the behaviour that causes failure."
+      },
+      {
+        k: "Deposit insurance",
+        v: "Removes the incentive to run by guaranteeing small deposits."
+      },
+      {
+        k: "Speed",
+        v: "Digital banking has compressed runs from days to hours."
+      }
+    ],
+    interpretation: "Deposit insurance works by making the run unnecessary rather than by funding it. If depositors are confident they will be repaid, they do not withdraw, and the guarantee is rarely called upon.",
+    related: ["commercial-banking", "liquidity-risk", "lender-of-last-resort", "systemic-risk"],
+    prereq: ["commercial-banking"],
+    next: ["bank-liquidity"],
+  },
+  {
+    id: "bank-liquidity",
+    title: "Liquidity Risk in Banks",
+    domain: "banking",
+    category: "bank-risk",
+    subcategory: "Liquidity Risk in Banks",
+    level: "Advanced",
+    oneLine: "A bank's specific vulnerability to being unable to meet obligations as they fall due.",
+    what: "Liquidity risk in banking arises from the mismatch between assets that cannot be quickly converted to cash and liabilities that can be withdrawn on demand. Regulation addresses it through requirements that banks hold sufficient high quality liquid assets to survive a defined stress period, and that funding be reasonably stable.",
+    simple: "Being solvent is not enough. The money has to be available on the day it is asked for.",
+    components: [
+      {
+        k: "Liquidity coverage",
+        v: "Holding enough high quality liquid assets to withstand a defined short-term stress."
+      },
+      {
+        k: "Stable funding",
+        v: "Requiring that long-term assets be funded by reasonably durable liabilities."
+      },
+      {
+        k: "High quality liquid assets",
+        v: "Holdings that can be sold quickly without material loss, typically government securities."
+      },
+      {
+        k: "Contingency planning",
+        v: "Arranged funding sources that can be drawn before a crisis, not during one."
+      }
+    ],
+    interpretation: "These requirements exist because the 2008 crisis demonstrated that institutions meeting every capital requirement could still fail within days when funding withdrew.",
+    related: ["liquidity-risk", "bank-runs", "alm", "capital-adequacy"],
+    prereq: ["liquidity-risk"],
+    next: ["regulation-supervision"],
+  },
+  {
+    id: "regulation-supervision",
+    title: "Regulation and Supervision",
+    domain: "banking",
+    category: "bank-risk",
+    subcategory: "Regulation & Supervision",
+    level: "Core",
+    oneLine: "Rules that constrain what banks may do, and the ongoing oversight that checks whether they follow them.",
+    what: "Regulation sets the rules: capital requirements, liquidity standards, exposure limits and governance obligations. Supervision is the continuous process of examining whether an institution complies and whether its risk management is adequate in practice. Rules without supervision are advisory; supervision without rules is arbitrary.",
+    simple: "One writes the rules. The other checks whether anyone is following them. Both are needed.",
+    components: [
+      {
+        k: "Capital regulation",
+        v: "Minimum equity against risk-weighted assets."
+      },
+      {
+        k: "Liquidity regulation",
+        v: "Requirements to hold liquid assets and maintain stable funding."
+      },
+      {
+        k: "Exposure limits",
+        v: "Caps on lending to a single borrower or connected group."
+      },
+      {
+        k: "Supervisory review",
+        v: "Inspection, stress testing and assessment of governance."
+      }
+    ],
+    interpretation: "Banking regulation is largely a record of past failures. Nearly every significant requirement exists because its absence caused a crisis that someone had to pay for.",
+    related: ["capital-adequacy", "bank-liquidity", "regulators", "systemic-risk"],
+    prereq: ["capital-adequacy"],
+    next: ["systemic-risk"],
+  },
+  {
+    id: "gdp",
+    title: "Gross Domestic Product",
+    domain: "economics",
+    category: "macro",
+    subcategory: "GDP",
+    level: "Foundational",
+    oneLine: "The total value of goods and services produced in an economy, and the number everything else is measured against.",
+    what: "GDP is the market value of all final goods and services produced within a country in a period. It can be measured by what is produced, what is spent or what is earned, and the three approaches should agree. Nominal GDP is measured at current prices; real GDP removes inflation to show actual change in output.",
+    simple: "Everything the country produced, added up. Growth in that number is what economies are judged on.",
+    formula: {
+      main: "GDP = Consumption + Investment + Government spending + (Exports − Imports)",
+      others: [
+        {
+          label: "Real growth",
+          expr: "Nominal growth − Inflation, approximately"
+        }
+      ]
+    },
+    example: {
+      setup: "An economy grows 11 percent in nominal terms with inflation at 5.5 percent.",
+      steps: ["Nominal growth = 11 percent", "Inflation = 5.5 percent", "Real growth ≈ 5.5 percent"],
+      result: "About 5.5 percent real",
+      note: "Half the apparent growth was prices rising rather than more being produced."
+    },
+    limitations: ["It counts activity, not wellbeing. Rebuilding after a disaster raises GDP.", "It excludes unpaid work, which is substantial in every economy.", "It says nothing about distribution."],
+    misconceptions: [
+      {
+        claim: "“GDP growth means people are better off.”",
+        truth: "It means more was produced. Whether that reaches households depends on distribution, inflation and population growth."
+      }
+    ],
+    related: ["inflation", "business-cycle", "unemployment", "monetary-policy"],
+    next: ["inflation", "business-cycle"],
+  },
+  {
+    id: "unemployment",
+    title: "Unemployment",
+    domain: "economics",
+    category: "macro",
+    subcategory: "Unemployment",
+    level: "Core",
+    oneLine: "The share of people seeking work who cannot find it, measured in ways that shape the answer.",
+    what: "The unemployment rate is the number of people actively seeking work as a proportion of the labour force. It excludes those not looking, which means it can fall because people gave up searching rather than because they found jobs. The labour force participation rate is therefore read alongside it.",
+    simple: "How many people want work and cannot get it. The measure has an edge case that matters: people who stopped looking are not counted.",
+    formula: {
+      main: "Unemployment rate = Unemployed ÷ Labour force × 100",
+      others: [
+        {
+          label: "Participation rate",
+          expr: "Labour force ÷ Working age population × 100"
+        }
+      ]
+    },
+    components: [
+      {
+        k: "Frictional",
+        v: "People between jobs. Always present and not a problem."
+      },
+      {
+        k: "Structural",
+        v: "Skills or location mismatched with available work. Persistent."
+      },
+      {
+        k: "Cyclical",
+        v: "Caused by weak demand. This is what policy attempts to address."
+      },
+      {
+        k: "Disguised",
+        v: "Working fewer hours or at lower productivity than desired, common where informal employment is large."
+      }
+    ],
+    interpretation: "A falling unemployment rate accompanied by a falling participation rate is not an improvement. It usually means people have left the labour force rather than entered employment.",
+    related: ["gdp", "business-cycle", "monetary-policy", "recessions"],
+    prereq: ["gdp"],
+    next: ["business-cycle"],
+  },
+  {
+    id: "business-cycle",
+    title: "The Business Cycle",
+    domain: "economics",
+    category: "macro",
+    subcategory: "Business Cycle",
+    level: "Core",
+    oneLine: "The recurring pattern of expansion and contraction that economies move through.",
+    what: "The business cycle describes fluctuations in economic activity around a long-term growth path. It moves through expansion, peak, contraction and trough. The cycle is recurrent but not regular: the length and depth of each phase vary, and turning points are only identifiable well after they occur.",
+    simple: "Economies do not grow in a straight line. They speed up, overheat, slow down and recover, repeatedly.",
+    components: [
+      {
+        k: "Expansion",
+        v: "Output, employment and credit growing together."
+      },
+      {
+        k: "Peak",
+        v: "Capacity constraints appear, inflation typically rises."
+      },
+      {
+        k: "Contraction",
+        v: "Demand falls, unemployment rises, credit tightens."
+      },
+      {
+        k: "Trough",
+        v: "The low point, from which recovery begins."
+      }
+    ],
+    interpretation: "Different sectors lead and lag. Construction and durable goods turn early; employment turns late. This is why sector performance often signals a change in phase before the aggregate data confirms it.",
+    misconceptions: [
+      {
+        claim: "“The cycle has a predictable length.”",
+        truth: "Cycles vary from a few years to more than a decade. Expansions do not die of old age."
+      }
+    ],
+    related: ["gdp", "recessions", "monetary-policy", "unemployment"],
+    prereq: ["gdp"],
+    next: ["recessions"],
+  },
+  {
+    id: "fiscal-policy",
+    title: "Fiscal Policy",
+    domain: "economics",
+    category: "policy",
+    subcategory: "Fiscal Policy",
+    level: "Core",
+    oneLine: "Government taxation and spending, which affects demand directly rather than through interest rates.",
+    what: "Fiscal policy is the use of government spending and taxation to influence economic activity. Expansionary policy increases spending or cuts taxes to support demand. Contractionary policy does the reverse. It differs from monetary policy in acting directly on demand rather than through the cost of borrowing.",
+    simple: "Monetary policy changes what borrowing costs. Fiscal policy puts money into the economy or takes it out.",
+    components: [
+      {
+        k: "Government spending",
+        v: "Direct injection of demand, particularly through infrastructure."
+      },
+      {
+        k: "Taxation",
+        v: "Affects disposable income and business investment decisions."
+      },
+      {
+        k: "Fiscal deficit",
+        v: "The excess of spending over revenue, funded by borrowing."
+      },
+      {
+        k: "Automatic stabilisers",
+        v: "Tax receipts falling and welfare spending rising in a downturn, without any new decision."
+      }
+    ],
+    interpretation: "Fiscal and monetary policy can work together or against each other. Fiscal expansion during monetary tightening pulls in opposite directions, and the result depends on which is stronger.",
+    related: ["monetary-policy", "government-debt", "gdp", "policy-transmission"],
+    prereq: ["gdp"],
+    next: ["government-debt"],
+  },
+  {
+    id: "policy-transmission",
+    title: "Policy Transmission",
+    domain: "economics",
+    category: "policy",
+    subcategory: "Policy Transmission",
+    level: "Advanced",
+    oneLine: "How a policy decision actually reaches households and businesses, incompletely and with a lag.",
+    what: "Policy transmission is the process through which a central bank's decision affects the real economy. It operates through several channels: interest rates on borrowing and saving, the availability of credit, asset prices and wealth, exchange rates, and expectations. Each channel works with a different lag and different strength.",
+    simple: "The rate changed today. Somebody's spending decision changes eight months from now, if at all.",
+    components: [
+      {
+        k: "Interest rate channel",
+        v: "Borrowing costs change, altering investment and consumption."
+      },
+      {
+        k: "Credit channel",
+        v: "Bank willingness to lend changes, independent of the rate."
+      },
+      {
+        k: "Asset price channel",
+        v: "Valuations move, affecting wealth and confidence."
+      },
+      {
+        k: "Exchange rate channel",
+        v: "Rate differentials move the currency, affecting trade prices."
+      },
+      {
+        k: "Expectations channel",
+        v: "Beliefs about future policy change behaviour today."
+      }
+    ],
+    interpretation: "Transmission is incomplete everywhere. Fixed rate borrowers are unaffected until refinancing, deposit rates lag lending rates, and a large informal economy may barely respond at all.",
+    related: ["monetary-policy", "interest-rates", "policy-rate", "commercial-banking"],
+    prereq: ["monetary-policy"],
+    next: ["fiscal-policy"],
+  },
+  {
+    id: "government-debt",
+    title: "Government Debt",
+    domain: "economics",
+    category: "policy",
+    subcategory: "Government Debt",
+    level: "Intermediate",
+    oneLine: "Accumulated borrowing by the state, where the cost of servicing matters more than the size.",
+    what: "Government debt is the total outstanding borrowing of a government. It is usually measured against GDP to allow comparison across countries and time. What determines sustainability is not the ratio itself but the relationship between the interest rate on the debt and the economy's nominal growth rate.",
+    simple: "The size of the debt matters less than whether the economy grows faster than the interest accumulates.",
+    formula: {
+      main: "Debt to GDP = Total government debt ÷ GDP × 100",
+      others: [
+        {
+          label: "Debt dynamics",
+          expr: "The ratio falls when nominal growth exceeds the interest rate, given a balanced primary budget"
+        }
+      ]
+    },
+    example: {
+      setup: "Debt at 80 percent of GDP, average interest of 7 percent, nominal GDP growth of 10 percent.",
+      steps: ["Growth exceeds the interest rate by 3 percentage points", "The ratio falls even while running a small primary deficit", "If growth fell to 5 percent, the ratio would rise instead"],
+      result: "Sustainable at 10 percent growth, not at 5",
+      note: "The same debt is manageable or dangerous depending entirely on growth and rates, neither of which is fixed."
+    },
+    misconceptions: [
+      {
+        claim: "“High debt to GDP means a country is near default.”",
+        truth: "Debt in a country's own currency, held largely domestically, at rates below nominal growth, is sustainable at high levels. Currency composition matters far more than the ratio."
+      }
+    ],
+    related: ["sovereign-debt", "fiscal-policy", "inflation", "bond-pricing"],
+    prereq: ["fiscal-policy"],
+    next: ["sovereign-debt"],
+  },
+  {
+    id: "exchange-rates",
+    title: "Exchange Rates",
+    domain: "economics",
+    category: "external",
+    subcategory: "Exchange Rates",
+    level: "Core",
+    oneLine: "The price of one currency in another, set by flows and expectations rather than by decree.",
+    what: "An exchange rate is the rate at which one currency converts into another. Under a floating regime it is determined by supply and demand from trade, investment and speculation. Under a fixed or managed regime, a central bank intervenes to hold it within a range, which requires reserves and constrains monetary policy.",
+    simple: "What your currency buys of someone else's. In a floating system, nobody sets it.",
+    components: [
+      {
+        k: "Floating",
+        v: "Market determined, with the central bank intervening only to smooth disorder."
+      },
+      {
+        k: "Managed float",
+        v: "Market determined within limits the central bank defends."
+      },
+      {
+        k: "Fixed or pegged",
+        v: "Held at a stated rate, requiring reserves and surrendering monetary independence."
+      },
+      {
+        k: "Real effective rate",
+        v: "Adjusted for inflation differences and weighted by trade partners."
+      }
+    ],
+    interpretation: "An economy cannot simultaneously have a fixed exchange rate, free capital movement and independent monetary policy. Choosing any two forecloses the third.",
+    related: ["foreign-exchange", "currency-markets", "currency-pegs", "balance-of-payments"],
+    prereq: ["foreign-exchange"],
+    next: ["international-trade"],
+  },
+  {
+    id: "international-trade",
+    title: "International Trade",
+    domain: "economics",
+    category: "external",
+    subcategory: "International Trade",
+    level: "Core",
+    oneLine: "Exchange of goods and services across borders, which raises output and redistributes who gains.",
+    what: "International trade allows countries to specialise where they are relatively more efficient and exchange for the rest. The theory of comparative advantage shows that trade can benefit both parties even when one is more efficient at everything. The aggregate gains are well established, and so is the fact that they are unevenly distributed.",
+    simple: "Both countries can gain from trade even if one is better at making everything. The gains do not reach everyone equally.",
+    components: [
+      {
+        k: "Comparative advantage",
+        v: "Specialising where the opportunity cost is lowest, not where you are absolutely best."
+      },
+      {
+        k: "Trade balance",
+        v: "Exports minus imports of goods and services."
+      },
+      {
+        k: "Tariffs and barriers",
+        v: "Taxes and restrictions that alter relative prices."
+      },
+      {
+        k: "Terms of trade",
+        v: "The ratio of export prices to import prices, which determines how gains are shared."
+      }
+    ],
+    interpretation: "The aggregate gain from trade coexists with concentrated losses in specific sectors and regions. That combination is why trade policy remains contested despite broad agreement on the aggregate effect.",
+    related: ["exchange-rates", "balance-of-payments", "currency-risk", "gdp"],
+    prereq: ["exchange-rates"],
+    next: ["balance-of-payments"],
+  },
+  {
+    id: "balance-of-payments",
+    title: "Balance of Payments",
+    domain: "economics",
+    category: "external",
+    subcategory: "Balance of Payments",
+    level: "Advanced",
+    oneLine: "A record of every transaction between a country and the rest of the world.",
+    what: "The balance of payments records all economic transactions between residents of a country and the rest of the world. The current account covers trade in goods and services, income and transfers. The capital and financial account covers investment flows. By construction the two must offset, since every transaction has a funding side.",
+    simple: "Everything coming in and going out. A deficit on one side must be financed by a surplus on the other.",
+    components: [
+      {
+        k: "Current account",
+        v: "Trade in goods and services, income, and remittances."
+      },
+      {
+        k: "Capital and financial account",
+        v: "Direct investment, portfolio flows and borrowing."
+      },
+      {
+        k: "Reserves",
+        v: "Changes in the central bank's foreign currency holdings."
+      },
+      {
+        k: "Identity",
+        v: "A current account deficit is necessarily financed by capital inflows or reserve drawdown."
+      }
+    ],
+    interpretation: "A current account deficit is not inherently bad. It means a country is investing more than it saves and importing capital to fund it. Whether that is sound depends entirely on how the capital is used and how stable the funding is.",
+    realWorld: "India's 1991 crisis was a balance of payments crisis. Reserves fell to a few weeks of import cover, forcing devaluation and the liberalisation that followed.",
+    related: ["exchange-rates", "international-trade", "capital-flows", "foreign-exchange"],
+    prereq: ["international-trade"],
+    next: ["capital-flows"],
+  },
+  {
+    id: "capital-flows",
+    title: "Capital Flows",
+    domain: "economics",
+    category: "external",
+    subcategory: "Capital Flows",
+    level: "Advanced",
+    oneLine: "Money moving across borders in search of return, which can arrive quickly and leave faster.",
+    what: "Capital flows are cross-border movements of investment. Foreign direct investment involves lasting interest in an enterprise and tends to be stable. Portfolio flows into shares and bonds can reverse rapidly, and are highly sensitive to interest rate differentials and risk sentiment abroad.",
+    simple: "Direct investment builds a factory and stays. Portfolio investment buys shares and can leave on Tuesday.",
+    components: [
+      {
+        k: "Direct investment",
+        v: "Lasting interest, slow to reverse, brings technology and management."
+      },
+      {
+        k: "Portfolio investment",
+        v: "Shares and bonds, liquid, reversible within days."
+      },
+      {
+        k: "Push factors",
+        v: "Conditions abroad, particularly rates in major economies."
+      },
+      {
+        k: "Pull factors",
+        v: "Domestic growth, stability and returns."
+      }
+    ],
+    interpretation: "Portfolio flows often respond more to conditions abroad than to anything domestic. A country can experience sudden outflows despite unchanged fundamentals, purely because rates rose elsewhere.",
+    realWorld: "The 2013 taper episode demonstrated this. Signals of reduced US stimulus triggered outflows from emerging markets, weakening currencies in economies where nothing domestic had changed.",
+    related: ["balance-of-payments", "foreign-exchange", "fdi", "portfolio-flows"],
+    prereq: ["balance-of-payments"],
+    next: ["fdi"],
+  },
+  {
+    id: "recessions",
+    title: "Recessions",
+    domain: "economics",
+    category: "cycles",
+    subcategory: "Recessions",
+    level: "Core",
+    oneLine: "A meaningful and broad decline in economic activity, with self-reinforcing dynamics.",
+    what: "A recession is a significant decline in economic activity spread across the economy and lasting more than a few months. It is commonly approximated by two consecutive quarters of falling real GDP, though formal determinations consider employment, income and production as well. The defining feature is that the decline becomes self-reinforcing.",
+    simple: "Activity falls, which reduces incomes, which reduces spending, which reduces activity further.",
+    components: [
+      {
+        k: "Demand contraction",
+        v: "Households and businesses spend less, often simultaneously."
+      },
+      {
+        k: "Employment effects",
+        v: "Job losses reduce income, which reduces demand further."
+      },
+      {
+        k: "Credit tightening",
+        v: "Lenders retreat exactly when borrowers most need funding."
+      },
+      {
+        k: "Policy response",
+        v: "Rate cuts and fiscal support, both operating with lags."
+      }
+    ],
+    interpretation: "Recessions are usually identified well after they begin, because the data arrives with a delay and is revised. By the time a recession is confirmed, it is often already ending.",
+    related: ["business-cycle", "unemployment", "monetary-policy", "financial-crises"],
+    prereq: ["business-cycle"],
+    next: ["financial-crises"],
+  },
+  {
+    id: "financial-crises",
+    title: "Financial Crises",
+    domain: "economics",
+    category: "cycles",
+    subcategory: "Financial Crises",
+    level: "Advanced",
+    oneLine: "A breakdown in the financial system itself, which damages the real economy far beyond the initial loss.",
+    what: "A financial crisis is a severe disruption to financial intermediation. It may take the form of a banking crisis, a currency crisis, a sovereign debt crisis, or a combination. What distinguishes it from an ordinary downturn is that the mechanism for allocating credit stops functioning, so sound borrowers are cut off alongside unsound ones.",
+    simple: "An ordinary recession is less activity. A financial crisis is the machinery for funding activity breaking down.",
+    components: [
+      {
+        k: "Preceding credit growth",
+        v: "Crises are typically preceded by rapid expansion in lending."
+      },
+      {
+        k: "Asset price collapse",
+        v: "Values that supported the borrowing fall."
+      },
+      {
+        k: "Balance sheet damage",
+        v: "Losses consume capital, forcing lenders to contract."
+      },
+      {
+        k: "Contagion",
+        v: "Spread through interconnection and loss of confidence."
+      }
+    ],
+    interpretation: "The pattern recurs with remarkable consistency across centuries and countries: rapid credit growth, rising asset prices, a trigger, then a sudden reassessment of risk that affects everything at once.",
+    related: ["systemic-risk", "recessions", "asset-bubbles", "contagion"],
+    prereq: ["recessions"],
+    next: ["asset-bubbles"],
+  },
+  {
+    id: "asset-bubbles",
+    title: "Asset Bubbles",
+    domain: "economics",
+    category: "cycles",
+    subcategory: "Asset Bubbles",
+    level: "Advanced",
+    oneLine: "Prices rising far above any justifiable value, sustained by the expectation of further rises.",
+    what: "An asset bubble occurs when prices rise substantially above levels justified by fundamentals, driven by expectations of continued appreciation rather than by income the asset produces. Bubbles are difficult to identify with confidence while they are inflating, and obvious afterwards.",
+    simple: "People buy because the price is rising. The price rises because people are buying. That works until it stops.",
+    components: [
+      {
+        k: "Narrative",
+        v: "A story explaining why traditional valuation no longer applies."
+      },
+      {
+        k: "Credit expansion",
+        v: "Borrowing to buy, which amplifies both the rise and the collapse."
+      },
+      {
+        k: "Broad participation",
+        v: "People with no prior interest entering, often late."
+      },
+      {
+        k: "Detachment",
+        v: "Prices unmoored from any cash flow the asset produces."
+      }
+    ],
+    interpretation: "The difficulty is that high prices can be justified by genuine change. Some transformative technologies did warrant valuations that looked absurd. Distinguishing the two in advance is the problem nobody has reliably solved.",
+    misconceptions: [
+      {
+        claim: "“Bubbles are obvious.”",
+        truth: "They are obvious afterwards. During inflation, sceptics are consistently wrong for long enough that scepticism becomes professionally costly."
+      }
+    ],
+    related: ["financial-crises", "market-efficiency", "contagion", "volatility"],
+    prereq: ["financial-crises"],
+    next: ["contagion"],
+  },
+  {
+    id: "contagion",
+    title: "Contagion",
+    domain: "economics",
+    category: "cycles",
+    subcategory: "Contagion",
+    level: "Advanced",
+    oneLine: "Financial distress spreading from where it started to places with no direct connection to it.",
+    what: "Contagion is the transmission of financial stress across institutions, markets or countries beyond what direct exposure would explain. It spreads through common lenders withdrawing funding, forced selling depressing prices for unrelated holders, and reassessment of risk in anything that resembles the original problem.",
+    simple: "The problem was there. Now it is here too, and nobody here did anything wrong.",
+    components: [
+      {
+        k: "Common creditor",
+        v: "A lender withdrawing from all borrowers after losses on one."
+      },
+      {
+        k: "Forced selling",
+        v: "Liquidating whatever can be sold, which depresses prices for unrelated holders."
+      },
+      {
+        k: "Reassessment",
+        v: "Investors repricing anything resembling the original problem."
+      },
+      {
+        k: "Confidence",
+        v: "Withdrawal from a category rather than from a company."
+      }
+    ],
+    realWorld: "After IL&FS defaulted in 2018, funding withdrew from Indian non-banking lenders as a class. Firms with entirely different balance sheets faced immediate stress because lenders could not quickly distinguish between them.",
+    caseRef: "ilfs-2018",
+    related: ["systemic-risk", "financial-crises", "liquidity-risk", "nbfc"],
+    prereq: ["systemic-risk"],
+  },
+  {
+    id: "currency-pegs",
+    title: "Currency Pegs",
+    domain: "global",
+    category: "currencies",
+    subcategory: "Currency Pegs",
+    level: "Advanced",
+    oneLine: "Fixing a currency to another, which buys stability and surrenders monetary independence.",
+    what: "A currency peg fixes the exchange rate against another currency or a basket, maintained by central bank intervention. It removes exchange rate uncertainty for trade and investment. The cost is that monetary policy must be devoted to defending the peg rather than to domestic conditions, and defending it requires reserves.",
+    simple: "You get a stable exchange rate. You give up the ability to set your own interest rates.",
+    components: [
+      {
+        k: "Hard peg",
+        v: "A fixed rate defended absolutely, sometimes through a currency board."
+      },
+      {
+        k: "Crawling peg",
+        v: "Adjusted gradually against a stated path."
+      },
+      {
+        k: "Band",
+        v: "Allowed to move within limits, defended at the edges."
+      },
+      {
+        k: "Reserve requirement",
+        v: "Foreign currency held to buy the domestic currency when it weakens."
+      }
+    ],
+    interpretation: "A peg is credible only while reserves and political will last. Markets test pegs precisely when domestic conditions call for a policy the peg forbids, and several major currency crises followed exactly that pattern.",
+    misconceptions: [
+      {
+        claim: "“A fixed rate removes currency risk.”",
+        truth: "It removes daily fluctuation and concentrates the risk into a single large adjustment if the peg breaks."
+      }
+    ],
+    related: ["exchange-rates", "foreign-exchange", "reserve-currencies", "currency-risk"],
+    prereq: ["exchange-rates"],
+    next: ["reserve-currencies"],
+  },
+  {
+    id: "reserve-currencies",
+    title: "Reserve Currencies",
+    domain: "global",
+    category: "currencies",
+    subcategory: "Reserve Currencies",
+    level: "Advanced",
+    oneLine: "Currencies held by central banks worldwide, which confers advantages on the issuing country.",
+    what: "A reserve currency is one held in significant quantities by central banks as part of their foreign exchange reserves, and used widely for international trade and borrowing. The US dollar has been the dominant reserve currency since the mid twentieth century, with the euro, yen, sterling and renminbi holding smaller shares.",
+    simple: "Everyone holds it, everyone prices in it, and that gives the issuing country advantages nobody else has.",
+    components: [
+      {
+        k: "Store of value",
+        v: "Held by central banks as reserves."
+      },
+      {
+        k: "Invoicing currency",
+        v: "Used to price internationally traded goods, particularly commodities."
+      },
+      {
+        k: "Funding currency",
+        v: "Used for cross-border borrowing, including by entities that do not earn it."
+      },
+      {
+        k: "Network effect",
+        v: "Widely used because it is widely used, which makes displacement slow."
+      }
+    ],
+    interpretation: "Reserve status lets the issuer borrow in its own currency at lower cost and gives its monetary policy global reach. When the dominant reserve currency tightens, capital leaves other economies regardless of their own conditions.",
+    related: ["foreign-exchange", "currency-pegs", "capital-flows", "sovereign-debt"],
+    prereq: ["foreign-exchange"],
+    next: ["capital-flows"],
+  },
+  {
+    id: "fdi",
+    title: "Foreign Direct Investment",
+    domain: "global",
+    category: "cross-border",
+    subcategory: "Foreign Direct Investment",
+    level: "Core",
+    oneLine: "Cross-border investment in productive assets, which arrives slowly and stays.",
+    what: "Foreign direct investment is investment made to establish lasting interest in an enterprise in another country, typically through acquiring a substantial ownership stake or building operations directly. It is distinguished from portfolio investment by the intent to exercise influence and by its relative stability.",
+    simple: "Building a factory or buying a controlling stake. It cannot be sold on Tuesday, which is exactly why it matters.",
+    components: [
+      {
+        k: "Greenfield",
+        v: "Building new operations, which adds capacity directly."
+      },
+      {
+        k: "Acquisition",
+        v: "Buying an existing business, which transfers ownership rather than adding capacity."
+      },
+      {
+        k: "Lasting interest",
+        v: "The defining criterion, usually a threshold ownership stake."
+      },
+      {
+        k: "Spillovers",
+        v: "Technology, management practice and supplier development that accompany the capital."
+      }
+    ],
+    interpretation: "Direct investment is valued above portfolio flows not because the money is worth more but because it cannot leave quickly. A country funded by direct investment is far less vulnerable to sudden reversal than one funded by portfolio flows.",
+    related: ["capital-flows", "portfolio-flows", "balance-of-payments", "international-trade"],
+    prereq: ["capital-flows"],
+    next: ["portfolio-flows"],
+  },
+  {
+    id: "portfolio-flows",
+    title: "Portfolio Flows",
+    domain: "global",
+    category: "cross-border",
+    subcategory: "Portfolio Flows",
+    level: "Core",
+    oneLine: "Cross-border investment in securities, which can reverse within days.",
+    what: "Portfolio flows are cross-border purchases of shares and bonds without the intent to control the enterprise. They provide capital and liquidity to receiving markets, and they are highly responsive to interest rate differentials and global risk sentiment. Their defining feature is reversibility.",
+    simple: "Money that bought shares this month can sell them next month, for reasons that have nothing to do with your economy.",
+    components: [
+      {
+        k: "Equity flows",
+        v: "Purchases of listed shares by foreign investors."
+      },
+      {
+        k: "Debt flows",
+        v: "Purchases of government and corporate bonds."
+      },
+      {
+        k: "Push factors",
+        v: "Conditions abroad, especially policy rates in major economies."
+      },
+      {
+        k: "Sudden stop",
+        v: "An abrupt reversal, which forces currency depreciation and tighter domestic conditions."
+      }
+    ],
+    realWorld: "The 2013 taper episode showed this precisely. Signals of reduced US stimulus triggered outflows from emerging markets, weakening currencies in economies where domestic conditions had not changed at all.",
+    interpretation: "Portfolio flows are often described as hot money. The description is fair, and the flows still provide genuine liquidity and lower the cost of capital while they are present.",
+    related: ["capital-flows", "fdi", "exchange-rates", "balance-of-payments"],
+    prereq: ["capital-flows"],
+    next: ["fdi"],
+  },
+  {
     id: "irr",
     title: "Internal Rate of Return",
     domain: "corporate",
@@ -6472,6 +8794,57 @@ button[disabled] .sym{opacity:.4}
   .fi-fill,.fi-disc,.fi-link{transition:none}
 }
 
+/* ---- universe: rotation on the compositor ---- */
+.uni-orbit-g.drift{animation:uniSpin 190s linear infinite}
+.uni-dom-label.drift{animation:uniSpinBack 190s linear infinite}
+@keyframes uniSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes uniSpinBack{from{transform:rotate(0deg)}to{transform:rotate(-360deg)}}
+.uni-svg{will-change:transform}
+
+/* ---- types of finance ---- */
+.tof-map{border:1px solid var(--line);border-radius:20px;padding:22px;background:
+  radial-gradient(120% 100% at 50% 0%,var(--surface-2),var(--surface));box-shadow:var(--shadow)}
+.tof-svg{display:block;width:100%;height:auto;aspect-ratio:1.6/1;overflow:visible}
+@media(max-width:680px){.tof-svg{aspect-ratio:1/1}}
+.tof-link{stroke:var(--line);stroke-width:.5;opacity:0;
+  transition:opacity .8s ease,stroke .35s ease,stroke-width .35s ease}
+.tof-link.in{opacity:1}
+.tof-link.on{stroke:var(--teal);stroke-width:.9}
+.tof-core{fill:var(--teal-soft);stroke:var(--teal);stroke-width:.5;
+  opacity:0;transform-origin:50px 50px;transform:scale(.6);
+  transition:opacity .7s cubic-bezier(.2,.7,.3,1),transform .7s cubic-bezier(.2,.7,.3,1)}
+.tof-core.in{opacity:1;transform:scale(1)}
+.tof-core-t{fill:var(--text);font-size:4px;font-weight:700;font-family:var(--serif)}
+.tof-core-s{fill:var(--muted);font-size:2.1px;font-family:var(--sans)}
+.tof-node{cursor:pointer;opacity:0;transform-box:fill-box;
+  transition:opacity .6s cubic-bezier(.2,.7,.3,1)}
+.tof-node.in{opacity:1}
+.tof-node:focus{outline:none}
+.tof-disc{fill:var(--surface);stroke:var(--line);stroke-width:.5;transition:.35s}
+.tof-node:hover .tof-disc{stroke:var(--teal)}
+.tof-node.on .tof-disc{fill:var(--teal);stroke:var(--teal)}
+.tof-n1{fill:var(--text);font-size:2.7px;font-weight:700;font-family:var(--sans)}
+.tof-n2{fill:var(--muted);font-size:2.2px;font-family:var(--sans)}
+.tof-node.on .tof-n1,.tof-node.on .tof-n2{fill:#fff}
+.tof-node:focus-visible .tof-disc{stroke:var(--text);stroke-width:1.2}
+.tof-panel{margin-top:26px;padding:30px;border:1px solid var(--line);border-radius:18px;
+  background:var(--surface);box-shadow:var(--shadow);animation:fadeUp .45s ease both}
+@media(max-width:600px){.tof-panel{padding:22px 18px}}
+.tof-panel-head{display:flex;flex-wrap:wrap;gap:20px;justify-content:space-between;align-items:flex-start}
+.tof-q{font-family:var(--serif);font-size:19px;font-style:italic;color:var(--teal);
+  max-width:30ch;line-height:1.4}
+.tof-cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:34px;margin-top:28px;
+  padding-top:26px;border-top:1px solid var(--line)}
+@media(max-width:700px){.tof-cols{grid-template-columns:minmax(0,1fr);gap:26px}}
+.tof-list{list-style:none;margin:0;padding:0;display:grid;gap:0}
+.tof-list li{padding:11px 0;border-bottom:1px solid var(--line);font-size:15.5px;color:var(--text)}
+.tof-list li:last-child{border-bottom:0}
+@media(prefers-reduced-motion:reduce){
+  .uni-orbit-g.drift,.uni-dom-label.drift{animation:none}
+  .tof-panel{animation:none}
+  .tof-link,.tof-core,.tof-node{transition:none;opacity:1}
+}
+
 .foot{border-top:1px solid var(--line);padding:44px 0 60px;color:var(--faint);font-size:13.5px}
 .foot a:hover{color:var(--teal)}
 `;
@@ -7165,7 +9538,7 @@ function ConceptGraph({ id }) {
    =========================================================================== */
 
 const NAV = [
-  ["Universe", "#/universe"], ["Origins", "#/origins"], ["History", "#/history"], ["Data", "#/data"], ["Tax", "#/tax"], ["Intelligence", "#/intelligence"], ["Simulator", "#/floor"], ["Telemetry", "#/telemetry"], ["Concepts", "#/concepts"], ["Cases", "#/cases"],
+  ["Start here", "#/types"], ["Universe", "#/universe"], ["Origins", "#/origins"], ["History", "#/history"], ["Data", "#/data"], ["Tax", "#/tax"], ["Intelligence", "#/intelligence"], ["Simulator", "#/floor"], ["Telemetry", "#/telemetry"], ["Concepts", "#/concepts"], ["Cases", "#/cases"],
   ["Scenarios", "#/scenarios"], ["Glossary", "#/glossary"], ["Tools", "#/tools"],
 ];
 
@@ -7293,7 +9666,6 @@ const ORBIT = [
 
 function FinanceUniverse() {
   const reduced = useReducedMotion();
-  const [angle, setAngle] = useState(0);
   const [sel, setSel] = useState(null);      // domain id
   const [cat, setCat] = useState(null);      // category id
   const [hover, setHover] = useState(null);
@@ -7305,18 +9677,11 @@ function FinanceUniverse() {
     return () => window.removeEventListener("resize", f);
   }, []);
 
-  // slow drift, only while nothing is selected
-  useEffect(() => {
-    if (reduced || sel || hover) return;
-    let raf, last = performance.now();
-    const step = (t) => {
-      const dt = t - last; last = t;
-      setAngle((a) => a + dt * 0.000045);
-      raf = requestAnimationFrame(step);
-    };
-    raf = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(raf);
-  }, [reduced, sel, hover]);
+  /* The orbit used to advance through React state, which re-rendered every
+     node on every frame and made touch interaction stutter. The rotation now
+     lives on a CSS animation applied to the orbit group, so the browser
+     composites it and React renders only when something is actually selected. */
+  const drifting = !reduced && !sel && !hover;
 
   const W = 1000, H = 640, cx = W / 2, cy = 250;
   const domains = ORBIT.map((id) => DOMAINS.find((d) => d.id === id)).filter(Boolean);
@@ -7331,7 +9696,7 @@ function FinanceUniverse() {
 
   // position of each orbit node
   const posOf = (i, n) => {
-    const a = (i / n) * Math.PI * 2 + angle;
+    const a = (i / n) * Math.PI * 2;
     return { x: cx + Math.cos(a) * 320, y: cy + Math.sin(a) * 165 };
   };
   // where a node goes once a domain is chosen: selected rises to the top axis
@@ -7428,7 +9793,11 @@ function FinanceUniverse() {
         })}
 
 
-        {/* domain nodes */}
+        {/* domain nodes. When nothing is selected they sit inside a group that
+            the browser rotates on the compositor; once selected, positions are
+            fixed and the group stops. */}
+        <g className={"uni-orbit-g" + (drifting ? " drift" : "")}
+          style={{ transformOrigin: `${cx}px ${cy}px` }}>
         {domains.map((d, i) => {
           const p = d.id === sel ? selectedPos : posOf(i, domains.length);
           const on = d.id === sel, dim = sel && !on;
@@ -7443,10 +9812,14 @@ function FinanceUniverse() {
               <g transform="translate(-11 -11)" className="uni-dom-sym">
                 <Symbol name={d.icon || "connection"} size={22} />
               </g>
-              <text y="52" textAnchor="middle" className="uni-dom-t">{d.name}</text>
+              <g className={"uni-dom-label" + (drifting ? " drift" : "")}>
+                <text y="52" textAnchor="middle" className="uni-dom-t">{d.name}</text>
+              </g>
             </g>
           );
         })}
+
+        </g>
 
         {/* the centre */}
         <g className="uni-core" onClick={reset} tabIndex={sel ? 0 : -1}
@@ -11658,6 +14031,199 @@ function IntelligencePage() {
   );
 }
 
+/* ===========================================================================
+   TYPES OF FINANCE
+   The page that should come before everything else. Someone arriving at a map
+   of seventeen domains has nowhere to stand until they know what finance is
+   and how its branches divide. This answers that, once, plainly.
+   =========================================================================== */
+
+const FINANCE_BRANCHES = [
+  {
+    id: "personal", name: "Personal Finance", who: "You, and every household",
+    line: "Managing the money of one person or family across a working lifetime.",
+    text: "Personal finance covers earning, spending, saving, borrowing, investing and protecting. Its defining constraint is that the horizon is a human life: money must be available for a goal at a particular date, and there is no second attempt at retirement. Every decision trades present consumption against future security.",
+    handles: ["Budgeting and saving", "Borrowing and debt", "Investing for goals", "Insurance and protection", "Retirement planning", "Tax on personal income"],
+    question: "Will I have enough, when I need it?",
+    concepts: ["budgeting", "emergency-reserves", "sip", "asset-allocation"],
+    x: 22, y: 30,
+  },
+  {
+    id: "corporate", name: "Corporate Finance", who: "Companies of every size",
+    line: "How a business raises money, decides where to put it, and returns what it does not need.",
+    text: "Corporate finance answers three questions. Which projects should the firm invest in, how should that investment be funded, and what should be done with profits. Everything else in the discipline follows from those three, and each is answered by comparing an expected return against the cost of the capital required.",
+    handles: ["Capital budgeting", "Cost of capital", "Capital structure", "Working capital", "Dividends and buybacks", "Mergers and acquisitions"],
+    question: "Will this project earn more than the money costs?",
+    concepts: ["capital-budgeting", "cost-of-capital", "capital-structure", "free-cash-flow"],
+    x: 50, y: 18,
+  },
+  {
+    id: "public", name: "Public Finance", who: "Governments and the state",
+    line: "How a government raises revenue, spends it, and manages what it borrows.",
+    text: "Public finance concerns taxation, government expenditure, borrowing and the management of debt. It differs from every other branch in objective: a government is not maximising return but allocating resources across competing public purposes, and its borrowing is constrained by the relationship between interest rates and economic growth rather than by profit.",
+    handles: ["Taxation", "Government expenditure", "Fiscal deficit", "Public debt", "Budgetary policy", "Intergovernmental transfers"],
+    question: "How should the state raise and spend what belongs to everyone?",
+    concepts: ["fiscal-policy", "government-debt", "sovereign-debt", "gdp"],
+    x: 78, y: 30,
+  },
+  {
+    id: "international", name: "International Finance", who: "Anyone crossing a border",
+    line: "What changes when money moves between currencies and jurisdictions.",
+    text: "International finance covers exchange rates, cross-border investment, trade finance and the institutions governing them. It exists as a separate branch because a transaction spanning two currencies carries risks that a domestic one does not, and because no single authority governs both sides.",
+    handles: ["Exchange rates", "Currency risk", "Cross-border investment", "Trade finance", "Global institutions", "Capital flows"],
+    question: "What happens when the money is not the money you earn?",
+    concepts: ["foreign-exchange", "currency-risk", "capital-flows", "balance-of-payments"],
+    x: 50, y: 78,
+  },
+];
+
+const FINANCE_SUPPORT = [
+  { name: "Financial markets", line: "Where the four branches meet. Governments borrow, companies raise capital, and households invest, all in the same place." },
+  { name: "Financial institutions", line: "Banks, insurers and funds that stand between those with surplus money and those who need it." },
+  { name: "Risk management", line: "Present in every branch, because every financial decision is a decision under uncertainty." },
+  { name: "Regulation", line: "The rules that make transacting with a stranger possible at all." },
+];
+
+function TypesOfFinancePage() {
+  const [sel, setSel] = useState(null);
+  const [play, setPlay] = useState(false);
+  const ref = useRef(null);
+  const reduced = useReducedMotion();
+  const active = sel ? FINANCE_BRANCHES.find((b) => b.id === sel) : null;
+
+  useEffect(() => {
+    const el = ref.current; if (!el) return;
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setPlay(true); io.disconnect(); } },
+      { rootMargin: "-8% 0px" });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  const on = play || reduced;
+
+  return (
+    <>
+      <Crumbs items={[["FinHub", "#/"], ["Types of finance"]]} />
+      <div className="wrap">
+        <Reveal><p className="kicker">Start here</p></Reveal>
+        <Reveal delay={60}><h1 className="h-page" style={{ marginTop: 12 }}>What Finance Is</h1></Reveal>
+        <Reveal delay={120}>
+          <p className="lede" style={{ marginTop: 18, maxWidth: "64ch" }}>
+            Finance is the study of how money is raised, allocated and managed across time, under
+            uncertainty. Every question in the subject reduces to one of four situations, and which
+            situation you are in determines which tools apply.
+          </p>
+        </Reveal>
+      </div>
+
+      <div className="wrap" style={{ paddingTop: 40 }}>
+        <Reveal>
+          <div className="tof-map" ref={ref}>
+            <svg viewBox="0 0 100 100" className="tof-svg" role="img"
+              aria-label="The four branches of finance around a common centre">
+              {FINANCE_BRANCHES.map((b, i) => (
+                <line key={"l" + b.id} x1="50" y1="50" x2={b.x} y2={b.y}
+                  className={"tof-link" + (on ? " in" : "") + (sel === b.id ? " on" : "")}
+                  style={{ transitionDelay: `${0.18 * i}s` }} />
+              ))}
+              <circle cx="50" cy="50" r="13" className={"tof-core" + (on ? " in" : "")} />
+              <text x="50" y="48" textAnchor="middle" className="tof-core-t">Finance</text>
+              <text x="50" y="53.5" textAnchor="middle" className="tof-core-s">Money across time</text>
+
+              {FINANCE_BRANCHES.map((b, i) => (
+                <g key={b.id} transform={`translate(${b.x} ${b.y})`}
+                  className={"tof-node" + (on ? " in" : "") + (sel === b.id ? " on" : "")}
+                  style={{ transitionDelay: `${0.18 * i + 0.2}s` }}
+                  tabIndex={0} role="button" aria-pressed={sel === b.id}
+                  onClick={() => setSel(sel === b.id ? null : b.id)}
+                  onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setSel(sel === b.id ? null : b.id); } }}>
+                  <circle r="9.5" className="tof-disc" />
+                  <text y="-0.5" textAnchor="middle" className="tof-n1">{b.name.split(" ")[0]}</text>
+                  <text y="3.4" textAnchor="middle" className="tof-n2">Finance</text>
+                </g>
+              ))}
+            </svg>
+            <p className="uni-hint">
+              {active ? active.question : "Select a branch to open it"}
+            </p>
+          </div>
+        </Reveal>
+
+        {active && (
+          <Reveal key={active.id}>
+            <div className="tof-panel">
+              <div className="tof-panel-head">
+                <div>
+                  <p className="kicker">{active.who}</p>
+                  <h2 style={{ fontSize: 28, marginTop: 10 }}>{active.name}</h2>
+                  <p className="lede" style={{ marginTop: 12, maxWidth: "56ch" }}>{active.line}</p>
+                </div>
+                <p className="tof-q">{active.question}</p>
+              </div>
+              <p className="body" style={{ marginTop: 22 }}>{active.text}</p>
+              <div className="tof-cols">
+                <div>
+                  <p className="eyebrow" style={{ marginBottom: 12 }}>What it covers</p>
+                  <ul className="tof-list">
+                    {active.handles.map((h) => <li key={h}>{h}</li>)}
+                  </ul>
+                </div>
+                <div>
+                  <p className="eyebrow" style={{ marginBottom: 12 }}>Start with these</p>
+                  <div className="chips">
+                    {active.concepts.map((id) => conceptById(id) && (
+                      <a className="chip" key={id} href={`#/concept/${id}`}>{conceptById(id).title} →</a>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Reveal>
+        )}
+      </div>
+
+      <div className="wrap" style={{ paddingTop: 60, paddingBottom: 100 }}>
+        <Reveal>
+          <div className="scene-head">
+            <p className="eyebrow">What holds them together</p>
+            <h2 className="h-scene" style={{ marginTop: 14 }}>Four branches, one system</h2>
+            <p className="lede" style={{ marginTop: 16, maxWidth: "58ch" }}>
+              The branches are divided by whose money is being managed, not by different principles.
+              A discount rate works the same way for a household, a company and a government.
+            </p>
+          </div>
+        </Reveal>
+        <div className="grid g4" style={{ marginTop: 40 }}>
+          {FINANCE_SUPPORT.map((x, i) => (
+            <Reveal key={x.name} delay={i * 70}>
+              <div className="card" style={{ height: "100%" }}>
+                <h3 style={{ fontSize: 18 }}>{x.name}</h3>
+                <p className="small" style={{ marginTop: 8 }}>{x.line}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+
+        <Reveal>
+          <div className="org-close" style={{ marginTop: 50 }}>
+            <p className="body" style={{ fontSize: 18.5 }}>
+              Every instrument in this platform is an answer to one of four questions. How to move
+              value safely. How to fund something larger than yourself. How to price time and risk.
+              How to hold those managing other people's money to account. Once you can see which
+              question you are asking, the right tools become obvious.
+            </p>
+            <div className="chips" style={{ marginTop: 24 }}>
+              <a className="chip" href="#/origins">Where it began →</a>
+              <a className="chip" href="#/universe">Enter the universe →</a>
+              <a className="chip" href="#/concept/time-value-of-money">The first concept →</a>
+            </div>
+          </div>
+        </Reveal>
+      </div>
+    </>
+  );
+}
+
 function NotFound() {
   return (
     <div className="wrap-n" style={{ padding: "90px 20px 120px" }}>
@@ -11739,6 +14305,7 @@ export default function FinHub() {
     case "scenario": view = <ScenarioPage id={parts[1]} />; break;
     case "history": view = <MarketHistoryPage />; break;
     case "origins": view = <OriginsPage data={origins} />; break;
+    case "types": view = <TypesOfFinancePage />; break;
     case "graph": view = <GraphPage />; break;
     case "intelligence": view = <IntelligencePage />; break;
     case "data": view = <MarketDataPage />; break;
