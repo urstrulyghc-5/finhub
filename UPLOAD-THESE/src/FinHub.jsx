@@ -161,6 +161,701 @@ const DOMAINS = [
 
 const CONCEPTS = [
   {
+    id: "irr",
+    title: "Internal Rate of Return",
+    domain: "corporate",
+    category: "investment-decision",
+    subcategory: "IRR",
+    level: "Intermediate",
+    oneLine: "The discount rate at which a project's net present value is exactly zero.",
+    what: "The internal rate of return is the rate that makes the present value of a project's inflows equal to its outflows. It expresses a project's return as a single percentage, which makes it intuitive to compare against a hurdle rate. A project is accepted when its IRR exceeds the cost of capital.",
+    simple: "The break-even discount rate. If the project earns more than what your money costs, it is worth doing.",
+    formula: {
+      main: "0 = Σ [ CFₜ ÷ (1 + IRR)ᵗ ] − C₀",
+      variables: [
+        {
+          sym: "CFₜ",
+          desc: "Cash flow in period t"
+        },
+        {
+          sym: "C₀",
+          desc: "Initial investment"
+        },
+        {
+          sym: "IRR",
+          desc: "The rate being solved for, found by iteration"
+        }
+      ]
+    },
+    example: {
+      setup: "A project costs ₹10,00,000 and returns ₹4,00,000 a year for three years.",
+      steps: ["Total undiscounted return = ₹12,00,000", "Solving for the rate where NPV = 0 gives approximately 9.7 percent", "If the cost of capital is 10 percent, the project is rejected"],
+      result: "IRR of about 9.7 percent",
+      note: "A project can return more money than it cost and still be rejected, because the return is below what the capital costs."
+    },
+    limitations: ["A project with alternating positive and negative cash flows can produce multiple IRRs, none of them meaningful.", "It assumes intermediate cash flows are reinvested at the IRR itself, which is usually unrealistic.", "It ignores scale. A small project with a high IRR may add less value than a large project with a lower one."],
+    misconceptions: [
+      {
+        claim: "“The project with the higher IRR is better.”",
+        truth: "Not necessarily. IRR is a percentage and NPV is an amount. When they disagree, NPV is the reliable guide because value is measured in money, not in rates."
+      }
+    ],
+    application: ["Screening projects against a hurdle rate.", "Communicating a project's return in a single figure."],
+    related: ["discount-rate", "capital-budgeting", "cost-of-capital", "payback-period"],
+    prereq: ["discount-rate"],
+    next: ["payback-period"],
+  },
+  {
+    id: "payback-period",
+    title: "Payback Period",
+    domain: "corporate",
+    category: "investment-decision",
+    subcategory: "Payback Period",
+    level: "Core",
+    oneLine: "How long before the initial outlay is recovered, which measures liquidity rather than value.",
+    what: "The payback period is the time taken for a project's cumulative cash inflows to equal its initial investment. It is simple to calculate and easy to communicate. It is also a poor measure of value, because it ignores everything after the payback date and, in its basic form, ignores the time value of money entirely.",
+    simple: "How long until you get your money back. Useful to know, and not the same question as whether the project is worth doing.",
+    formula: {
+      main: "Payback = Years before recovery + (Unrecovered amount ÷ Cash flow in the recovery year)",
+      others: [
+        {
+          label: "Discounted payback",
+          expr: "Same calculation using discounted cash flows"
+        }
+      ]
+    },
+    example: {
+      setup: "Two projects each costing ₹10,00,000. A returns ₹5,00,000 a year for 3 years. B returns ₹3,00,000 a year for 10 years.",
+      steps: ["A pays back in 2.0 years and returns ₹15,00,000 in total", "B pays back in 3.3 years and returns ₹30,00,000 in total", "Payback selects A. NPV at any reasonable rate selects B"],
+      result: "2.0 years against 3.3 years",
+      note: "Payback rewarded the project that returned half as much money, because it stopped counting at the recovery date."
+    },
+    interpretation: "Payback answers a liquidity question, not a value question. It is legitimate as a secondary screen for a business worried about how long capital is tied up, and dangerous as a primary decision rule.",
+    misconceptions: [
+      {
+        claim: "“A shorter payback means a better project.”",
+        truth: "It means capital is recovered sooner. It says nothing about total value created, which is what the decision should rest on."
+      }
+    ],
+    application: ["Screening for projects where capital cannot be locked up for long.", "Understanding why it must be paired with NPV rather than used alone."],
+    related: ["irr", "discount-rate", "capital-budgeting", "liquidity-risk"],
+    prereq: ["capital-budgeting"],
+    next: ["project-risk"],
+  },
+  {
+    id: "project-risk",
+    title: "Project Risk",
+    domain: "corporate",
+    category: "investment-decision",
+    subcategory: "Project Risk",
+    level: "Intermediate",
+    oneLine: "Adjusting the required return to the risk of the specific project rather than of the company as a whole.",
+    what: "Project risk recognises that different investments within one firm carry different risks. Using a single company-wide discount rate for every project systematically overvalues risky ones and undervalues safe ones. The correct rate reflects the risk of the project itself, not the average risk of the firm undertaking it.",
+    simple: "A steel company building another furnace and the same company launching a software product are not equally risky. Discounting both at the same rate is a mistake.",
+    why: "This is one of the most common and most costly errors in corporate finance. A single hurdle rate acts as a subsidy to the riskiest projects and a tax on the safest, and over time the firm's risk profile drifts upward without anyone deciding that it should.",
+    components: [
+      {
+        k: "Business risk",
+        v: "Uncertainty in the project's own cash flows."
+      },
+      {
+        k: "Sensitivity analysis",
+        v: "Testing how the outcome changes as one assumption varies."
+      },
+      {
+        k: "Scenario analysis",
+        v: "Testing coherent combinations of assumptions rather than one at a time."
+      },
+      {
+        k: "Risk adjusted rate",
+        v: "A higher discount rate for a riskier project, applied deliberately."
+      }
+    ],
+    example: {
+      setup: "A firm with a WACC of 11 percent evaluates a project whose risk resembles businesses that require 16 percent.",
+      steps: ["At 11 percent, the project shows a positive NPV and is approved", "At 16 percent, the correct rate for its risk, the NPV is negative", "The firm has accepted a project that destroys value while appearing to create it"],
+      result: "Approved wrongly at the company rate",
+      note: "Nothing was miscalculated. The wrong rate was used, and the wrong rate produced the wrong decision."
+    },
+    misconceptions: [
+      {
+        claim: "“Our cost of capital is 11 percent, so every project must beat 11 percent.”",
+        truth: "That is the average across the firm's existing risk. A project riskier than the average requires more, and a safer one requires less."
+      }
+    ],
+    application: ["Setting different hurdle rates for different kinds of investment.", "Running sensitivity analysis before committing capital."],
+    related: ["cost-of-capital", "discount-rate", "risk-return", "capital-budgeting"],
+    prereq: ["cost-of-capital"],
+    next: ["debt-vs-equity"],
+  },
+  {
+    id: "debt-vs-equity",
+    title: "Debt versus Equity",
+    domain: "corporate",
+    category: "financing-decision",
+    subcategory: "Debt vs Equity",
+    level: "Core",
+    oneLine: "Two ways to fund a business, differing in cost, obligation, control and who bears the loss.",
+    what: "A firm can raise capital by borrowing or by selling ownership. Debt carries a contractual obligation to pay interest and repay principal, ranks ahead of equity, and its interest is generally tax deductible. Equity carries no repayment obligation, ranks last, and dilutes the ownership of existing shareholders.",
+    simple: "Borrowing means you must pay it back whatever happens. Selling shares means you never repay, but you own less of what you built.",
+    components: [
+      {
+        k: "Obligation",
+        v: "Debt must be serviced on schedule. Dividends are discretionary."
+      },
+      {
+        k: "Cost",
+        v: "Debt is cheaper because it is senior and tax deductible. Equity is dearer because it bears the residual risk."
+      },
+      {
+        k: "Control",
+        v: "Lenders impose covenants. Shareholders receive votes and a claim on the business."
+      },
+      {
+        k: "Flexibility",
+        v: "Debt capacity used today is not available in a downturn."
+      }
+    ],
+    example: {
+      setup: "A firm needs ₹50 crore. Debt costs 9 percent before tax at a 25 percent tax rate, and equity costs 15 percent.",
+      steps: ["After tax cost of debt = 9 × (1 − 0.25) = 6.75 percent", "Debt is 8.25 percentage points cheaper", "Annual saving = 50 crore × 8.25 percent = ₹4.13 crore"],
+      result: "₹4.13 crore a year cheaper",
+      note: "That saving is compensation for accepting a fixed obligation. In a year when profits fall, the interest is still due while a dividend could have been suspended."
+    },
+    interpretation: "The apparent cheapness of debt is not a free lunch. It is payment for accepting a claim that does not adjust when the business struggles.",
+    misconceptions: [
+      {
+        claim: "“Equity is free because there is no repayment.”",
+        truth: "Equity is the most expensive capital a firm can raise. Shareholders demand the highest return precisely because they are paid last."
+      }
+    ],
+    application: ["Choosing a funding route for an expansion.", "Understanding why young companies with volatile cash flows use equity."],
+    related: ["capital-structure", "cost-of-capital", "leverage", "equity"],
+    prereq: ["capital-structure"],
+    next: ["payout-ratio"],
+  },
+  {
+    id: "payout-ratio",
+    title: "Payout Ratio",
+    domain: "corporate",
+    category: "dividend",
+    subcategory: "Payout Ratio",
+    level: "Core",
+    oneLine: "The share of earnings distributed rather than reinvested, which reveals what management thinks of its own opportunities.",
+    what: "The payout ratio is dividends divided by earnings. It states how much of each rupee of profit is returned to shareholders and how much is retained in the business. The complement, the retention ratio, funds internal growth. Together they determine how fast a firm can grow without raising new capital.",
+    simple: "Out of every hundred rupees earned, how much goes to shareholders and how much stays in the business.",
+    formula: {
+      main: "Payout ratio = Dividend per share ÷ Earnings per share",
+      others: [
+        {
+          label: "Retention ratio",
+          expr: "1 − Payout ratio"
+        },
+        {
+          label: "Sustainable growth rate",
+          expr: "Retention ratio × Return on equity"
+        }
+      ]
+    },
+    example: {
+      setup: "A company earns ₹40 per share, pays ₹12 as dividend, and generates a return on equity of 18 percent.",
+      steps: ["Payout ratio = 12 ÷ 40 = 30 percent", "Retention ratio = 70 percent", "Sustainable growth = 0.70 × 18 = 12.6 percent a year"],
+      result: "12.6 percent growth without new capital",
+      note: "To grow faster than 12.6 percent, the firm must either raise external funding or reduce the dividend."
+    },
+    interpretation: "A high payout ratio in a growing industry often signals that management cannot find enough attractive projects. A low payout with poor returns on capital signals the opposite problem: cash is being retained and wasted.",
+    misconceptions: [
+      {
+        claim: "“A higher payout is more shareholder friendly.”",
+        truth: "Only if the firm cannot reinvest at a return above its cost of capital. If it can, retaining serves shareholders better than distributing."
+      }
+    ],
+    application: ["Assessing whether a dividend is sustainable from earnings.", "Estimating how fast a business can grow from internal funds."],
+    related: ["dividend-policy", "retained-earnings", "share-buybacks", "financial-ratios"],
+    prereq: ["dividend-policy"],
+    next: ["share-buybacks"],
+  },
+  {
+    id: "share-buybacks",
+    title: "Share Buybacks",
+    domain: "corporate",
+    category: "dividend",
+    subcategory: "Share Buybacks",
+    level: "Intermediate",
+    oneLine: "A company purchasing its own shares, which returns cash while concentrating ownership.",
+    what: "A buyback is the repurchase of a company's own shares from the market or from shareholders directly. The repurchased shares are cancelled or held in treasury, reducing the count outstanding. Because earnings are then divided among fewer shares, earnings per share rises even if total profit does not.",
+    simple: "The company buys back its own shares. The pie stays the same size and is cut into fewer slices.",
+    why: "A buyback is an alternative to a dividend. It returns cash without committing the company to a recurring payment, and shareholders who want cash can sell while those who do not simply hold a larger proportion.",
+    formula: {
+      main: "New EPS = Net profit ÷ (Shares outstanding − Shares repurchased)"
+    },
+    example: {
+      setup: "A company earns ₹100 crore with 10 crore shares outstanding, and buys back 1 crore shares.",
+      steps: ["EPS before = 100 ÷ 10 = ₹10.00", "EPS after = 100 ÷ 9 = ₹11.11", "EPS rose 11.1 percent with no change in profit"],
+      result: "EPS up 11.1 percent",
+      note: "The business did not improve. The same earnings are divided among fewer shares, and the cash used is no longer in the company."
+    },
+    interpretation: "A buyback creates value only when shares are repurchased below intrinsic value. Buying back overvalued shares transfers value from continuing shareholders to those who sell.",
+    misconceptions: [
+      {
+        claim: "“A buyback always benefits shareholders.”",
+        truth: "It depends entirely on the price paid. Companies have a documented tendency to buy back most heavily when prices are high and cash is plentiful, which is the wrong time."
+      },
+      {
+        claim: "“Rising EPS after a buyback means the company grew.”",
+        truth: "It means the denominator shrank. Total profit is unchanged."
+      }
+    ],
+    application: ["Judging whether a buyback is being conducted at a sensible price.", "Adjusting EPS growth for changes in share count."],
+    related: ["dividend-policy", "payout-ratio", "equity", "valuation-multiples"],
+    prereq: ["dividend-policy"],
+    next: ["retained-earnings"],
+  },
+  {
+    id: "retained-earnings",
+    title: "Retained Earnings",
+    domain: "corporate",
+    category: "dividend",
+    subcategory: "Retained Earnings",
+    level: "Core",
+    oneLine: "Profits kept in the business rather than distributed, which are shareholders' money left invested on their behalf.",
+    what: "Retained earnings are cumulative profits that have not been distributed. They appear within equity on the balance sheet and represent the portion of past earnings reinvested in the business. They are not a cash reserve: the money has usually already been spent on assets, inventory or debt reduction.",
+    simple: "Money the company earned and kept. It still belongs to shareholders, and it has usually already been put to work.",
+    why: "Retained earnings are the cheapest source of capital, because they require no issuance cost and no dilution. They are also the most easily wasted, because no external party scrutinises their use the way a lender or new investor would.",
+    formula: {
+      main: "Closing retained earnings = Opening + Net profit − Dividends"
+    },
+    interpretation: "The test of retained earnings is whether each rupee retained created at least a rupee of market value. A company retaining heavily while returns on equity decline is destroying value quietly, and the balance sheet grows while the business does not improve.",
+    misconceptions: [
+      {
+        claim: "“Large retained earnings mean the company has a lot of cash.”",
+        truth: "Retained earnings are an accounting record of profits not distributed. The cash has typically been converted into factories, inventory or repaid debt."
+      },
+      {
+        claim: "“Retaining profit is always prudent.”",
+        truth: "Only if it can be reinvested above the cost of capital. Otherwise shareholders would be better served receiving it."
+      }
+    ],
+    application: ["Testing whether retained profit has produced returns.", "Understanding why a company with large reserves can still be short of cash."],
+    related: ["balance-sheet", "dividend-policy", "payout-ratio", "cost-of-capital"],
+    prereq: ["balance-sheet"],
+    next: ["payout-ratio"],
+  },
+  {
+    id: "inventory-management",
+    title: "Inventory Management",
+    domain: "corporate",
+    category: "working-capital",
+    subcategory: "Inventory Management",
+    level: "Core",
+    oneLine: "Balancing the cost of holding stock against the cost of not having it.",
+    what: "Inventory management determines how much stock a business holds. Holding costs include capital tied up, storage, insurance and obsolescence. Shortage costs include lost sales, production stoppages and damaged customer relationships. The right level is the point where the two are balanced, and it differs entirely by industry.",
+    simple: "Too much stock ties up cash. Too little loses sales. The skill is knowing where the line sits for your business.",
+    formula: {
+      main: "Inventory turnover = Cost of goods sold ÷ Average inventory",
+      others: [
+        {
+          label: "Inventory days",
+          expr: "365 ÷ Inventory turnover"
+        }
+      ]
+    },
+    example: {
+      setup: "A firm with cost of goods sold of ₹24 crore and average inventory of ₹4 crore.",
+      steps: ["Turnover = 24 ÷ 4 = 6 times a year", "Inventory days = 365 ÷ 6 = 61 days", "If inventory were reduced to ₹3 crore, days fall to 46 and ₹1 crore of cash is released"],
+      result: "61 days, with ₹1 crore releasable",
+      note: "That released crore is cash the business no longer needs to borrow, which reduces interest cost permanently."
+    },
+    interpretation: "Rising inventory days with flat sales is one of the earliest signs of demand weakening or of goods becoming hard to sell. It often appears in the accounts before it appears in revenue.",
+    misconceptions: [
+      {
+        claim: "“More inventory means the business is growing.”",
+        truth: "It can equally mean goods are not selling. Inventory growing faster than sales is a warning rather than a sign of expansion."
+      }
+    ],
+    application: ["Releasing cash trapped in the operating cycle.", "Detecting demand weakness early from the balance sheet."],
+    related: ["working-capital", "receivables", "cash-management", "financial-ratios"],
+    prereq: ["working-capital"],
+    next: ["receivables"],
+  },
+  {
+    id: "receivables",
+    title: "Receivables",
+    domain: "corporate",
+    category: "working-capital",
+    subcategory: "Receivables",
+    level: "Core",
+    oneLine: "Money owed by customers, which is revenue recognised but not yet collected.",
+    what: "Receivables represent sales made on credit where payment has not yet arrived. They appear as a current asset. Extending credit can increase sales, and it also means the business is financing its customers, carrying both the cost of that capital and the risk that some will never pay.",
+    simple: "You have made the sale and recorded the profit. You do not yet have the money.",
+    formula: {
+      main: "Receivable days = (Receivables ÷ Revenue) × 365",
+      others: [
+        {
+          label: "Receivables turnover",
+          expr: "Revenue ÷ Average receivables"
+        }
+      ]
+    },
+    example: {
+      setup: "Revenue of ₹60 crore with receivables of ₹12 crore, rising to ₹18 crore the following year on revenue of ₹66 crore.",
+      steps: ["Year one: (12 ÷ 60) × 365 = 73 days", "Year two: (18 ÷ 66) × 365 = 100 days", "Revenue grew 10 percent while receivables grew 50 percent"],
+      result: "73 days rising to 100 days",
+      note: "Either collection has weakened or sales are being made to customers who cannot pay. Both are worth investigating before the next quarter."
+    },
+    interpretation: "Receivables growing materially faster than revenue is among the most reliable early warnings in financial analysis. It appeared in the accounts at several major accounting frauds well before disclosure.",
+    misconceptions: [
+      {
+        claim: "“A sale is a sale.”",
+        truth: "A sale on credit is profit today and cash later, if ever. Revenue growth funded by extending credit terms is not the same as demand."
+      }
+    ],
+    application: ["Assessing collection quality alongside revenue growth.", "Identifying revenue that may not convert to cash."],
+    related: ["working-capital", "cash-flow-statement", "quality-of-earnings", "credit-risk"],
+    prereq: ["working-capital"],
+    next: ["cash-management"],
+  },
+  {
+    id: "cash-management",
+    title: "Cash Management",
+    domain: "corporate",
+    category: "working-capital",
+    subcategory: "Cash Management",
+    level: "Core",
+    oneLine: "Ensuring money is available when obligations fall due, which is what actually keeps a company alive.",
+    what: "Cash management is the practice of forecasting, monitoring and controlling cash flows so that obligations can be met as they arise. It covers collection timing, payment scheduling, short term borrowing arrangements and the investment of temporary surpluses. It is distinct from profitability and, in the short term, more important.",
+    simple: "Profit is an opinion formed at the end of the year. Cash is what pays salaries on the last working day of the month.",
+    why: "Companies fail when they run out of cash, not when they report a loss. A profitable business growing quickly can run out of money precisely because growth consumes working capital before it produces cash.",
+    components: [
+      {
+        k: "Cash flow forecast",
+        v: "A rolling projection of receipts and payments, usually weekly."
+      },
+      {
+        k: "Credit lines",
+        v: "Committed borrowing available before it is needed, not after."
+      },
+      {
+        k: "Collection discipline",
+        v: "Shortening the time between sale and receipt."
+      },
+      {
+        k: "Surplus deployment",
+        v: "Placing temporary cash where it earns something without becoming inaccessible."
+      }
+    ],
+    interpretation: "The most important rule in cash management is that facilities are arranged when they are not needed. A business seeking a credit line during a cash crisis is negotiating from the weakest possible position.",
+    misconceptions: [
+      {
+        claim: "“A profitable company cannot run out of cash.”",
+        truth: "It happens regularly. Profit is recorded at the sale while cash arrives later, and in the gap wages and suppliers still have to be paid."
+      }
+    ],
+    application: ["Building a rolling cash forecast.", "Arranging funding before it becomes urgent."],
+    related: ["working-capital", "liquidity-risk", "cash-flow-statement", "receivables"],
+    prereq: ["cash-flow-statement"],
+    next: ["liquidity-risk"],
+  },
+  {
+    id: "terminal-value",
+    title: "Terminal Value",
+    domain: "corporate",
+    category: "valuation",
+    subcategory: "Terminal Value",
+    level: "Advanced",
+    oneLine: "The value of everything beyond the forecast period, which usually dominates the entire valuation.",
+    what: "Terminal value represents the worth of all cash flows after the explicit forecast horizon. Because a business is assumed to continue indefinitely while a forecast covers only five or ten years, terminal value typically accounts for well over half of a discounted cash flow valuation, and sometimes far more.",
+    simple: "You forecast ten years carefully. Then you have to put a number on everything after that, and it usually matters more than the ten years you worked on.",
+    formula: {
+      main: "TV = FCFₙ₊₁ ÷ (WACC − g)",
+      others: [
+        {
+          label: "Exit multiple method",
+          expr: "TV = Final year EBITDA × Assumed multiple"
+        },
+        {
+          label: "Present value of TV",
+          expr: "TV ÷ (1 + WACC)ⁿ"
+        }
+      ],
+      variables: [
+        {
+          sym: "g",
+          desc: "Perpetual growth rate, which must be below long run economic growth"
+        },
+        {
+          sym: "n",
+          desc: "Length of the explicit forecast"
+        }
+      ]
+    },
+    example: {
+      setup: "Final year free cash flow of ₹80 crore, WACC of 11 percent, perpetual growth of 4 percent, ten year forecast.",
+      steps: ["TV = 80 × 1.04 ÷ (0.11 − 0.04) = ₹1,188.6 crore", "Present value = 1,188.6 ÷ (1.11)¹⁰ = ₹418.6 crore", "If explicit forecast years contribute ₹300 crore, terminal value is 58 percent of total value"],
+      result: "58 percent of the valuation",
+      note: "Raising perpetual growth to 5 percent lifts terminal value to ₹1,400 crore, an 18 percent increase from one assumption."
+    },
+    interpretation: "The uncomfortable truth of discounted cash flow valuation is that most of the answer comes from two assumptions about a period nobody can forecast. This is why sensitivity analysis on terminal assumptions matters more than precision in the forecast years.",
+    limitations: ["Extremely sensitive to the growth rate and discount rate.", "A perpetual growth rate above long run economic growth implies the company eventually becomes the entire economy, which is why it must be modest."],
+    misconceptions: [
+      {
+        claim: "“A detailed ten year forecast makes the valuation accurate.”",
+        truth: "The forecast years are usually the smaller part of the answer. Effort is often spent where it matters least."
+      }
+    ],
+    application: ["Testing how sensitive a valuation is to terminal assumptions.", "Judging whether a valuation rests on plausible long run growth."],
+    related: ["free-cash-flow", "cost-of-capital", "discount-rate", "enterprise-value"],
+    prereq: ["free-cash-flow"],
+    next: ["enterprise-value"],
+  },
+  {
+    id: "enterprise-value",
+    title: "Enterprise Value",
+    domain: "corporate",
+    category: "valuation",
+    subcategory: "Enterprise Value",
+    level: "Intermediate",
+    oneLine: "The value of the whole business regardless of how it is financed, which is what an acquirer actually pays for.",
+    what: "Enterprise value is the value of a company's operations, independent of its capital structure. It is calculated as market capitalisation plus net debt. It represents what it would cost to acquire the entire business, since the acquirer takes on the debt and receives the cash.",
+    simple: "The price of the shares plus the debt you inherit, minus the cash you find in the till.",
+    why: "Market capitalisation alone can mislead badly. Two companies with identical operations but different debt levels have very different market capitalisations and similar enterprise values. For comparison, enterprise value is the fairer measure.",
+    formula: {
+      main: "EV = Market capitalisation + Total debt − Cash and equivalents",
+      others: [
+        {
+          label: "EV to EBITDA",
+          expr: "Enterprise value ÷ EBITDA"
+        }
+      ]
+    },
+    example: {
+      setup: "Company A: market capitalisation ₹500 crore, debt ₹300 crore, cash ₹50 crore. Company B: market capitalisation ₹700 crore, no debt, cash ₹50 crore.",
+      steps: ["A: EV = 500 + 300 − 50 = ₹750 crore", "B: EV = 700 + 0 − 50 = ₹650 crore", "B looks more expensive by market capitalisation and is cheaper as a business"],
+      result: "₹750 crore against ₹650 crore",
+      note: "Comparing on share price or market capitalisation alone would have produced exactly the wrong conclusion."
+    },
+    misconceptions: [
+      {
+        claim: "“Market capitalisation is what a company is worth.”",
+        truth: "It is what the equity is worth. The business as a whole includes the debt claim on it."
+      }
+    ],
+    application: ["Comparing companies with different debt levels.", "Assessing what an acquisition would actually cost."],
+    related: ["valuation-multiples", "free-cash-flow", "capital-structure", "terminal-value"],
+    prereq: ["valuation-multiples"],
+    next: ["relative-valuation"],
+  },
+  {
+    id: "relative-valuation",
+    title: "Relative Valuation",
+    domain: "corporate",
+    category: "valuation",
+    subcategory: "Relative Valuation",
+    level: "Intermediate",
+    oneLine: "Valuing a business by what similar businesses are priced at, which is fast and inherits the market's errors.",
+    what: "Relative valuation estimates worth by applying the multiples of comparable companies or transactions to the subject company's financial measures. It is quicker than discounted cash flow and requires fewer assumptions. Its weakness is fundamental: it assumes the comparable companies are correctly priced.",
+    simple: "Similar companies trade at fourteen times earnings, so this one should too. Quick, and only as sound as the comparison.",
+    components: [
+      {
+        k: "Comparable selection",
+        v: "The most consequential step. Businesses must be genuinely similar in growth, risk and capital intensity."
+      },
+      {
+        k: "Multiple choice",
+        v: "P/E, EV to EBITDA, price to book, or price to sales depending on the industry."
+      },
+      {
+        k: "Adjustments",
+        v: "For differences in growth, margin and leverage between the subject and the comparables."
+      },
+      {
+        k: "Transaction multiples",
+        v: "Prices paid in actual acquisitions, which usually include a control premium."
+      }
+    ],
+    example: {
+      setup: "A company generates ₹40 crore of EBITDA. Three comparable listed companies trade at EV to EBITDA of 11, 13 and 15 times.",
+      steps: ["Median multiple = 13 times", "Implied enterprise value = 40 × 13 = ₹520 crore", "Less net debt of ₹80 crore gives equity value of ₹440 crore"],
+      result: "₹440 crore equity value",
+      note: "If the sector as a whole is overvalued, this method produces an overvalued answer with complete confidence."
+    },
+    limitations: ["It inherits any mispricing in the comparable set.", "Genuinely comparable companies are rare, and differences in growth or leverage distort the result.", "It gives a relative answer, not an absolute one. It cannot tell you whether the whole sector is expensive."],
+    misconceptions: [
+      {
+        claim: "“Trading below its peers means a stock is cheap.”",
+        truth: "It may mean the market has identified a genuine difference in quality, growth or risk that the comparison ignored."
+      }
+    ],
+    application: ["Producing a quick valuation range as a sanity check on a discounted cash flow.", "Pricing a transaction against recent deals."],
+    related: ["valuation-multiples", "enterprise-value", "free-cash-flow", "fundamental-analysis"],
+    prereq: ["enterprise-value"],
+    next: ["types-of-ma"],
+  },
+  {
+    id: "types-of-ma",
+    title: "Types of Mergers and Acquisitions",
+    domain: "corporate",
+    category: "ma",
+    subcategory: "Types of M&A",
+    level: "Intermediate",
+    oneLine: "Different ways companies combine, each with a different rationale and a different failure mode.",
+    what: "Mergers and acquisitions describe transactions in which companies combine or one purchases another. They are classified by the relationship between the businesses. Horizontal transactions join competitors, vertical ones join a company with its supplier or customer, and conglomerate transactions join unrelated businesses.",
+    simple: "Buying a competitor, buying your supplier, or buying something unrelated. Three very different decisions.",
+    components: [
+      {
+        k: "Horizontal",
+        v: "Combining direct competitors, usually for scale and cost reduction. Attracts competition scrutiny."
+      },
+      {
+        k: "Vertical",
+        v: "Acquiring a supplier or distributor, for control over the chain or margin capture."
+      },
+      {
+        k: "Conglomerate",
+        v: "Unrelated businesses. Historically the weakest performer, because the parent adds little."
+      },
+      {
+        k: "Structure",
+        v: "Merger, share purchase or asset purchase, which differ in liabilities inherited and tax treatment."
+      }
+    ],
+    interpretation: "The evidence on acquisitions is not encouraging. A substantial share fail to create value for the acquiring shareholders, most often because the price paid already assumed the benefits would materialise.",
+    misconceptions: [
+      {
+        claim: "“Acquisitions create growth.”",
+        truth: "They create size. Whether they create value depends entirely on the price paid relative to what the acquired business genuinely contributes."
+      }
+    ],
+    application: ["Understanding what an acquirer is actually buying.", "Judging whether a stated rationale matches the transaction type."],
+    related: ["synergies", "due-diligence", "enterprise-value", "deal-financing"],
+    prereq: ["enterprise-value"],
+    next: ["synergies"],
+  },
+  {
+    id: "synergies",
+    title: "Synergies",
+    domain: "corporate",
+    category: "ma",
+    subcategory: "Synergies",
+    level: "Advanced",
+    oneLine: "The value created by combining two businesses, which is the justification for every premium ever paid.",
+    what: "Synergy is the additional value expected from combining two companies beyond the sum of their separate values. Cost synergies come from removing duplicated functions and are relatively predictable. Revenue synergies come from selling more through the combined business and are considerably less reliable.",
+    simple: "Two plus two equals five. The question is who gets the extra one, and whether it exists at all.",
+    why: "An acquirer pays a premium above market price. That premium is only justified if synergies exceed it. If the seller captures the full expected synergy in the price, the buyer has paid for value it must then create simply to break even.",
+    formula: {
+      main: "Value to acquirer = Synergies − Premium paid",
+      others: [
+        {
+          label: "Premium",
+          expr: "(Offer price − Pre-announcement price) ÷ Pre-announcement price"
+        }
+      ]
+    },
+    example: {
+      setup: "A target valued at ₹1,000 crore is acquired for ₹1,300 crore, with expected annual cost savings of ₹40 crore.",
+      steps: ["Premium paid = ₹300 crore", "Value of ₹40 crore in perpetuity at 11 percent = 40 ÷ 0.11 = ₹364 crore", "Net value to the acquirer = 364 − 300 = ₹64 crore, if the savings are fully achieved"],
+      result: "₹64 crore, conditional on delivery",
+      note: "If the savings prove to be ₹30 crore rather than ₹40 crore, the value becomes negative. The margin for error is narrow."
+    },
+    interpretation: "Cost synergies are usually achievable because they involve decisions within the acquirer's control. Revenue synergies depend on customers behaving as hoped, and they are the ones that most often fail to appear.",
+    misconceptions: [
+      {
+        claim: "“The merger will create synergies.”",
+        truth: "Synergies are created by executing difficult integration, not by signing a transaction. Most announced revenue synergies are not delivered in full."
+      }
+    ],
+    application: ["Testing whether a premium is justified by realistic savings.", "Separating reliable cost synergies from speculative revenue ones."],
+    related: ["types-of-ma", "due-diligence", "enterprise-value", "free-cash-flow"],
+    prereq: ["types-of-ma"],
+    next: ["due-diligence"],
+  },
+  {
+    id: "due-diligence",
+    title: "Due Diligence",
+    domain: "corporate",
+    category: "ma",
+    subcategory: "Due Diligence",
+    level: "Intermediate",
+    oneLine: "Verifying what is actually being bought, before rather than after the money moves.",
+    what: "Due diligence is the investigation conducted before a transaction to verify the target's financial, legal, tax, commercial and operational position. Its purpose is not to confirm the decision already made but to find what would change it: undisclosed liabilities, overstated earnings, contracts that terminate on a change of control, or litigation not yet provided for.",
+    simple: "Checking that what you are buying is what you were told you are buying.",
+    components: [
+      {
+        k: "Financial",
+        v: "Verifying earnings quality, cash conversion, working capital and debt."
+      },
+      {
+        k: "Legal",
+        v: "Contracts, litigation, ownership of assets, regulatory standing."
+      },
+      {
+        k: "Tax",
+        v: "Outstanding assessments, disputes and exposures that transfer with the entity."
+      },
+      {
+        k: "Commercial",
+        v: "Customer concentration, contract durability, competitive position."
+      }
+    ],
+    interpretation: "The most valuable finding in due diligence is often not a number but a pattern: earnings that do not convert to cash, revenue concentrated in one customer, or accounting policies more aggressive than peers. These predict integration difficulty better than any single liability.",
+    misconceptions: [
+      {
+        claim: "“Audited accounts mean the numbers are verified.”",
+        truth: "An audit provides reasonable assurance against material misstatement under a defined framework. It is not a valuation, and it does not assess whether earnings are repeatable."
+      }
+    ],
+    application: ["Structuring an investigation before committing to a transaction.", "Deciding what warranties and price adjustments are needed."],
+    related: ["quality-of-earnings", "types-of-ma", "synergies", "cash-flow-statement"],
+    prereq: ["quality-of-earnings"],
+    next: ["deal-financing"],
+  },
+  {
+    id: "deal-financing",
+    title: "Deal Financing",
+    domain: "corporate",
+    category: "ma",
+    subcategory: "Deal Financing",
+    level: "Advanced",
+    oneLine: "How an acquisition is paid for, which determines who carries the risk if the assumptions prove wrong.",
+    what: "Deal financing is the method used to fund an acquisition: cash, debt, shares, or a combination. The choice affects the acquirer's capital structure, the risk borne by each party, and the signal sent to the market. It is not merely a funding question, because it determines what happens if the acquisition disappoints.",
+    simple: "Pay in cash and you carry the risk. Pay in shares and the seller carries part of it with you.",
+    components: [
+      {
+        k: "Cash",
+        v: "Certain value to the seller. The acquirer bears the full risk of the outcome."
+      },
+      {
+        k: "Shares",
+        v: "The seller becomes a shareholder and shares in the result, good or bad."
+      },
+      {
+        k: "Debt funded",
+        v: "Raises leverage. Amplifies returns if the acquisition works and distress risk if it does not."
+      },
+      {
+        k: "Earn-out",
+        v: "Part of the price paid later, contingent on the target meeting agreed targets."
+      }
+    ],
+    interpretation: "Research on acquisitions has found that share funded deals are often received less favourably by the market than cash deals. One explanation is signalling: a management team confident in its own valuation and in the acquisition prefers to pay cash rather than issue shares it considers undervalued.",
+    example: {
+      setup: "A ₹1,000 crore acquisition funded entirely by debt at 9 percent, expected to add ₹120 crore of operating profit.",
+      steps: ["Annual interest cost = ₹90 crore", "Net addition to profit before tax = ₹30 crore", "If operating profit proves to be ₹80 crore, the acquisition reduces profit by ₹10 crore"],
+      result: "₹30 crore added, or ₹10 crore lost",
+      note: "The interest is fixed and contractual. Only the acquired profit is uncertain, which is the entire risk of debt funded acquisition."
+    },
+    misconceptions: [
+      {
+        claim: "“Paying in shares costs nothing.”",
+        truth: "It dilutes existing shareholders. Issuing shares is selling a portion of the existing business to fund the purchase."
+      }
+    ],
+    application: ["Assessing the risk an acquirer has taken on.", "Reading what the payment method signals about management's own view."],
+    related: ["capital-structure", "leverage", "synergies", "debt-vs-equity"],
+    prereq: ["capital-structure"],
+    next: [],
+  },
+  {
     id: "equity-markets",
     title: "Equity Markets",
     domain: "markets",
