@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>FinHub</title>
+<meta name="description" content="The Financial Universe, Clearly Connected. Built, designed and curated by G. Hari Charan." />
+<meta name="theme-color" content="#04060C" />
+<meta property="og:title" content="FinHub" />
+<meta property="og:description" content="Finance was never meant to be simple. It was meant to be understood." />
+<meta property="og:type" content="website" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<style>
+  :root{
+    --ink:#04060C; --teal:#5CE1D0; --teal-2:#8FF0E2; --amber:#F2B33D;
+    --paper:#EAF2F0; --dim:#7C8B96;
+    --serif:ui-serif,Georgia,'Times New Roman',serif;
+    --sans:ui-sans-serif,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    --mono:ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%;background:var(--ink);overflow:hidden}
+  body{font-family:var(--sans);-webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility}
+
+  #stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+  canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+
+  .vig{position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(circle at 50% 50%,transparent 48%,rgba(4,6,12,.55) 78%,rgba(4,6,12,.96) 100%)}
+
+  .words{position:relative;z-index:3;text-align:center;padding:0 26px;width:100%;
+    max-width:1100px}
+
+  .line{font-family:var(--serif);font-weight:400;letter-spacing:-.022em;line-height:1.28;
+    color:var(--paper);font-size:clamp(23px,4.4vw,50px);opacity:0}
+  .line.two{color:var(--teal);margin-top:18px}
+  .line.show{animation:word 1.5s cubic-bezier(.16,.7,.24,1) forwards}
+  @keyframes word{
+    from{opacity:0;filter:blur(10px);transform:translateY(14px) scale(.985)}
+    to{opacity:1;filter:blur(0);transform:none}}
+  .line.out{animation:wordOut .85s ease forwards}
+  @keyframes wordOut{to{opacity:0;filter:blur(8px)}}
+
+  .title{opacity:0}
+  .title.show{animation:titleIn 1.5s cubic-bezier(.18,.86,.24,1) forwards}
+  @keyframes titleIn{
+    0%{opacity:0;transform:perspective(1100px) rotateX(42deg) translateZ(-260px) scale(.86)}
+    60%{opacity:1}
+    100%{opacity:1;transform:perspective(1100px) rotateX(0) translateZ(0) scale(1)}}
+
+  h1{font-family:var(--serif);font-weight:600;letter-spacing:-.055em;color:#fff;
+    font-size:clamp(62px,14.5vw,176px);line-height:.92;
+    text-shadow:0 0 90px rgba(92,225,208,.3),0 0 30px rgba(92,225,208,.16)}
+
+  .rule{width:0;height:1px;margin:26px auto 0;
+    background:linear-gradient(90deg,transparent,var(--teal),transparent)}
+  .rule.show{animation:rule 1.2s cubic-bezier(.2,.7,.3,1) .45s forwards}
+  @keyframes rule{to{width:min(300px,58vw)}}
+
+  .cred{margin-top:26px;font-family:var(--mono);font-size:clamp(8.5px,1.5vw,11.5px);
+    letter-spacing:.42em;text-transform:uppercase;color:var(--teal);opacity:0}
+  /* the signature */
+  .sig{display:flex;align-items:center;justify-content:center;gap:clamp(14px,3vw,30px);
+    margin-top:20px;opacity:0}
+  .sig.show{animation:sigIn 1.5s cubic-bezier(.16,.75,.22,1) forwards}
+  @keyframes sigIn{
+    0%{opacity:0;transform:translateY(16px) scale(.94);filter:blur(9px)}
+    100%{opacity:1;transform:none;filter:blur(0)}}
+  .sig-mark{display:block;height:1px;width:0;
+    background:linear-gradient(90deg,transparent,rgba(242,179,61,.75));}
+  .sig-mark.right{background:linear-gradient(90deg,rgba(242,179,61,.75),transparent)}
+  .sig.show .sig-mark{animation:sigRule 1.5s cubic-bezier(.2,.7,.3,1) .5s forwards}
+  @keyframes sigRule{to{width:clamp(34px,9vw,110px)}}
+  .name{font-family:var(--serif);font-weight:500;
+    font-size:clamp(26px,5vw,50px);color:#fff;letter-spacing:-.01em;white-space:nowrap;
+    text-shadow:0 0 44px rgba(242,179,61,.28)}
+  .sig.show .name{animation:sigGlow 3.4s ease-in-out .9s infinite alternate}
+  @keyframes sigGlow{
+    from{text-shadow:0 0 44px rgba(242,179,61,.26)}
+    to{text-shadow:0 0 70px rgba(242,179,61,.44)}}
+  .sub{margin-top:18px;font-size:clamp(12px,1.9vw,15.5px);color:var(--dim);
+    letter-spacing:.015em;opacity:0}
+  .fade.show{animation:fadeUp 1.15s cubic-bezier(.2,.7,.3,1) forwards}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
+
+  .enter{margin-top:44px;opacity:0;display:inline-flex;align-items:center;gap:12px;
+    padding:15px 32px;border-radius:999px;border:1px solid rgba(92,225,208,.4);
+    background:rgba(92,225,208,.07);color:#fff;font-size:15px;letter-spacing:.01em;
+    cursor:pointer;transition:background .25s,border-color .25s,transform .25s;
+    font-family:var(--sans)}
+  .enter:hover{background:rgba(92,225,208,.15);border-color:var(--teal);transform:translateY(-2px)}
+  .enter em{font-style:normal;font-family:var(--mono);font-size:11px;letter-spacing:.14em;
+    color:var(--teal)}
+
+  .skip{position:fixed;right:22px;bottom:26px;z-index:6;padding:9px 19px;
+    border:1px solid rgba(234,242,240,.2);border-radius:999px;background:none;cursor:pointer;
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;
+    color:rgba(234,242,240,.55);transition:.25s}
+  .skip:hover{color:#fff;border-color:rgba(234,242,240,.48)}
+  .bar{position:fixed;left:0;right:0;bottom:0;height:2px;z-index:6;
+    background:rgba(234,242,240,.07)}
+  .bar i{display:block;height:100%;width:0;
+    background:linear-gradient(90deg,var(--teal),var(--amber))}
+
+  .out-all{animation:leave .75s cubic-bezier(.5,0,.75,0) forwards}
+  @keyframes leave{to{opacity:0;transform:scale(1.09);filter:blur(5px)}}
+
+  @media (prefers-reduced-motion: reduce){
+    .line,.title,.cred,.sig,.name,.sub,.enter{opacity:1;animation:none!important}
+    .sig-mark{width:clamp(34px,9vw,110px)}
+    .rule{width:min(260px,52vw);animation:none}
+    canvas{display:none}
+  }
+</style>
+</head>
+<body>
+<div id="stage">
+  <canvas id="c"></canvas>
+  <div class="vig"></div>
+  <div class="words">
+    <p class="line" id="l1">Finance was never meant to be simple.</p>
+    <p class="line two" id="l2">It was meant to be understood.</p>
+    <div class="title" id="title">
+      <h1>FinHub</h1>
+      <div class="rule" id="rule"></div>
+      <p class="cred fade" id="cred">Built. Designed. Curated.</p>
+      <div class="sig" id="nameWrap">
+        <span class="sig-mark" aria-hidden="true"></span>
+        <p class="name">G. Hari Charan</p>
+        <span class="sig-mark right" aria-hidden="true"></span>
+      </div>
+      <p class="sub fade" id="sub">An ambition made into action.</p>
+      <button class="enter fade" id="enter">Enter FinHub <em>→</em></button>
+    </div>
+  </div>
+</div>
+<button class="skip" id="skip">Skip</button>
+<div class="bar"><i id="prog"></i></div>
+
+<script>
+(function () {
+  "use strict";
+  var TARGET = "./index.html?e=1#/";       // the platform, flagged so it does not loop
+  var DURATION = 25200;
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  var $ = function (id) { return document.getElementById(id); };
+  var stage = $("stage"), title = $("title"), prog = $("prog");
+  var done = false;
+
+  function go() {
+    if (done) return;
+    done = true;
+    if (reduced) { window.location.href = TARGET; return; }
+    stage.classList.add("out-all");
+    setTimeout(function () { window.location.href = TARGET; }, 620);
+  }
+
+  $("skip").addEventListener("click", go);
+  $("enter").addEventListener("click", go);
+  window.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" || e.key === "Enter" || e.key === " ") go();
+  });
+
+  if (reduced) {
+    title.classList.add("show");
+    ["cred", "nameWrap", "sub", "enter"].forEach(function (k) { $(k).classList.add("show"); });
+    $("rule").classList.add("show");
+    return;
+  }
+
+  /* ---- the system ---------------------------------------------------- */
+  var c = $("c"), ctx = c.getContext("2d"), dpr = Math.min(2, window.devicePixelRatio || 1);
+  var W = 0, H = 0;
+  function size() {
+    W = c.clientWidth; H = c.clientHeight;
+    c.width = W * dpr; c.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  size();
+  window.addEventListener("resize", size);
+
+  var N = window.innerWidth < 700 ? 34 : 52;
+  var nodes = [];
+  for (var i = 0; i < N; i++) {
+    nodes.push({
+      ring: i % 3,
+      idx: Math.floor(i / 3),
+      seed: Math.random() * 6.28,
+      born: 800 + (i / N) * 9400,
+    });
+  }
+  var perRing = Math.ceil(N / 3);
+
+  var t0 = performance.now();
+  function clamp(x) { return x < 0 ? 0 : x > 1 ? 1 : x; }
+  function ph(a, b, t) { return clamp((t - a) / (b - a)); }
+
+  function frame(now) {
+    var t = now - t0;
+    if (t >= DURATION) { go(); return; }
+    prog.style.width = (t / DURATION) * 100 + "%";
+
+    var chaos = ph(10800, 14200, t);
+    var stillT = t >= 14200 && t < 19100;
+    var conv = ph(19100, 21700, t);
+    var dim = stillT ? 0.15 : 1;
+    var scale = Math.min(W, H) / 620;
+
+    ctx.clearRect(0, 0, W, H);
+
+    /* first pulse */
+    var pulse = ph(150, 1900, t), pfade = 1 - ph(900, 3400, t);
+    if (pfade > 0) {
+      var pr = 10 + pulse * 150 * scale;
+      var g = ctx.createRadialGradient(W / 2, H / 2, 0, W / 2, H / 2, pr);
+      g.addColorStop(0, "rgba(92,225,208," + (0.85 * pfade) + ")");
+      g.addColorStop(1, "rgba(92,225,208,0)");
+      ctx.fillStyle = g;
+      ctx.beginPath(); ctx.arc(W / 2, H / 2, pr, 0, 6.2832); ctx.fill();
+    }
+
+    /* positions */
+    var pts = [];
+    for (var k = 0; k < N; k++) {
+      var n = nodes[k];
+      if (t < n.born) { pts.push(null); continue; }
+      var a = (n.idx / perRing) * 6.2832 + n.ring * 0.72 + t * 0.000042 * (n.ring + 1);
+      var wob = Math.sin(t * 0.0013 + n.seed) * 11 * chaos;
+      var r = (118 + n.ring * 92 + wob) * (1 - conv * 0.94) * scale;
+      pts.push({
+        x: W / 2 + Math.cos(a) * r * 1.42,
+        y: H / 2 + Math.sin(a) * r * 0.74,
+        ring: n.ring,
+        age: clamp((t - n.born) / 700),
+      });
+    }
+
+    /* links */
+    ctx.lineWidth = 0.9;
+    for (var i2 = 0; i2 < N; i2++) {
+      var A = pts[i2]; if (!A) continue;
+      var B = pts[(i2 + 3) % N];
+      if (B) {
+        ctx.strokeStyle = "rgba(92,225,208," + (0.34 * A.age * dim * (1 - conv * 0.5)) + ")";
+        ctx.beginPath(); ctx.moveTo(A.x, A.y); ctx.lineTo(B.x, B.y); ctx.stroke();
+      }
+      if (chaos > 0.15) {
+        var C = pts[(i2 + 7) % N];
+        if (C) {
+          ctx.strokeStyle = "rgba(242,179,61," + (0.15 * chaos * dim) + ")";
+          ctx.beginPath(); ctx.moveTo(A.x, A.y); ctx.lineTo(C.x, C.y); ctx.stroke();
+        }
+      }
+    }
+
+    /* nodes */
+    for (var i3 = 0; i3 < N; i3++) {
+      var P = pts[i3]; if (!P) continue;
+      var rad = (P.ring === 0 ? 3.3 : P.ring === 1 ? 2.5 : 1.9) * P.age * scale * 0.9;
+      ctx.fillStyle = P.ring === 2
+        ? "rgba(242,179,61," + (0.72 * dim) + ")"
+        : P.ring === 1 ? "rgba(143,240,226," + (0.86 * dim) + ")"
+        : "rgba(92,225,208," + (0.96 * dim) + ")";
+      ctx.beginPath(); ctx.arc(P.x, P.y, Math.max(0.6, rad), 0, 6.2832); ctx.fill();
+    }
+
+    /* convergence glow */
+    if (conv > 0.08) {
+      var cr = (8 + conv * 40) * scale;
+      var g2 = ctx.createRadialGradient(W / 2, H / 2, 0, W / 2, H / 2, cr);
+      g2.addColorStop(0, "rgba(92,225,208," + (0.75 * conv) + ")");
+      g2.addColorStop(1, "rgba(92,225,208,0)");
+      ctx.fillStyle = g2;
+      ctx.beginPath(); ctx.arc(W / 2, H / 2, cr, 0, 6.2832); ctx.fill();
+    }
+
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+
+  /* ---- the words, on their own schedule ------------------------------ */
+  function at(ms, fn) { setTimeout(fn, ms); }
+  at(15100, function () { $("l1").classList.add("show"); });
+  at(17000, function () { $("l2").classList.add("show"); });
+  at(18950, function () { $("l1").classList.add("out"); $("l2").classList.add("out"); });
+  at(21600, function () {
+    $("l1").style.display = "none"; $("l2").style.display = "none";
+    title.classList.add("show");
+    $("rule").classList.add("show");
+  });
+  at(22550, function () { $("cred").classList.add("show"); });
+  at(23000, function () { $("nameWrap").classList.add("show"); });
+  at(23900, function () { $("sub").classList.add("show"); });
+  at(24350, function () { $("enter").classList.add("show"); });
+})();
+</script>
+</body>
+</html>
