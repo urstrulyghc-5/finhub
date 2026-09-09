@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>FinHub — The Financial Universe, Clearly Connected</title>
+    <meta name="description" content="A structured financial universe. Domains, concepts, real cases and consequences in one connected structure — so finance becomes something you can move through." />
+    <meta name="theme-color" content="#F5F7FA" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="FinHub — The Financial Universe, Clearly Connected" />
+    <meta property="og:description" content="Everything in finance is connected. Follow any thread far enough and it reaches all the others." />
+    <meta property="og:image" content="/finhub/og.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script>
+      (function () {
+        try {
+          if (location.search.indexOf("e=1") === -1 &&
+              (location.hash === "" || location.hash === "#" || location.hash === "#/")) {
+            location.replace("intro.html");
+          }
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
